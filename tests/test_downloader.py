@@ -8,8 +8,10 @@ from unittest.mock import MagicMock, patch
 
 from downloader import (
     _extract_meeting_id,
+    _meeting_rank,
     _extract_version_from_name,
     _pick_latest_in_meeting_group,
+    discover_schedule_sources,
     find_latest_chair_notes,
     find_latest_schedule,
     get_latest_chair_notes_info,
@@ -102,6 +104,11 @@ class ExtractMeetingIdTests(unittest.TestCase):
 class PickLatestInMeetingGroupTests(unittest.TestCase):
     """Tests for _pick_latest_in_meeting_group."""
 
+    def test_meeting_rank_orders_regular_meetings(self):
+        self.assertLess(_meeting_rank("ran1#124"), _meeting_rank("ran1#124bis"))
+        self.assertLess(_meeting_rank("ran1#124bis"), _meeting_rank("ran1#125"))
+        self.assertIsNone(_meeting_rank("ran1#124adhoc"))
+
     def test_same_meeting_picks_highest_version(self):
         """Scenario A: within the same meeting, pick the highest version."""
         files = [
@@ -160,6 +167,27 @@ class PickLatestInMeetingGroupTests(unittest.TestCase):
         self.assertIn("124bis", result["name"])
         self.assertIn("v01", result["name"])
 
+    def test_newer_regular_meeting_beats_cached_preferred_meeting(self):
+        """A later plenary meeting should advance state automatically."""
+        files = [
+            _f("RAN1#124bis schedule - v08.docx", datetime(2026, 4, 18, 8, 3)),
+            _f("RAN1#125 schedule - v01.docx", datetime(2026, 4, 19, 9, 0)),
+        ]
+        result = _pick_latest_in_meeting_group(
+            files,
+            preferred_meeting_id="ran1#124bis",
+        )
+        self.assertIn("125", result["name"])
+
+    def test_irregular_meetings_fall_back_to_upload_time(self):
+        """Irregular meetings are ordered by upload timestamp, not by name."""
+        files = [
+            _f("RAN1#124adhoc schedule - v01.docx", datetime(2026, 4, 17, 8, 0)),
+            _f("RAN1#124e schedule - v01.docx", datetime(2026, 4, 18, 8, 0)),
+        ]
+        result = _pick_latest_in_meeting_group(files)
+        self.assertIn("124e", result["name"])
+
 
 class FindLatestScheduleMeetingAwareTests(unittest.TestCase):
     """Integration tests for find_latest_schedule with meeting grouping."""
@@ -200,6 +228,15 @@ class FindLatestScheduleMeetingAwareTests(unittest.TestCase):
         result = find_latest_schedule(files)
         assert result is not None
         self.assertIn("v03", result["name"])
+
+    def test_preferred_meeting_advances_to_newer_regular_meeting(self):
+        files = [
+            _f("RAN1#124bis schedule - v08.docx", datetime(2026, 4, 18, 8, 3)),
+            _f("RAN1#125 schedule - v01.docx", datetime(2026, 4, 19, 9, 0)),
+        ]
+        result = find_latest_schedule(files, preferred_meeting_id="ran1#124bis")
+        assert result is not None
+        self.assertIn("125", result["name"])
 
     def test_last_resort_returns_first(self):
         """When no version or timestamp, return first file."""
@@ -278,6 +315,80 @@ class GetLatestChairNotesInfoTests(unittest.TestCase):
         self.assertEqual(
             mock_list_remote_files.call_args_list[2].args[0],
             "https://example.com/custom/Chair_notes/",
+        )
+
+
+class DiscoverScheduleSourcesMeetingFilterTests(unittest.TestCase):
+    """Tests for current-meeting filtering across discovered schedule sources."""
+
+    @patch("downloader.list_remote_files")
+    @patch("downloader.list_inbox_subfolders")
+    def test_filters_sibling_folder_files_to_current_chair_meeting(
+        self,
+        mock_list_inbox_subfolders,
+        mock_list_remote_files,
+    ):
+        mock_list_inbox_subfolders.return_value = [
+            {"name": "Chair_notes", "url": "https://example.com/Inbox/Chair_notes"},
+            {"name": "Hiroki_notes", "url": "https://example.com/Inbox/Hiroki_notes"},
+        ]
+        mock_list_remote_files.side_effect = [
+            [_f("Draft RAN1#125 online and offline schedules - v00.docx", datetime(2026, 5, 11, 7, 43))],
+            [
+                _f("RAN1#124bis schedule for Hiroki Adhoc2 sessions_v11.docx", datetime(2026, 4, 17, 5, 42)),
+                _f("RAN1#125 schedule for Hiroki sessions_v00.docx", datetime(2026, 5, 11, 8, 0)),
+            ],
+            [],
+        ]
+
+        result = discover_schedule_sources(urls=["https://example.com/Inbox/"])
+
+        self.assertEqual(len(result), 2)
+        by_person = {s.person_name: s for s in result if s.person_name}
+        self.assertEqual(
+            by_person["Hiroki"].file_info["name"],
+            "RAN1#125 schedule for Hiroki sessions_v00.docx",
+        )
+
+    @patch("downloader.list_remote_files")
+    @patch("downloader.list_inbox_subfolders")
+    def test_filters_old_inbox_vice_chair_sources_after_meeting_advances(
+        self,
+        mock_list_inbox_subfolders,
+        mock_list_remote_files,
+    ):
+        mock_list_inbox_subfolders.side_effect = [
+            [
+                {"name": "Chair_notes", "url": "https://example.com/old/Inbox/Chair_notes"},
+                {"name": "Hiroki_notes", "url": "https://example.com/old/Inbox/Hiroki_notes"},
+                {"name": "Sorour_notes", "url": "https://example.com/old/Inbox/Sorour_notes"},
+            ],
+            [
+                {"name": "Chair_notes", "url": "https://example.com/new/Inbox/Chair_notes"},
+            ],
+        ]
+        mock_list_remote_files.side_effect = [
+            [_f("RAN1#124bis online and offline schedules - v08.docx", datetime(2026, 4, 17, 6, 15))],
+            [_f("RAN1#124bis schedule for Hiroki Adhoc2 sessions_v11.docx", datetime(2026, 4, 17, 5, 42))],
+            [_f("RAN1#124bis Sorour online and offline schedules - v04.docx", datetime(2026, 4, 16, 6, 29))],
+            [],
+            [_f("Draft RAN1#125 online and offline schedules - v00.docx", datetime(2026, 5, 11, 7, 43))],
+            [],
+        ]
+
+        result = discover_schedule_sources(
+            urls=[
+                "https://example.com/old/Inbox/",
+                "https://example.com/new/Inbox/",
+            ],
+            preferred_meeting_id="ran1#124bis",
+        )
+
+        self.assertEqual(len(result), 1)
+        self.assertTrue(result[0].is_main)
+        self.assertEqual(
+            result[0].file_info["name"],
+            "Draft RAN1#125 online and offline schedules - v00.docx",
         )
 
 

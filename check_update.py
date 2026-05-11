@@ -1,10 +1,14 @@
 """Lightweight FTP change-detection script for GitHub Actions.
 
-Checks if the latest schedule file on the 3GPP FTP has changed since
+Checks if the selected schedule files on the 3GPP FTP have changed since
 the last run.  Outputs `changed=true/false` to $GITHUB_OUTPUT.
 
 State is persisted in docs/.schedule_state.json (committed to the repo
-by the build-and-deploy job).
+by the build-and-deploy job). The cached ``meeting_id`` is fed back into
+remote selection as a stability hint: older meetings do not displace the
+current state, but a later regular meeting (e.g. ``124bis`` → ``125``)
+does advance automatically. Irregular meetings continue to rely on
+upload timestamps.
 """
 
 from __future__ import annotations
@@ -36,10 +40,13 @@ def main() -> None:
         f"({len(cfg['inbox_urls'])} inbox URL(s), "
         f"{len(cfg['extra_folders'])} extra folder(s))…"
     )
+    state = load_schedule_state()
+
     try:
         remote_all = get_all_remote_schedule_info(
             urls=cfg["inbox_urls"],
             extra_folders=cfg["extra_folders"],
+            preferred_meeting_id=state.get("meeting_id"),
         )
     except Exception as e:
         print(f"FTP check failed: {e}")
@@ -58,7 +65,6 @@ def main() -> None:
         print(f"  Remote [{folder}]: {info['name']}  uploaded_at={info.get('uploaded_at')}")
 
     # 2. Compare with cached state (stored in repo as docs/.schedule_state.json)
-    state = load_schedule_state()
     cached = state.get("files")
 
     # Handle migration from old single-dict format

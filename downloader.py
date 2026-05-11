@@ -204,18 +204,18 @@ def _pick_latest_in_meeting_group(
     """Select the best file using meeting-aware grouping.
 
     1. Group *files* by meeting identifier.
-    2. Choose the "current" meeting group:
-       - If ``preferred_meeting_id`` is supplied and at least one file
-         matches it, that group wins (hard constraint — used to align
-         vice-chair folders with the Chair_notes decision).
-       - Otherwise, prefer the regular plenary id with the highest
-         meeting rank (e.g. ``ran1#124bis`` beats ``ran1#124``;
-         ``ran1#125`` beats both).  This means a stray draft labelled
-         with an *older* meeting id cannot displace the current one,
-         and a *newer* meeting id automatically takes over as soon as
-         it appears.
-       - If no regular ids are present (only ad-hoc / unknown), fall
-         back to the group whose most-recent ``uploaded_at`` is newest.
+        2. Choose the "current" meeting group:
+             - Among regular plenary ids, the highest meeting rank wins
+                 (e.g. ``ran1#124bis`` beats ``ran1#124``; ``ran1#125`` beats
+                 both).  This means a stray draft labelled with an *older*
+                 meeting id cannot displace the current one, and a *newer*
+                 meeting id automatically takes over as soon as it appears.
+             - ``preferred_meeting_id`` acts as the cached/current hint from
+                 state: if the best regular id is the same meeting, we stay on
+                 it; if a later regular meeting appears, we advance to it.
+             - If no regular ids are present (only ad-hoc / unknown), fall
+                 back to the preferred group when present, else to the group
+                 whose most-recent ``uploaded_at`` is newest.
     3. Within the chosen group pick the file with the highest version
        number, using ``uploaded_at`` as a tiebreaker.
 
@@ -231,14 +231,39 @@ def _pick_latest_in_meeting_group(
     def _group_max_ts(group: list[dict]) -> datetime:
         return max(f["uploaded_at"] for f in group)
 
+    regular = {
+        mid: grp for mid, grp in groups.items() if _meeting_rank(mid) is not None
+    }
+    pref_rank = _meeting_rank(preferred_meeting_id)
+
     current_mid: str | None
-    if preferred_meeting_id is not None and preferred_meeting_id in groups:
-        current_mid = preferred_meeting_id
+    if regular:
+        highest_regular_mid = max(regular, key=lambda m: _meeting_rank(m))
+        highest_regular_rank = _meeting_rank(highest_regular_mid)
+        if (
+            preferred_meeting_id is not None
+            and preferred_meeting_id in regular
+            and pref_rank is not None
+            and highest_regular_rank is not None
+            and pref_rank >= highest_regular_rank
+        ):
+            current_mid = preferred_meeting_id
+        else:
+            current_mid = highest_regular_mid
+
+        if (
+            preferred_meeting_id is not None
+            and pref_rank is not None
+            and highest_regular_rank is not None
+            and highest_regular_rank > pref_rank
+        ):
+            print(
+                f"  Newer meeting detected for {label}: "
+                f"{preferred_meeting_id} → {current_mid}"
+            )
     else:
-        regular = {mid: grp for mid, grp in groups.items() if _meeting_rank(mid) is not None}
-        if regular:
-            # Highest-ranked regular meeting wins, regardless of upload time.
-            current_mid = max(regular, key=lambda m: _meeting_rank(m))  # type: ignore[arg-type]
+        if preferred_meeting_id is not None and preferred_meeting_id in groups:
+            current_mid = preferred_meeting_id
         else:
             # Only irregular / unparseable ids → fall back to upload date.
             current_mid = max(groups, key=lambda mid: _group_max_ts(groups[mid]))
@@ -246,22 +271,10 @@ def _pick_latest_in_meeting_group(
             preferred_meeting_id is not None
             and current_mid != preferred_meeting_id
         ):
-            pref_rank = _meeting_rank(preferred_meeting_id)
-            cur_rank = _meeting_rank(current_mid)
-            if (
-                pref_rank is not None
-                and cur_rank is not None
-                and cur_rank > pref_rank
-            ):
-                print(
-                    f"  Newer meeting detected for {label}: "
-                    f"{preferred_meeting_id} → {current_mid}"
-                )
-            else:
-                print(
-                    f"  Note: preferred meeting {preferred_meeting_id!r} not found "
-                    f"among {label} files; falling back to {current_mid!r}"
-                )
+            print(
+                f"  Note: preferred meeting {preferred_meeting_id!r} not found "
+                f"among {label} files; falling back to {current_mid!r}"
+            )
     current_group = groups[current_mid]
 
     latest = max(
@@ -954,7 +967,23 @@ def _extract_person_from_filename(filename: str) -> str | None:
     return None
 
 
-def _discover_from_inbox(url: str) -> list[ScheduleSource]:
+def _filter_files_to_meeting(files: list[dict], meeting_id: str | None) -> list[dict]:
+    """Return only files whose filename explicitly matches ``meeting_id``.
+
+    Once a current meeting is known, files from other meetings should not
+    participate in schedule selection, even if their version or upload time is
+    higher.  Files without a parseable meeting id are also excluded because we
+    cannot prove they belong to the selected meeting.
+    """
+    if meeting_id is None:
+        return files
+    return [f for f in files if _extract_meeting_id(f["name"]) == meeting_id]
+
+
+def _discover_from_inbox(
+    url: str,
+    preferred_meeting_id: str | None = None,
+) -> list[ScheduleSource]:
     """Scan a single inbox URL for schedule sources (subfolders + stray root files)."""
     sources: list[ScheduleSource] = []
     chair_notes_url = f"{url.rstrip('/')}/Chair_notes"
@@ -966,10 +995,9 @@ def _discover_from_inbox(url: str) -> list[ScheduleSource]:
         print(f"Warning: Failed to list Inbox subfolders at {url}: {e}")
         return _fallback_chair_only(chair_notes_url)
 
-    # First pass: locate the Chair_notes folder so we can pin the
-    # current meeting id and use it as a hint for vice-chair folders
-    # (where a stale or mislabelled file uploaded after the real latest
-    # one would otherwise hijack the selection).
+    # First pass: locate the Chair_notes folder so we can determine the
+    # canonical meeting for this run. The cached state meeting id is a
+    # hint, not a lock: a newer regular meeting is allowed to take over.
     main_meeting_id: str | None = None
     main_folder_name: str | None = None
     for folder in subfolders:
@@ -982,7 +1010,10 @@ def _discover_from_inbox(url: str) -> list[ScheduleSource]:
             except Exception as e:
                 print(f"  Warning: Cannot access {folder['name']}/: {e}")
                 break
-            chair_latest = find_latest_schedule(chair_files)
+            chair_latest = find_latest_schedule(
+                chair_files,
+                preferred_meeting_id=preferred_meeting_id,
+            )
             if chair_latest is not None:
                 main_meeting_id = _extract_meeting_id(chair_latest["name"])
                 main_folder_name = folder["name"]
@@ -1016,7 +1047,19 @@ def _discover_from_inbox(url: str) -> list[ScheduleSource]:
             print(f"  Warning: Cannot access {folder['name']}/: {e}")
             continue
 
-        latest = find_latest_schedule(files, preferred_meeting_id=main_meeting_id)
+        if main_meeting_id is not None:
+            files = _filter_files_to_meeting(files, main_meeting_id)
+            if not files:
+                print(
+                    f"  No schedule for current meeting {main_meeting_id} "
+                    f"in {folder['name']}/"
+                )
+                continue
+
+        latest = find_latest_schedule(
+            files,
+            preferred_meeting_id=main_meeting_id or preferred_meeting_id,
+        )
         if latest is None:
             continue
 
@@ -1045,23 +1088,13 @@ def _discover_from_inbox(url: str) -> list[ScheduleSource]:
             existing_persons = {s.person_name for s in sources if s.person_name}
             if person in existing_persons:
                 continue
-            # Honour the current meeting hint for stray files too: skip
-            # files that clearly belong to an *older* meeting.  A newer
-            # meeting id is allowed through (it would override Chair's
-            # decision on the next run via state update).
-            if main_meeting_id is not None:
+            meeting_hint = main_meeting_id or preferred_meeting_id
+            if meeting_hint is not None:
                 file_mid = _extract_meeting_id(sf["name"])
-                main_rank = _meeting_rank(main_meeting_id)
-                file_rank = _meeting_rank(file_mid)
-                if (
-                    file_mid is not None
-                    and main_rank is not None
-                    and file_rank is not None
-                    and file_rank < main_rank
-                ):
+                if file_mid != meeting_hint:
                     print(
-                        f"  Skipping Inbox root file from older meeting "
-                        f"({file_mid} < {main_meeting_id}): {sf['name']}"
+                        f"  Skipping Inbox root file outside current meeting "
+                        f"{meeting_hint}: {sf['name']}"
                     )
                     continue
             sources.append(
@@ -1085,7 +1118,10 @@ def _discover_from_inbox(url: str) -> list[ScheduleSource]:
     return sources
 
 
-def _source_from_extra_folder(folder: dict) -> ScheduleSource | None:
+def _source_from_extra_folder(
+    folder: dict,
+    preferred_meeting_id: str | None = None,
+) -> ScheduleSource | None:
     """Build a ScheduleSource from a manually-configured extra folder entry."""
     folder_url = folder["url"]
     folder_name = folder["name"]
@@ -1095,7 +1131,7 @@ def _source_from_extra_folder(folder: dict) -> ScheduleSource | None:
         print(f"  Warning: Cannot access extra folder {folder_name}/: {e}")
         return None
 
-    latest = find_latest_schedule(files)
+    latest = find_latest_schedule(files, preferred_meeting_id=preferred_meeting_id)
     if latest is None:
         print(f"  No schedule file in extra folder {folder_name}/")
         return None
@@ -1158,11 +1194,60 @@ def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
     return out
 
 
+def _current_meeting_from_sources(
+    sources: list[ScheduleSource],
+    preferred_meeting_id: str | None = None,
+) -> str | None:
+    """Determine the current meeting from discovered main schedule sources."""
+    main_files = [s.file_info for s in sources if s.is_main]
+    if not main_files:
+        return preferred_meeting_id
+
+    if all(f.get("uploaded_at") is not None for f in main_files):
+        latest_main = _pick_latest_in_meeting_group(
+            main_files,
+            label="schedule",
+            preferred_meeting_id=preferred_meeting_id,
+        )
+    else:
+        latest_main = find_latest_schedule(
+            main_files,
+            preferred_meeting_id=preferred_meeting_id,
+        )
+
+    if latest_main is None:
+        return preferred_meeting_id
+    return _extract_meeting_id(latest_main["name"]) or preferred_meeting_id
+
+
+def _filter_sources_to_meeting(
+    sources: list[ScheduleSource],
+    meeting_id: str | None,
+) -> list[ScheduleSource]:
+    """Drop schedule sources that do not belong to the selected meeting."""
+    if meeting_id is None:
+        return sources
+
+    filtered: list[ScheduleSource] = []
+    for source in sources:
+        source_mid = _extract_meeting_id(source.file_info["name"])
+        if source_mid == meeting_id:
+            filtered.append(source)
+        else:
+            label = "MAIN" if source.is_main else source.person_name or source.folder_name
+            print(
+                f"  Skipping {source.folder_name}/ outside current meeting "
+                f"{meeting_id}: {source.file_info['name']} [{label}]"
+            )
+    return filtered
+
+
 def discover_schedule_sources(
     url: str | None = None,
     *,
     urls: list[str] | None = None,
     extra_folders: list[dict] | None = None,
+    preferred_meeting_id: str | None = None,
 ) -> list[ScheduleSource]:
     """Discover schedule sources across one or more inbox URLs and extra folders.
 
@@ -1171,20 +1256,37 @@ def discover_schedule_sources(
     ``extra_folders`` is a list of dicts with keys ``url`` (required),
     ``name``, ``person_name``, ``is_main`` — manually-specified folders
     to include alongside the inbox scans.
+
+    ``preferred_meeting_id`` is typically loaded from persisted state and
+    used as the current-meeting hint. Older meetings are ignored when a
+    newer regular meeting is present; newer meetings are allowed to advance
+    the run automatically.
     """
     if urls is None:
         urls = [url] if url is not None else [INBOX_URL]
 
     all_sources: list[ScheduleSource] = []
     for u in urls:
-        all_sources.extend(_discover_from_inbox(u))
+        all_sources.extend(
+            _discover_from_inbox(
+                u,
+                preferred_meeting_id=preferred_meeting_id,
+            )
+        )
 
     for folder in extra_folders or []:
-        src = _source_from_extra_folder(folder)
+        src = _source_from_extra_folder(
+            folder,
+            preferred_meeting_id=preferred_meeting_id,
+        )
         if src is not None:
             all_sources.append(src)
 
-    return _dedup_sources(all_sources)
+    current_meeting_id = _current_meeting_from_sources(
+        all_sources,
+        preferred_meeting_id=preferred_meeting_id,
+    )
+    return _dedup_sources(_filter_sources_to_meeting(all_sources, current_meeting_id))
 
 
 def _fallback_chair_only(chair_url: str = BASE_URL) -> list[ScheduleSource]:
@@ -1339,8 +1441,16 @@ def load_schedule_state(
     return {}
 
 
-def _collect_info_from_inbox(url: str) -> list[dict]:
-    """Lightweight directory scan of a single inbox for change detection."""
+def _collect_info_from_inbox(
+    url: str,
+    preferred_meeting_id: str | None = None,
+) -> list[dict]:
+    """Lightweight directory scan of a single inbox for change detection.
+
+    ``preferred_meeting_id`` is used as a stability hint from persisted
+    state so older meetings do not temporarily displace the current one,
+    while later regular meetings can still advance automatically.
+    """
     out: list[dict] = []
     try:
         subfolders = list_inbox_subfolders(url)
@@ -1355,7 +1465,10 @@ def _collect_info_from_inbox(url: str) -> list[dict]:
             continue
         try:
             files = list_remote_files(folder["url"])
-            latest = find_latest_schedule(files)
+            latest = find_latest_schedule(
+                files,
+                preferred_meeting_id=preferred_meeting_id,
+            )
             if latest:
                 out.append({
                     "folder": folder["name"],
@@ -1377,6 +1490,7 @@ def get_all_remote_schedule_info(
     *,
     urls: list[str] | None = None,
     extra_folders: list[dict] | None = None,
+    preferred_meeting_id: str | None = None,
 ) -> list[dict]:
     """Return metadata of all schedule files across configured inbox folders.
 
@@ -1386,20 +1500,33 @@ def get_all_remote_schedule_info(
 
     Entries are deduplicated by (folder, name) — if the same folder/file is
     seen in multiple inboxes, the newest ``uploaded_at`` wins.
+
+    ``preferred_meeting_id`` is the meeting id cached in
+    ``docs/.schedule_state.json``. It helps keep the comparison stable
+    across reruns while still allowing a newer regular meeting id to take
+    precedence over the cached one.
     """
     if urls is None:
         urls = [url] if url is not None else [INBOX_URL]
 
     collected: list[dict] = []
     for u in urls:
-        collected.extend(_collect_info_from_inbox(u))
+        collected.extend(
+            _collect_info_from_inbox(
+                u,
+                preferred_meeting_id=preferred_meeting_id,
+            )
+        )
 
     for folder in extra_folders or []:
         folder_url = folder["url"]
         folder_name = folder["name"]
         try:
             files = list_remote_files(folder_url)
-            latest = find_latest_schedule(files)
+            latest = find_latest_schedule(
+                files,
+                preferred_meeting_id=preferred_meeting_id,
+            )
             if latest:
                 collected.append({
                     "folder": folder_name,

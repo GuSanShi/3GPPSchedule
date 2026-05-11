@@ -116,6 +116,10 @@ def main():
         print(f"Error: {email_error}", file=sys.stderr)
         sys.exit(1)
     cfg = load_config()
+    prev_state = load_schedule_state()
+    cached_meeting_id = prev_state.get("meeting_id")
+    cached_tz = prev_state.get("timezone")
+
     # Step 1: Get the DOCX file(s)
     docx_path: Path | None = None
     vice_chair_paths: dict[str, Path] = {}
@@ -147,6 +151,7 @@ def main():
             sources = discover_schedule_sources(
                 urls=cfg["inbox_urls"],
                 extra_folders=cfg["extra_folders"],
+                preferred_meeting_id=cached_meeting_id,
             )
             if sources:
                 print(f"Found {len(sources)} schedule source(s)")
@@ -208,10 +213,6 @@ def main():
     current_meeting_id = _extract_meeting_id(docx_path.name)
 
     # Detect meeting timezone — reuse cached value when the meeting hasn't changed
-    prev_state = load_schedule_state()
-    cached_meeting_id = prev_state.get("meeting_id")
-    cached_tz = prev_state.get("timezone")
-
     meeting_tz = "UTC"
     if current_meeting_id and current_meeting_id == cached_meeting_id and cached_tz:
         # Same meeting as last build → reuse the saved timezone
