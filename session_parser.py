@@ -722,8 +722,8 @@ those rooms simultaneously. For such sessions:
   Do NOT duplicate it into each individual room.
 - Common examples: opening/closing plenaries, remembrance gatherings,
   sweep sessions, agenda approval.
-
-## Explicit time ranges in cell text
+## Explicit timing in cell text
+### Explicit time ranges in cell text
 
 Sometimes cell text contains explicit time ranges such as:
   14:00 ~ 15:00
@@ -740,8 +740,35 @@ These override the standard time block boundaries. When you encounter them:
   time block end. This is allowed and expected.
 - This commonly occurs on the last day (e.g. Friday) with compressed or
   modified schedules.
-- For sessions WITHOUT an explicit time range, leave specified_start_time
-  as null — their times are calculated sequentially from the time block start.
+- For sessions WITHOUT an explicit time range or explicit start time, leave
+  specified_start_time as null — their times are calculated sequentially from
+  the time block start.
+
+### Explicit start times without durations
+
+Sometimes a session line contains a single explicit start time but no explicit
+end time or duration, such as:
+  RAN1#124b commences at 09:00 on Monday
+  Agenda items 1, 2, 3, 4, 5
+  6GR (30)
+  .10.5.0 (30)
+
+For these cases:
+- Set specified_start_time to the explicit start time (e.g. "09:00").
+- Do NOT create an empty session for the time before that start.
+- If the started session has no "(N)" duration, infer its duration from the
+  remaining schedulable time:
+    duration = time_block_end - specified_start_time - following_leaf_durations
+- following_leaf_durations means the total duration of subsequent non-header
+  leaf sessions in the same room/multi-room block.
+- Example for an 08:30-10:30 block:
+    "RAN1#124b commences at 09:00 on Monday" starts at 09:00.
+    "6GR (30) / .10.5.0 (30)" contributes 30 following leaf minutes.
+    Commencement duration = 10:30 - 09:00 - 30 = 60 minutes.
+    Output:
+      {name:"RAN1#124b commences at 09:00 on Monday", dur:60,
+       specified_start_time:"09:00", agenda_item:"1, 2, 3, 4, 5"}
+      {name:"10.5.0", dur:30, specified_start_time:null, group_header:"6GR"}
 
 ## Output format
 
@@ -752,7 +779,7 @@ These override the standard time block boundaries. When you encounter them:
       "room_name": "<room alias or ALL_ONLINE / ALL_ROOMS>",
       "name": "session name (include AI number if known)",
       "duration_minutes": N,
-      "specified_start_time": "HH:MM or null (only when cell text has explicit time range)",
+      "specified_start_time": "HH:MM or null (only when cell text has explicit time range or explicit start time)",
       "chair": "person or null",
       "group_header": "category labels joined by ' / ', or empty string",
       "agenda_item": "9.3.2.3, 9.3, 9.3.1, 9.3.2.1, 9.3.2.2 or null (preserve ALL items)"
