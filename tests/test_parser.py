@@ -2,7 +2,9 @@ import unittest
 from xml.etree.ElementTree import Element, SubElement
 from unittest.mock import MagicMock
 
+from models import RoomInfo
 from parser import _determine_time_block_index, _get_cell_text
+from session_parser import _extract_agenda_item_from_name, _slot_result_to_sessions
 
 _NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
@@ -98,6 +100,53 @@ class DetermineTimeBlockIndexTests(unittest.TestCase):
         self.assertIsNone(
             _determine_time_block_index("10:30\n~\n11:00\n\n(30 min)"),
         )
+
+
+class AgendaExtractionTests(unittest.TestCase):
+    def test_extracts_prefixed_agenda_item(self):
+        name, agenda_item = _extract_agenda_item_from_name("9.6 R20 NTN-NR")
+        self.assertEqual(name, "R20 NTN-NR")
+        self.assertEqual(agenda_item, "9.6")
+
+    def test_preserves_slash_shorthand_in_agenda_item(self):
+        name, agenda_item = _extract_agenda_item_from_name("10.5.1.2/3")
+        self.assertEqual(name, "10.5.1.2/3")
+        self.assertEqual(agenda_item, "10.5.1.2/3")
+
+    def test_slot_result_keeps_full_name_for_slash_shorthand(self):
+        slot = MagicMock(
+            day="Friday",
+            time_block_start="08:30",
+            time_block_end="10:30",
+        )
+        parsed = {
+            "sessions": [
+                {
+                    "room_name": "RAN1_off1",
+                    "name": "10.5.1.2/3",
+                    "duration_minutes": 120,
+                    "specified_start_time": None,
+                    "chair": "Xiaodong",
+                    "group_header": "6GR",
+                    "agenda_item": None,
+                }
+            ]
+        }
+        day_rooms_map = {
+            "Friday": [
+                RoomInfo(name="Some online room", table_index=0, room_index_in_table=0),
+                RoomInfo(name="Offline Room 1", table_index=1, room_index_in_table=0),
+            ]
+        }
+        alias_to_name = {"RAN1_off1": "Offline Room 1"}
+
+        sessions = _slot_result_to_sessions(parsed, slot, day_rooms_map, alias_to_name)
+
+        self.assertEqual(len(sessions), 1)
+        self.assertEqual(sessions[0].name, "10.5.1.2/3")
+        self.assertEqual(sessions[0].agenda_item, "10.5.1.2/3")
+        self.assertEqual(sessions[0].chair, "Xiaodong")
+        self.assertEqual(sessions[0].group_header, "6GR")
 
 
 if __name__ == "__main__":

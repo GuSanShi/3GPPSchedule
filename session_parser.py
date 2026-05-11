@@ -960,6 +960,26 @@ def _build_time_slot_prompt(
     return "\n".join(parts)
 
 
+def _extract_agenda_item_from_name(name: str) -> tuple[str, str | None]:
+    """Extract a leading agenda item from a session name when present.
+
+    Preserves shorthand forms such as ``10.5.1.2/3`` as a single agenda item
+    instead of splitting them into ``10.5.1.2`` and ``/3``.
+    """
+    match = re.match(
+        r"^(?:AI\s+)?\.?\s*(\d+\.\d[\d.xX]*(?:/\d[\d.xX]*)*)\b(?:\s+(.*))?$",
+        name.strip(),
+    )
+    if not match:
+        return name, None
+
+    agenda_item = match.group(1).strip(".")
+    remainder = (match.group(2) or "").strip()
+    if remainder:
+        return remainder, agenda_item
+    return name, agenda_item
+
+
 def parse_time_slots(
     time_slots: list,
     day_rooms_map: dict[str, list[RoomInfo]],
@@ -1166,12 +1186,9 @@ def _slot_result_to_sessions(
 
             # Post-process: extract agenda_item from name if not provided
             if not agenda_item:
-                agenda_match = re.match(r"^(?:AI\s+)?\.?\s*(\d+\.\d[\d.xX]*)\s*(.*)", name)
-                if agenda_match:
-                    agenda_item = agenda_match.group(1).strip(".")
-                    rest = agenda_match.group(2).strip()
-                    if rest:
-                        name = rest
+                name, extracted_agenda_item = _extract_agenda_item_from_name(name)
+                if extracted_agenda_item:
+                    agenda_item = extracted_agenda_item
                 # Check group_header for agenda context
                 if not agenda_item and group_header:
                     m = re.match(r"AI\s+(\d[\d.]*)", group_header)
