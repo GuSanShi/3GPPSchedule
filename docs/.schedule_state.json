@@ -2,6 +2,11 @@
   "files": [
     {
       "folder": "Chair_notes",
+      "name": "Draft RAN1#125 online and offline schedules - v00.docx",
+      "uploaded_at": "2026-05-11T07:43:00"
+    },
+    {
+      "folder": "Chair_notes",
       "name": "RAN1#124bis online and offline schedules - v08.docx",
       "uploaded_at": "2026-04-17T06:15:00"
     },
@@ -16,6 +21,6 @@
       "uploaded_at": "2026-04-16T06:29:00"
     }
   ],
-  "meeting_id": "ran1#124bis",
-  "timezone": "Europe/Malta"
+  "meeting_id": "ran1#125",
+  "timezone": "Asia/Shanghai"
 }
