@@ -14,6 +14,7 @@ from downloader import (
     discover_schedule_sources,
     find_latest_chair_notes,
     find_latest_schedule,
+    get_all_remote_schedule_info,
     get_latest_chair_notes_info,
     load_schedule_state,
     save_schedule_state,
@@ -389,6 +390,51 @@ class DiscoverScheduleSourcesMeetingFilterTests(unittest.TestCase):
         self.assertEqual(
             result[0].file_info["name"],
             "Draft RAN1#125 online and offline schedules - v00.docx",
+        )
+
+    @patch("downloader.list_remote_files")
+    @patch("downloader.list_inbox_subfolders")
+    def test_change_check_uses_current_meeting_sources_only(
+        self,
+        mock_list_inbox_subfolders,
+        mock_list_remote_files,
+    ):
+        mock_list_inbox_subfolders.side_effect = [
+            [
+                {"name": "Chair_notes", "url": "https://example.com/old/Inbox/Chair_notes"},
+                {"name": "Hiroki_notes", "url": "https://example.com/old/Inbox/Hiroki_notes"},
+                {"name": "Sorour_notes", "url": "https://example.com/old/Inbox/Sorour_notes"},
+            ],
+            [
+                {"name": "Chair_notes", "url": "https://example.com/new/Inbox/Chair_notes"},
+            ],
+        ]
+        mock_list_remote_files.side_effect = [
+            [_f("RAN1#124bis online and offline schedules - v08.docx", datetime(2026, 4, 17, 6, 15))],
+            [_f("RAN1#124bis schedule for Hiroki Adhoc2 sessions_v11.docx", datetime(2026, 4, 17, 5, 42))],
+            [_f("RAN1#124bis Sorour online and offline schedules - v04.docx", datetime(2026, 4, 16, 6, 29))],
+            [],
+            [_f("Draft RAN1#125 online and offline schedules - v00.docx", datetime(2026, 5, 11, 7, 43))],
+            [],
+        ]
+
+        result = get_all_remote_schedule_info(
+            urls=[
+                "https://example.com/old/Inbox/",
+                "https://example.com/new/Inbox/",
+            ],
+            preferred_meeting_id="ran1#125",
+        )
+
+        self.assertEqual(
+            result,
+            [
+                {
+                    "folder": "Chair_notes",
+                    "name": "Draft RAN1#125 online and offline schedules - v00.docx",
+                    "uploaded_at": "2026-05-11T07:43:00",
+                }
+            ],
         )
 
 

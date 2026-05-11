@@ -1492,62 +1492,42 @@ def get_all_remote_schedule_info(
     extra_folders: list[dict] | None = None,
     preferred_meeting_id: str | None = None,
 ) -> list[dict]:
-    """Return metadata of all schedule files across configured inbox folders.
+    """Return metadata of the schedule sources selected for a build.
 
     Aggregates across multiple inbox URLs (``urls``) and any manually-added
-    ``extra_folders``.  Used for change detection — only fetches directory
+    ``extra_folders``. Used for change detection — only fetches directory
     listings, no downloads.
-
-    Entries are deduplicated by (folder, name) — if the same folder/file is
-    seen in multiple inboxes, the newest ``uploaded_at`` wins.
 
     ``preferred_meeting_id`` is the meeting id cached in
     ``docs/.schedule_state.json``. It helps keep the comparison stable
     across reruns while still allowing a newer regular meeting id to take
     precedence over the cached one.
+
+    This intentionally mirrors ``discover_schedule_sources`` because
+    ``save_schedule_state`` persists those selected sources after a successful
+    build. Comparing against the same selected/current-meeting set prevents
+    older sibling inboxes from triggering false positives after the main
+    meeting has advanced.
     """
-    if urls is None:
-        urls = [url] if url is not None else [INBOX_URL]
+    sources = discover_schedule_sources(
+        url=url,
+        urls=urls,
+        extra_folders=extra_folders,
+        preferred_meeting_id=preferred_meeting_id,
+    )
 
-    collected: list[dict] = []
-    for u in urls:
-        collected.extend(
-            _collect_info_from_inbox(
-                u,
-                preferred_meeting_id=preferred_meeting_id,
-            )
-        )
+    result: list[dict] = []
+    for source in sources:
+        uploaded_at = source.file_info.get("uploaded_at")
+        result.append({
+            "folder": source.folder_name,
+            "name": source.file_info["name"],
+            "uploaded_at": (
+                uploaded_at.isoformat()
+                if isinstance(uploaded_at, datetime)
+                else uploaded_at
+            ),
+        })
 
-    for folder in extra_folders or []:
-        folder_url = folder["url"]
-        folder_name = folder["name"]
-        try:
-            files = list_remote_files(folder_url)
-            latest = find_latest_schedule(
-                files,
-                preferred_meeting_id=preferred_meeting_id,
-            )
-            if latest:
-                collected.append({
-                    "folder": folder_name,
-                    "name": latest["name"],
-                    "uploaded_at": (
-                        latest["uploaded_at"].isoformat()
-                        if latest.get("uploaded_at")
-                        else None
-                    ),
-                })
-        except Exception as e:
-            print(f"Warning: Failed to check extra folder {folder_name}: {e}")
-
-    # Dedup by (folder, name) — newer uploaded_at wins.
-    dedup: dict[tuple[str, str], dict] = {}
-    for entry in collected:
-        key = (entry.get("folder", ""), entry.get("name", ""))
-        prior = dedup.get(key)
-        if prior is None or (entry.get("uploaded_at") or "") > (prior.get("uploaded_at") or ""):
-            dedup[key] = entry
-
-    result = list(dedup.values())
     result.sort(key=lambda x: (x.get("folder", ""), x.get("name", "")))
     return result
