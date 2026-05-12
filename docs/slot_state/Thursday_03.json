@@ -2,7 +2,7 @@
   "day": "Thursday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "4203bee7b4183cf0"
+    "Main Schedule": "1dc8d0da962df7ed"
   },
   "merged_sessions": [
     {
@@ -43,15 +43,6 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "R20",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk1",
       "name": "10.3.1 Channel coding",
       "duration_minutes": 60,
       "specified_start_time": null,
@@ -66,6 +57,15 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_brk1",
+      "name": "MIMO",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -115,7 +115,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "AI/ML",
+      "name": "IoT-NTN",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -141,6 +141,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-11T10:46:33.637051+00:00",
+  "merged_at": "2026-05-12T09:47:03.856516+00:00",
   "schema_version": 1
 }

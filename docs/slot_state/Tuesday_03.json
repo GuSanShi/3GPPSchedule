@@ -2,7 +2,7 @@
   "day": "Tuesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "52449857999d3e33"
+    "Main Schedule": "3d6b47560a5baea1"
   },
   "merged_sessions": [
     {
@@ -43,11 +43,11 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
+      "name": "AI 7/8",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": null
     },
     {
@@ -70,20 +70,20 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "A-IoT Phase2",
-      "duration_minutes": 90,
+      "name": "10.5.4.x",
+      "duration_minutes": 80,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
+      "group_header": "6GR",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.5.4.x",
-      "duration_minutes": 60,
+      "name": "A-IoT Phase2",
+      "duration_minutes": 70,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "6GR",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -106,6 +106,15 @@
     },
     {
       "room_name": "RAN1_off2",
+      "name": "A-IoT",
+      "duration_minutes": 70,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "R20",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_off2",
       "name": "NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
@@ -116,22 +125,13 @@
     {
       "room_name": "RAN1_off2",
       "name": "10.7.1 NTN",
-      "duration_minutes": 30,
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorouri",
       "group_header": "6GR",
       "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_off2",
-      "name": "A-IoT",
-      "duration_minutes": 80,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20",
-      "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-11T10:46:00.140314+00:00",
+  "merged_at": "2026-05-12T09:46:31.977372+00:00",
   "schema_version": 1
 }

@@ -2,7 +2,7 @@
   "day": "Thursday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "401f1869df5efdfe"
+    "Main Schedule": "b377f5b9262ee61c"
   },
   "merged_sessions": [
     {
@@ -34,6 +34,15 @@
     },
     {
       "room_name": "RAN1_brk1",
+      "name": "AI 7/8",
+      "duration_minutes": 50,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_brk1",
       "name": "NTN-IoT",
       "duration_minutes": 40,
       "specified_start_time": null,
@@ -48,15 +57,6 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "AI 7/8",
-      "duration_minutes": 50,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "",
       "agenda_item": null
     },
     {
@@ -105,6 +105,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-11T10:46:25.256766+00:00",
+  "merged_at": "2026-05-12T09:46:56.210159+00:00",
   "schema_version": 1
 }

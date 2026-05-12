@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "6d2e258210380f9d"
+    "Main Schedule": "7ba53e9d4943b7fe"
   },
   "merged_sessions": [
     {
@@ -88,14 +88,14 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.3.x",
+      "name": "10.5.4.x",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-11T10:46:08.232580+00:00",
+  "merged_at": "2026-05-12T09:46:38.737171+00:00",
   "schema_version": 1
 }

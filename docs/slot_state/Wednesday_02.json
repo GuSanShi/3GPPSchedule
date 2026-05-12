@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "e4d7af53a416be31"
+    "Main Schedule": "65c520b34efe4aff"
   },
   "merged_sessions": [
     {
@@ -34,7 +34,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI/ML",
+      "name": "MIMO",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
@@ -43,7 +43,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
+      "name": "AI/ML",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
@@ -70,19 +70,19 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.5",
-      "duration_minutes": 30,
+      "name": "10.3.x",
+      "duration_minutes": 90,
       "specified_start_time": null,
-      "chair": "Xiaodong",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.4.x",
-      "duration_minutes": 90,
+      "name": "10.5.5",
+      "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": "Xiaodong",
       "group_header": "6GR",
       "agenda_item": null
     },
@@ -114,6 +114,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-11T10:46:12.799525+00:00",
+  "merged_at": "2026-05-12T09:46:42.473387+00:00",
   "schema_version": 1
 }
