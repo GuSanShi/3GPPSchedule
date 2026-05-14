@@ -2,7 +2,7 @@
   "day": "Thursday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "b377f5b9262ee61c"
+    "Main Schedule": "6e2b0ff643cff2f8"
   },
   "merged_sessions": [
     {
@@ -105,6 +105,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-12T09:46:56.210159+00:00",
+  "merged_at": "2026-05-14T07:16:46.828721+00:00",
   "schema_version": 1
 }
