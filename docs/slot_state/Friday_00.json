@@ -2,7 +2,8 @@
   "day": "Friday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "de92e812df69a4d4"
+    "Main Schedule": "de92e812df69a4d4",
+    "Hiroki's schedule": "8198039f7849e855"
   },
   "merged_sessions": [
     {
@@ -52,12 +53,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": null,
-      "group_header": "R20",
-      "agenda_item": null
+      "chair": "Hiroki",
+      "group_header": "",
+      "agenda_item": "9.3.3, 9.3.2, 9.3.1"
     },
     {
       "room_name": "RAN1_off1",
@@ -78,6 +79,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-14T07:16:59.090204+00:00",
+  "merged_at": "2026-05-15T01:02:28.122628+00:00",
   "schema_version": 1
 }
