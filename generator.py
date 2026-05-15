@@ -148,13 +148,49 @@ header .meta {
 }
 
 /* Tabs */
-.tabs {
+.schedule-toolbar {
     display: flex;
-    gap: 4px;
+    align-items: flex-end;
+    gap: 8px;
     margin-bottom: 12px;
     border-bottom: 2px solid var(--grid-line);
     padding-bottom: 0;
+}
+
+.tabs {
+    display: flex;
+    gap: 4px;
     flex-wrap: wrap;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.now-toggle {
+    flex: 0 0 auto;
+    height: 28px;
+    margin: 0 0 4px 4px;
+    padding: 0 10px;
+    border: 1px solid #FCA5A5;
+    background: #FEF2F2;
+    color: #B91C1C;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: all 0.15s;
+    line-height: 1;
+}
+
+.now-toggle:hover {
+    background: #FEE2E2;
+    border-color: #F87171;
+}
+
+.now-toggle[aria-pressed="false"] {
+    background: #F9FAFB;
+    border-color: #D1D5DB;
+    color: #6B7280;
+    font-weight: 600;
 }
 
 .tab {
@@ -499,7 +535,10 @@ header .meta {
 @media (max-width: 768px) {
     .container { padding: 8px; }
     header h1 { font-size: 18px; }
+    .schedule-toolbar { gap: 6px; }
+    .tabs { flex-wrap: nowrap; overflow-x: auto; }
     .tab { padding: 6px 14px; font-size: 13px; }
+    .now-toggle { height: 26px; margin-bottom: 3px; padding: 0 9px; }
     :root { --slot-height: 7px; --time-col-width: 44px; }
     .session-name { font-size: 10px; }
     .room-header { font-size: 9px; padding: 3px 3px; }
@@ -735,6 +774,8 @@ document.addEventListener('DOMContentLoaded', function() {{
     const MEETING_TZ = '{timezone}';
     const AUTO_REFRESH_MS = {auto_refresh_ms}; // {auto_refresh_minutes} minutes
     const STATE_KEY = '3gpp_schedule_state';
+    const NOW_TOGGLE_KEY = '3gpp_schedule_show_now';
+    let showNowLine = true;
 
     // --- User state persistence (sessionStorage) ---
     function saveUserState() {{
@@ -794,6 +835,33 @@ document.addEventListener('DOMContentLoaded', function() {{
     updateTimeDisplay();
     setInterval(updateTimeDisplay, 60000);
 
+    function loadNowToggleState() {{
+        try {{
+            const raw = localStorage.getItem(NOW_TOGGLE_KEY);
+            return raw === null ? true : raw !== 'false';
+        }} catch (e) {{
+            return true;
+        }}
+    }}
+
+    function saveNowToggleState(value) {{
+        try {{
+            localStorage.setItem(NOW_TOGGLE_KEY, value ? 'true' : 'false');
+        }} catch (e) {{
+            // localStorage may be unavailable; silently ignore
+        }}
+    }}
+
+    function syncNowToggleButton() {{
+        const btn = document.getElementById('now-toggle');
+        if (!btn) return;
+        btn.setAttribute('aria-pressed', showNowLine ? 'true' : 'false');
+        btn.title = showNowLine ? 'Hide NOW line' : 'Show NOW line';
+    }}
+
+    showNowLine = loadNowToggleState();
+    syncNowToggleButton();
+
     // Tab switching
     const tabs = document.querySelectorAll('.tab');
     const panels = document.querySelectorAll('.day-panel');
@@ -840,6 +908,8 @@ document.addEventListener('DOMContentLoaded', function() {{
 
         document.querySelectorAll('.now-line').forEach(el => el.remove());
 
+        if (!showNowLine) return;
+
         if (minutes >= base && minutes <= end) {{
             const slot = Math.floor((minutes - base) / 5);
             const row = slot + 2;
@@ -858,6 +928,16 @@ document.addEventListener('DOMContentLoaded', function() {{
 
     updateNowLine();
     setInterval(updateNowLine, 60000);
+
+    const nowToggle = document.getElementById('now-toggle');
+    if (nowToggle) {{
+        nowToggle.addEventListener('click', function() {{
+            showNowLine = !showNowLine;
+            saveNowToggleState(showNowLine);
+            syncNowToggleButton();
+            updateNowLine();
+        }});
+    }}
 
     // Click-to-show popup on session blocks (shared floating popup)
     const backdrop = document.getElementById('popup-backdrop');
@@ -1332,13 +1412,19 @@ def generate_html(schedule: Schedule) -> str:
         html_parts.append("    </div>\n")
 
     # Day tabs
-    html_parts.append('    <div class="tabs">\n')
+    html_parts.append('    <div class="schedule-toolbar">\n')
+    html_parts.append('        <div class="tabs">\n')
     for day_schedule in schedule.days:
         day_lower = day_schedule.day_name.lower()
         day_short = day_schedule.day_name[:3]
         html_parts.append(
-            f'        <button class="tab" data-day="{day_lower}">{day_short}</button>\n'
+            f'            <button class="tab" data-day="{day_lower}">{day_short}</button>\n'
         )
+    html_parts.append("        </div>\n")
+    html_parts.append(
+        '        <button class="now-toggle" id="now-toggle" type="button" '
+        'aria-pressed="true" title="Hide NOW line">NOW</button>\n'
+    )
     html_parts.append("    </div>\n")
 
     # Day panels
