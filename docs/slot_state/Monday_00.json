@@ -2,13 +2,13 @@
   "day": "Monday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "c5cf4fe2e403b00c",
+    "Main Schedule": "1c5241d544565b4c",
     "Hiroki's schedule": "a94a0f65993e108b"
   },
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "RAN1#125 commences at 09:00 on Monday",
+      "name": "RAN1#124b commences at 09:00 on Monday",
       "duration_minutes": 60,
       "specified_start_time": "09:00",
       "chair": "Hiroki",
@@ -25,6 +25,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-15T01:01:13.420223+00:00",
+  "merged_at": "2026-05-17T15:00:54.686993+00:00",
   "schema_version": 1
 }

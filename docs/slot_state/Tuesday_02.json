@@ -2,8 +2,9 @@
   "day": "Tuesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "fe637d42c94ab698",
-    "Hiroki's schedule": "89fc2eed4827f083"
+    "Main Schedule": "32f8b1a3e1ebd62c",
+    "Hiroki's schedule": "89fc2eed4827f083",
+    "Sorour's schedule": "6e570e18ea392ba1"
   },
   "merged_sessions": [
     {
@@ -35,16 +36,16 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI/ML",
+      "name": "AI 9.1 AI/ML",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.1"
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT",
+      "name": "A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -80,23 +81,32 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.5.4.1",
+      "name": "10.5.4.x",
       "duration_minutes": 40,
-      "specified_start_time": "14:30",
+      "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G",
+      "group_header": "6GR",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.3.x",
-      "duration_minutes": 80,
+      "name": "10.3.1",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Sorouri",
+      "group_header": "6GR",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.3.2",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorouri",
       "group_header": "6GR",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-15T01:01:39.011250+00:00",
+  "merged_at": "2026-05-17T15:01:22.075652+00:00",
   "schema_version": 1
 }

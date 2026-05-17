@@ -2,8 +2,9 @@
   "day": "Thursday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "5fe0a89dd697e398",
-    "Hiroki's schedule": "1dc9a91f1d3527e8"
+    "Main Schedule": "64666114627083e4",
+    "Hiroki's schedule": "1dc9a91f1d3527e8",
+    "Sorour's schedule": "0c81911d87775f76"
   },
   "merged_sessions": [
     {
@@ -26,25 +27,25 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "NTN-NR",
+      "name": "AI 9.5 NR-NTN",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.5"
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.7.1 NTN",
+      "name": "AI 10.7.1 NTN",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": "10.7.1"
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Maintenance/TEI20",
+      "name": "AI 8",
       "duration_minutes": 10,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -53,7 +54,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "6G ISAC",
+      "name": "10.8 Sensing",
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -62,11 +63,11 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 Coverage",
+      "name": "Coverage",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": "9.4.1"
     },
     {
@@ -98,14 +99,14 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 A-IoT",
+      "name": "A-IoT",
       "duration_minutes": 120,
       "specified_start_time": "08:30",
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-15T01:02:09.733575+00:00",
+  "merged_at": "2026-05-17T15:01:51.223123+00:00",
   "schema_version": 1
 }

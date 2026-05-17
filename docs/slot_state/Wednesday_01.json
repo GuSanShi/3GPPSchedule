@@ -2,8 +2,9 @@
   "day": "Wednesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "50490a86289b5542",
-    "Hiroki's schedule": "a7f30563cdaec199"
+    "Main Schedule": "04eac75963e2a0c3",
+    "Hiroki's schedule": "a7f30563cdaec199",
+    "Sorour's schedule": "3c339ad9141eee04"
   },
   "merged_sessions": [
     {
@@ -26,25 +27,25 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "NTN-IoT",
+      "name": "AI 9.6 IoT-NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.6"
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 7/8",
+      "name": "AI 8.1",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "",
-      "agenda_item": null
+      "agenda_item": "8.1"
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT",
+      "name": "A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -89,23 +90,14 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.5.4.3",
-      "duration_minutes": 40,
-      "specified_start_time": "11:40",
-      "chair": "Hiroki",
-      "group_header": "6G",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_off2",
-      "name": "10.5.4.1",
-      "duration_minutes": 40,
+      "name": "10.5.4.x",
+      "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G",
+      "group_header": "6GR",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-15T01:01:55.043710+00:00",
+  "merged_at": "2026-05-17T15:01:37.448645+00:00",
   "schema_version": 1
 }
