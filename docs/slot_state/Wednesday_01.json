@@ -3,7 +3,7 @@
   "time_block_index": 1,
   "source_hashes": {
     "Main Schedule": "04eac75963e2a0c3",
-    "Hiroki's schedule": "a7f30563cdaec199",
+    "Hiroki's schedule": "3b10f476dd80290e",
     "Sorour's schedule": "3c339ad9141eee04"
   },
   "merged_sessions": [
@@ -45,11 +45,11 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": "9.3.3, 9.3.2, 9.3.1"
     },
     {
@@ -90,14 +90,23 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.5.4.x",
-      "duration_minutes": 80,
+      "name": "10.5.4.3",
+      "duration_minutes": 40,
+      "specified_start_time": "11:40",
+      "chair": "Hiroki",
+      "group_header": "6G",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.5.4.1",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
+      "group_header": "6G",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-17T15:01:37.448645+00:00",
+  "merged_at": "2026-05-18T07:09:14.620549+00:00",
   "schema_version": 1
 }

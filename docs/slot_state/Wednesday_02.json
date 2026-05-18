@@ -3,7 +3,7 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "27cfe0aaffcee112",
-    "Hiroki's schedule": "86569098ad50a14a",
+    "Hiroki's schedule": "61c58c0b55c0dec4",
     "Sorour's schedule": "deeb5d4cff30a61b"
   },
   "merged_sessions": [
@@ -54,20 +54,29 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
-      "duration_minutes": 90,
+      "name": "10.8.1",
+      "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
-      "agenda_item": "10.8.1, 10.8.2"
+      "group_header": "6G ISAC",
+      "agenda_item": "10.8.1"
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Coverage",
+      "name": "10.8.2",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6G ISAC",
+      "agenda_item": "10.8.2"
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "R20 Coverage",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": "9.4.1"
     },
     {
@@ -125,6 +134,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-17T15:01:42.791763+00:00",
+  "merged_at": "2026-05-18T07:09:19.024677+00:00",
   "schema_version": 1
 }

@@ -3,7 +3,7 @@
   "time_block_index": 0,
   "source_hashes": {
     "Main Schedule": "64666114627083e4",
-    "Hiroki's schedule": "1dc9a91f1d3527e8",
+    "Hiroki's schedule": "9a25044cc82055b3",
     "Sorour's schedule": "0c81911d87775f76"
   },
   "merged_sessions": [
@@ -45,7 +45,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "AI 8",
+      "name": "Maintenance/TEI20",
       "duration_minutes": 10,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -54,16 +54,16 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
+      "name": "10.8.1",
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
-      "agenda_item": "10.8.3"
+      "group_header": "6G ISAC",
+      "agenda_item": "10.8.1"
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Coverage",
+      "name": "R20 Coverage",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -99,7 +99,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
       "specified_start_time": "08:30",
       "chair": "Hiroki",
@@ -107,6 +107,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-17T15:01:51.223123+00:00",
+  "merged_at": "2026-05-18T07:09:23.959487+00:00",
   "schema_version": 1
 }

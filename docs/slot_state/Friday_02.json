@@ -3,7 +3,7 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "42270d4a1f73ea41",
-    "Hiroki's schedule": "e133d2b3fa7f640f"
+    "Hiroki's schedule": "c84bfb9ad064f04e"
   },
   "merged_sessions": [
     {
@@ -34,6 +34,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-17T15:02:11.496336+00:00",
+  "merged_at": "2026-05-18T07:09:41.620694+00:00",
   "schema_version": 1
 }
