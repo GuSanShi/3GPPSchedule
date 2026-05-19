@@ -98,6 +98,60 @@ def _build_filter_data(all_sessions: list) -> str:
     return json.dumps(result, ensure_ascii=False)
 
 
+def _agenda_description_popup_lines(session) -> list[str]:
+    """Build compact popup HTML for agenda-item descriptions."""
+    items = getattr(session, "agenda_descriptions", None) or []
+    if not items and getattr(session, "description", None):
+        items = [
+            {
+                "agenda_item": session.agenda_item or "",
+                "matched_agenda_item": session.agenda_item or "",
+                "description": session.description,
+                "hierarchy": [],
+            }
+        ]
+
+    lines: list[str] = []
+    for item in items:
+        agenda_item = str(item.get("agenda_item") or "")
+        matched = str(item.get("matched_agenda_item") or agenda_item)
+        description = str(item.get("description") or "")
+        if not description:
+            continue
+
+        label = agenda_item
+        if matched and matched != agenda_item:
+            label = f"{agenda_item} -> {matched}"
+        header = (
+            f"<strong>{_esc(label)}:</strong> {_esc(description)}"
+            if label
+            else f"<strong>Description:</strong> {_esc(description)}"
+        )
+
+        hierarchy_lines = []
+        for level in item.get("hierarchy") or []:
+            level_ai = str(level.get("agenda_item") or "")
+            level_desc = level.get("description")
+            if not level_ai:
+                continue
+            if level_desc:
+                hierarchy_lines.append(f"{_esc(level_ai)} - {_esc(str(level_desc))}")
+            else:
+                hierarchy_lines.append(_esc(level_ai))
+
+        path_html = ""
+        if len(hierarchy_lines) > 1:
+            path_html = (
+                '<div class="popup-path">'
+                + "<br>".join(hierarchy_lines)
+                + "</div>"
+            )
+
+        lines.append(f'<div class="popup-description">{header}{path_html}</div>')
+
+    return lines
+
+
 def _generate_css(num_rooms_max: int) -> str:
     """Generate the CSS for the schedule page."""
     return """
@@ -479,13 +533,13 @@ header .meta {
     padding: 12px 16px;
     border-radius: 8px;
     font-size: 12px;
-    white-space: nowrap;
+    white-space: normal;
     z-index: 200;
     box-shadow: 0 4px 16px rgba(0,0,0,0.35);
     pointer-events: auto;
     line-height: 1.7;
     min-width: 180px;
-    max-width: 400px;
+    max-width: min(520px, calc(100vw - 24px));
 }
 
 .popup-floating.show {
@@ -506,6 +560,19 @@ header .meta {
 
 .popup-floating .popup-close:hover {
     color: white;
+}
+
+.popup-description {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.16);
+}
+
+.popup-path {
+    margin-top: 2px;
+    color: #D1D5DB;
+    font-size: 11px;
+    line-height: 1.45;
 }
 
 /* Current time indicator */
@@ -1561,6 +1628,7 @@ def generate_html(schedule: Schedule) -> str:
                 popup_lines.append(f"Chair: {_esc(session.chair)}")
             if session.agenda_item:
                 popup_lines.append(f"AI: {_esc(session.agenda_item)}")
+            popup_lines.extend(_agenda_description_popup_lines(session))
             popup_lines.append(
                 f"Time: {session.start_time} - {session.end_time} ({session.duration_minutes} min)"
             )
@@ -1596,6 +1664,7 @@ def generate_html(schedule: Schedule) -> str:
             data_ai_attr = _esc(data_ai).replace('"', '&quot;')
             data_name_attr = _esc(session.name).replace('"', '&quot;')
             data_group_attr = _esc(session.group_header).replace('"', '&quot;')
+            data_description_attr = _esc(session.description or "").replace('"', '&quot;')
 
             html_parts.append(
                 f'                <div class="{block_classes}" style="{style}"'
@@ -1603,6 +1672,7 @@ def generate_html(schedule: Schedule) -> str:
                 f' data-ai="{data_ai_attr}"'
                 f' data-name="{data_name_attr}"'
                 f' data-group="{data_group_attr}"'
+                f' data-description="{data_description_attr}"'
                 f'>\n'
                 f"                    {name_html}{details_html}\n"
                 f"                </div>\n"

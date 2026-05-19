@@ -20,6 +20,8 @@ import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
+from agenda_descriptions import strip_derived_description_fields
+
 
 SLOT_STATE_DIR = Path("docs/slot_state")
 SCHEMA_VERSION = 1
@@ -63,7 +65,9 @@ def load_slot_state(day: str, time_block_index: int) -> SlotState | None:
         day=data.get("day", day),
         time_block_index=data.get("time_block_index", time_block_index),
         source_hashes=data.get("source_hashes", {}),
-        merged_sessions=data.get("merged_sessions", []),
+        merged_sessions=strip_derived_description_fields(
+            data.get("merged_sessions", [])
+        ),
         merged_at=data.get("merged_at", ""),
         schema_version=data.get("schema_version", SCHEMA_VERSION),
     )

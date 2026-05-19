@@ -8,6 +8,11 @@ import os
 import re
 from pathlib import Path
 
+from agenda_descriptions import (
+    annotate_sessions_with_agenda_descriptions,
+    load_agenda_description_map,
+    strip_derived_description_fields,
+)
 from models import RoomInfo, Session, time_to_minutes, minutes_to_time
 
 
@@ -907,7 +912,7 @@ def _build_time_slot_prompt(
             summary_lines.append(f"- {label}: {status}{note}")
         parts.append("\n## Source freshness summary\n" + "\n".join(summary_lines))
 
-        baseline = slot.previous_merge or []
+        baseline = strip_derived_description_fields(slot.previous_merge or [])
         parts.append(
             "\n## Previous merge result (BASELINE — carry forward unless overridden)"
         )
@@ -1017,6 +1022,7 @@ def parse_time_slots(
     n_skipped = 0
     api_calls = 0
     MAX_RETRIES = 3
+    agenda_description_map = load_agenda_description_map()
 
     for slot_idx, slot in enumerate(time_slots):
         slot_label = (
@@ -1034,7 +1040,24 @@ def parse_time_slots(
 
         # ── Short-circuit: every source unchanged → reuse last merge.
         if slot.all_stale and slot.previous_merge is not None:
-            parsed_result = {"sessions": slot.previous_merge}
+            parsed_result = {
+                "sessions": annotate_sessions_with_agenda_descriptions(
+                    slot.previous_merge,
+                    agenda_description_map,
+                )
+            }
+            try:
+                save_slot_state(
+                    SlotState(
+                        day=slot.day,
+                        time_block_index=slot.time_block_index,
+                        source_hashes=dict(slot.current_hashes),
+                        merged_sessions=parsed_result.get("sessions", []),
+                        merged_at=datetime.now(timezone.utc).isoformat(),
+                    )
+                )
+            except OSError as e:
+                print(f"  Warning: failed to save slot state: {e}")
             sessions = _slot_result_to_sessions(
                 parsed_result, slot, day_rooms_map, alias_to_name
             )
@@ -1102,6 +1125,11 @@ def parse_time_slots(
 
         if parsed_result is None:
             parsed_result = {"sessions": []}
+
+        parsed_result["sessions"] = annotate_sessions_with_agenda_descriptions(
+            parsed_result.get("sessions", []),
+            agenda_description_map,
+        )
 
         # Persist slot state so the next run can short-circuit / merge incrementally.
         try:
@@ -1183,6 +1211,8 @@ def _slot_result_to_sessions(
             name = sd.get("name", "Unknown")
             group_header = sd.get("group_header", "")
             agenda_item = sd.get("agenda_item")
+            description = sd.get("description")
+            agenda_descriptions = sd.get("agenda_descriptions") or []
 
             # Post-process: extract agenda_item from name if not provided
             if not agenda_item:
@@ -1217,6 +1247,8 @@ def _slot_result_to_sessions(
                 chair=sd.get("chair"),
                 agenda_item=agenda_item,
                 group_header=group_header,
+                description=description,
+                agenda_descriptions=agenda_descriptions,
             )
             sessions.append(session)
             current_min += duration

@@ -53,6 +53,7 @@ from downloader import (
 )
 from merger import collect_time_slot_data
 from config import load_config
+from agenda_descriptions import DEFAULT_JSON_PATH, update_agenda_description_json
 
 
 def _extract_meeting_name(filepath: Path) -> str:
@@ -217,6 +218,16 @@ def main():
         print(f"  {len(time_slots)} time slots ({n_enriched} enriched with vice-chair detail)")
     else:
         print(f"  {len(time_slots)} time slots (from {len(cells)} cells)")
+
+    if not DEFAULT_JSON_PATH.exists() and not args.no_download:
+        print("\nFetching agenda item descriptions...")
+        try:
+            update_agenda_description_json(output_path=DEFAULT_JSON_PATH)
+            print(f"  Wrote {DEFAULT_JSON_PATH}")
+        except Exception as e:
+            print(f"  Warning: failed to fetch agenda item descriptions: {e}")
+    elif DEFAULT_JSON_PATH.exists():
+        print(f"\nUsing agenda item descriptions: {DEFAULT_JSON_PATH}")
 
     print("\nParsing time slots (Gemini API)...")
     sessions = parse_time_slots(time_slots, day_rooms_map)
