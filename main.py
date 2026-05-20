@@ -24,6 +24,7 @@ Config file:
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import re
 import sys
@@ -42,6 +43,7 @@ from downloader import (
     download_latest_schedule,
     download_latest_chair_notes,
     download_latest_agenda,
+    get_latest_agenda_info,
     find_local_latest_schedule,
     find_local_latest_agenda,
     find_local_vice_chair_schedules,
@@ -53,7 +55,84 @@ from downloader import (
 )
 from merger import collect_time_slot_data
 from config import load_config
-from agenda_descriptions import DEFAULT_JSON_PATH, update_agenda_description_json
+from agenda_descriptions import (
+    DEFAULT_JSON_PATH,
+    update_agenda_description_json,
+)
+
+
+def _iso_value(value: object) -> str | None:
+    if isinstance(value, datetime):
+        return value.isoformat()
+    if value is None:
+        return None
+    return str(value)
+
+
+def _agenda_state_from_info(
+    agenda_info: dict | None,
+    agenda_path: Path | None,
+) -> dict | None:
+    """Build the agenda block stored in docs/.schedule_state.json."""
+    if agenda_info is None and agenda_path is None:
+        return None
+
+    state: dict[str, object] = {}
+    if agenda_info is not None:
+        state.update(
+            {
+                "name": agenda_info.get("name"),
+                "uploaded_at": _iso_value(agenda_info.get("uploaded_at")),
+                "url": agenda_info.get("url"),
+                "source_url": agenda_info.get("source_url"),
+            }
+        )
+    if agenda_path is not None:
+        state["document_file"] = agenda_path.name
+        state["local_path"] = str(agenda_path)
+
+    return {k: v for k, v in state.items() if v is not None}
+
+
+def _agenda_state_from_description_json(json_path: Path) -> dict | None:
+    """Recover reflected agenda metadata from agenda_item_description.json."""
+    if not json_path.exists():
+        return None
+
+    try:
+        data = json.loads(json_path.read_text())
+    except (json.JSONDecodeError, OSError):
+        return None
+
+    source_file = data.get("source_file")
+    source_agenda_file = data.get("source_agenda_file") or source_file
+    state = {
+        "name": source_agenda_file,
+        "uploaded_at": data.get("source_uploaded_at"),
+        "url": data.get("source_url"),
+        "document_file": source_file,
+        "description_json": str(json_path),
+        "description_generated_at": data.get("generated_at"),
+        "description_source_type": data.get("source_type"),
+        "description_source_file": source_file,
+        "description_source_agenda_file": source_agenda_file,
+        "description_source_url": data.get("source_url"),
+        "description_source_uploaded_at": data.get("source_uploaded_at"),
+    }
+    return {k: v for k, v in state.items() if v is not None}
+
+
+def _agenda_state_for_save(
+    agenda_info: dict | None,
+    agenda_path: Path | None,
+    json_path: Path = DEFAULT_JSON_PATH,
+) -> dict | None:
+    """Combine remote/local agenda metadata with reflected description metadata."""
+    state = _agenda_state_from_info(agenda_info, agenda_path) or {}
+    description_state = _agenda_state_from_description_json(json_path) or {}
+    for key, value in description_state.items():
+        state.setdefault(key, value)
+    return state or None
 
 
 def _extract_meeting_name(filepath: Path) -> str:
@@ -220,24 +299,33 @@ def main():
         print(f"  {len(time_slots)} time slots (from {len(cells)} cells)")
 
     agenda_path: Path | None = None
+    agenda_info: dict | None = None
     agenda_urls = cfg.get("agenda_urls") or []
     if agenda_urls and not args.no_download:
         print(
             f"\nLooking up meeting agenda from "
             f"{len(agenda_urls)} agenda URL(s)..."
         )
-        agenda_path = download_latest_agenda(agenda_urls)
+        agenda_info = get_latest_agenda_info(agenda_urls)
+        if agenda_info is not None:
+            agenda_path = download_latest_agenda(
+                agenda_urls,
+                latest_info=agenda_info,
+            )
+        else:
+            print("No agenda file found on FTP")
     if agenda_path is None:
         agenda_path = find_local_latest_agenda()
         if agenda_path is not None:
             print(f"\nUsing local agenda: {agenda_path.name}")
 
-    if not DEFAULT_JSON_PATH.exists() and not args.no_download:
+    if not args.no_download and (agenda_path is not None or not DEFAULT_JSON_PATH.exists()):
         print("\nFetching agenda item descriptions...")
         try:
             update_agenda_description_json(
                 output_path=DEFAULT_JSON_PATH,
                 agenda_docx_path=agenda_path,
+                agenda_source_info=agenda_info,
             )
             print(f"  Wrote {DEFAULT_JSON_PATH}")
         except Exception as e:
@@ -261,7 +349,11 @@ def main():
 
     # Detect meeting timezone — reuse cached value when the meeting hasn't changed
     meeting_tz = "UTC"
-    if current_meeting_id and current_meeting_id == cached_meeting_id and cached_tz:
+    if (
+        current_meeting_id
+        and current_meeting_id == cached_meeting_id
+        and cached_tz
+    ):
         # Same meeting as last build → reuse the saved timezone
         print(f"\nReusing cached timezone for {current_meeting_id}: {cached_tz}")
         meeting_tz = cached_tz
@@ -269,7 +361,9 @@ def main():
         # New meeting or no cached data → detect timezone.
         # Prefer the agenda DOCX (uploaded earlier than Chair notes), fall
         # back to Chair notes if no agenda is available.
-        location_source: Path | None = agenda_path
+        location_source: Path | None = (
+            agenda_path if agenda_path and agenda_path.suffix.lower() == ".docx" else None
+        )
 
         if location_source is None:
             # Fall back to Chair notes
@@ -305,6 +399,7 @@ def main():
             sources,
             meeting_id=current_meeting_id,
             timezone=meeting_tz,
+            agenda=_agenda_state_for_save(agenda_info, agenda_path),
         )
 
     days = []

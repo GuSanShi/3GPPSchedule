@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import re
 import zipfile
@@ -386,6 +387,47 @@ def build_agenda_description_pairs(df: pd.DataFrame) -> list[dict[str, str]]:
     return pairs
 
 
+def _normalize_agenda_item(value: object) -> str:
+    agenda_item = _normalize_cell(value)
+    if re.fullmatch(r"\d+(?:\.\d+)*\.", agenda_item):
+        agenda_item = agenda_item.rstrip(".")
+    return agenda_item
+
+
+def build_agenda_description_pairs_from_csv(csv_path: Path) -> list[dict[str, str]]:
+    """Build agenda-item descriptions from a two-column Agenda CSV."""
+    pairs: list[dict[str, str]] = []
+    seen: set[tuple[str, str]] = set()
+
+    with open(csv_path, newline="", encoding="utf-8-sig") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if len(row) < 2:
+                continue
+
+            agenda_item = _normalize_agenda_item(row[0])
+            description = _normalize_cell(row[1])
+            if not agenda_item or not description:
+                continue
+
+            lower_item = agenda_item.lower().replace("_", " ")
+            lower_description = description.lower().replace("_", " ")
+            if (
+                lower_item in {"agenda item", "item"}
+                and lower_description in {"agenda item description", "description"}
+            ):
+                continue
+
+            key = (agenda_item, description)
+            if key in seen:
+                continue
+            seen.add(key)
+            pairs.append({"agenda_item": agenda_item, "description": description})
+
+    pairs.sort(key=lambda p: _natural_sort_key(p["agenda_item"]))
+    return pairs
+
+
 def _paragraph_text(paragraph: ET.Element) -> str:
     parts: list[str] = []
     for node in paragraph.iter():
@@ -508,6 +550,8 @@ def save_agenda_description_json(
     source_file: str | None = None,
     source_url: str | None = None,
     source_type: str | None = None,
+    source_uploaded_at: str | None = None,
+    source_agenda_file: str | None = None,
 ) -> None:
     """Save agenda descriptions in both list and lookup-map form."""
     descriptions: dict[str, str] = {}
@@ -528,6 +572,8 @@ def save_agenda_description_json(
         "source_type": source_type,
         "source_file": source_file,
         "source_url": source_url,
+        "source_uploaded_at": source_uploaded_at,
+        "source_agenda_file": source_agenda_file,
         "agenda_items": pairs,
         "descriptions": descriptions,
     }
@@ -549,24 +595,50 @@ def find_local_latest_agenda_docx(
     return max(agenda_files, key=lambda path: path.stat().st_mtime)
 
 
+def find_local_latest_agenda_file(
+    download_dir: Path = DEFAULT_AGENDA_DOWNLOAD_DIR,
+) -> Path | None:
+    """Return the latest cached Agenda CSV or DOCX, if present."""
+    agenda_files = list(download_dir.glob("*.csv")) + list(download_dir.glob("*.docx"))
+    if not agenda_files:
+        return None
+    return max(agenda_files, key=lambda path: path.stat().st_mtime)
+
+
 def update_agenda_description_json(
     listing_url: str = TDOC_LIST_URL,
     output_path: Path = DEFAULT_JSON_PATH,
     download_dir: Path = DEFAULT_DOWNLOAD_DIR,
     agenda_docx_path: Path | None = None,
+    agenda_source_info: dict | None = None,
 ) -> Path:
-    """Build agenda_item_description.json, preferring the Agenda DOCX."""
+    """Build agenda_item_description.json, preferring the Agenda CSV/DOCX."""
     if agenda_docx_path is None:
-        agenda_docx_path = find_local_latest_agenda_docx()
+        agenda_docx_path = find_local_latest_agenda_file()
 
     if agenda_docx_path is not None:
-        pairs = build_agenda_description_pairs_from_docx(agenda_docx_path)
+        uploaded_at = agenda_source_info.get("uploaded_at") if agenda_source_info else None
+        if isinstance(uploaded_at, datetime):
+            uploaded_at = uploaded_at.isoformat()
+        suffix = agenda_docx_path.suffix.lower()
+        if suffix == ".csv":
+            pairs = build_agenda_description_pairs_from_csv(agenda_docx_path)
+            source_type = "agenda_csv"
+        elif suffix == ".docx":
+            pairs = build_agenda_description_pairs_from_docx(agenda_docx_path)
+            source_type = "agenda_docx"
+        else:
+            raise ValueError(f"Unsupported agenda file type: {agenda_docx_path}")
         save_agenda_description_json(
             pairs,
             output_path,
             source_file=agenda_docx_path.name,
-            source_url=None,
-            source_type="agenda_docx",
+            source_url=agenda_source_info.get("url") if agenda_source_info else None,
+            source_type=source_type,
+            source_uploaded_at=uploaded_at,
+            source_agenda_file=(
+                agenda_source_info.get("name") if agenda_source_info else agenda_docx_path.name
+            ),
         )
         return output_path
 
@@ -778,16 +850,20 @@ def annotate_sessions_with_agenda_descriptions(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Build agenda descriptions JSON from a 3GPP RAN1 Agenda DOCX."
+        description="Build agenda descriptions JSON from a 3GPP RAN1 Agenda CSV/DOCX."
     )
     parser.add_argument("--listing-url", default=TDOC_LIST_URL)
     parser.add_argument("--output", type=Path, default=DEFAULT_JSON_PATH)
     parser.add_argument("--download-dir", type=Path, default=DEFAULT_DOWNLOAD_DIR)
     parser.add_argument(
         "--agenda-docx",
+        "--agenda-file",
         type=Path,
         default=None,
-        help="Agenda DOCX to parse. Defaults to the latest cached downloads/Agenda/*.docx.",
+        help=(
+            "Agenda CSV or DOCX to parse. Defaults to the latest cached "
+            "downloads/Agenda/*.csv or *.docx."
+        ),
     )
     args = parser.parse_args()
 

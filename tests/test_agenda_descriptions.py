@@ -1,3 +1,4 @@
+import json
 from zipfile import ZipFile
 
 import pandas as pd
@@ -7,7 +8,9 @@ from agenda_descriptions import (
     AGENDA_ITEM_COLUMN,
     annotate_sessions_with_agenda_descriptions,
     build_agenda_description_pairs,
+    build_agenda_description_pairs_from_csv,
     build_agenda_description_pairs_from_docx,
+    save_agenda_description_json,
     strip_derived_description_fields,
 )
 
@@ -24,6 +27,22 @@ def test_build_agenda_description_pairs_deduplicates_rows():
     assert build_agenda_description_pairs(df) == [
         {"agenda_item": "10", "description": "Rel-20 Study of 6GR"},
         {"agenda_item": "10.5.4", "description": "Scheduling"},
+    ]
+
+
+def test_build_agenda_description_pairs_from_csv_handles_plain_agenda_csv(tmp_path):
+    csv_path = tmp_path / "agenda.csv"
+    csv_path.write_text(
+        '"1","Opening of the meeting"\n'
+        '"9.","Release 20 NR"\n'
+        '"9.1","Artificial Intelligence for NR"\n',
+        encoding="utf-8",
+    )
+
+    assert build_agenda_description_pairs_from_csv(csv_path) == [
+        {"agenda_item": "1", "description": "Opening of the meeting"},
+        {"agenda_item": "9", "description": "Release 20 NR"},
+        {"agenda_item": "9.1", "description": "Artificial Intelligence for NR"},
     ]
 
 
@@ -137,3 +156,46 @@ def test_strip_derived_description_fields():
             }
         ]
     ) == [{"name": "10.5.4.x"}]
+
+
+def test_build_agenda_description_pairs_from_docx_extracts_deep_number_pattern(tmp_path):
+    docx_path = tmp_path / "agenda.docx"
+    document_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:pPr><w:pStyle w:val="Heading4"/></w:pPr><w:r><w:t>9.3.2.1 Deep agenda item</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+    styles_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:style w:type="paragraph" w:styleId="Heading4"><w:name w:val="heading 4"/><w:pPr><w:outlineLvl w:val="3"/></w:pPr></w:style>
+</w:styles>
+"""
+    with ZipFile(docx_path, "w") as docx:
+        docx.writestr("word/document.xml", document_xml)
+        docx.writestr("word/styles.xml", styles_xml)
+
+    assert build_agenda_description_pairs_from_docx(docx_path) == [
+        {"agenda_item": "9.3.2.1", "description": "Deep agenda item"},
+    ]
+
+
+def test_save_agenda_description_json_records_source_metadata(tmp_path):
+    output_path = tmp_path / "agenda_item_description.json"
+
+    save_agenda_description_json(
+        [{"agenda_item": "1", "description": "Opening"}],
+        output_path,
+        source_file="R1-2601750_Draft agenda.docx",
+        source_url="https://example.com/Agenda/R1-2601750.zip",
+        source_type="agenda_docx",
+        source_uploaded_at="2026-05-18T08:30:00",
+        source_agenda_file="R1-2601750.zip",
+    )
+
+    data = json.loads(output_path.read_text())
+    assert data["source_file"] == "R1-2601750_Draft agenda.docx"
+    assert data["source_url"] == "https://example.com/Agenda/R1-2601750.zip"
+    assert data["source_uploaded_at"] == "2026-05-18T08:30:00"
+    assert data["source_agenda_file"] == "R1-2601750.zip"

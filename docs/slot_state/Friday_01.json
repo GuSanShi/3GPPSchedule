@@ -2,8 +2,8 @@
   "day": "Friday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "ce7df231dee45477",
-    "Sorour's schedule": "c8a2bfbcd657fe64"
+    "Main Schedule": "72498ab5e215001f",
+    "Sorour's schedule": "11112bae9621cdd8"
   },
   "merged_sessions": [
     {
@@ -25,6 +25,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.728462+00:00",
+  "merged_at": "2026-05-20T03:07:04.317135+00:00",
   "schema_version": 1
 }

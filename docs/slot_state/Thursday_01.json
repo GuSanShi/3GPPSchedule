@@ -2,9 +2,9 @@
   "day": "Thursday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "4a224bc47d6b1a08",
-    "Hiroki's schedule": "a9f22dd51e01d16b",
-    "Sorour's schedule": "b3a17e407b8771a2"
+    "Main Schedule": "3b1b3d95eb29f19c",
+    "Hiroki's schedule": "f73879d754860d71",
+    "Sorour's schedule": "08214663955ad150"
   },
   "merged_sessions": [
     {
@@ -149,7 +149,7 @@
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
-          "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+          "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
           "hierarchy": [
             {
               "agenda_item": "8",
@@ -158,7 +158,7 @@
             },
             {
               "agenda_item": "8.1",
-              "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+              "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
               "has_description": true
             }
           ]
@@ -225,11 +225,11 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT",
+      "name": "A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": "9.3.2, 9.3.3, 9.3.1",
       "description": "D2R signals, channels, waveform and procedures",
       "agenda_descriptions": [
@@ -332,20 +332,45 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "6G waveform",
+      "name": "10.2.1 Waveform",
       "duration_minutes": 40,
       "specified_start_time": "12:20",
       "chair": "Hiroki",
-      "group_header": "",
-      "agenda_item": null
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Waveform",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.2.1",
+          "matched_agenda_item": "10.2.1",
+          "description": "Waveform",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2",
+              "description": "Waveform for 6GR air interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2.1",
+              "description": "Waveform",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off2",
-      "name": "6G ISAC",
+      "name": "10.8.x Sensing",
       "duration_minutes": 60,
       "specified_start_time": "11:00",
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "6GR",
       "agenda_item": "10.8.2, 10.8.3",
       "description": "Aspects of integration with communication",
       "agenda_descriptions": [
@@ -361,7 +386,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "ISAC",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             },
             {
@@ -383,7 +408,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "ISAC",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             },
             {
@@ -405,6 +430,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.724599+00:00",
+  "merged_at": "2026-05-20T03:07:04.315422+00:00",
   "schema_version": 1
 }

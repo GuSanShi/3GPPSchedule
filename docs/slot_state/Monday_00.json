@@ -2,28 +2,28 @@
   "day": "Monday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "1c5241d544565b4c",
-    "Hiroki's schedule": "a94a0f65993e108b"
+    "Main Schedule": "5d35f70f5c0d3c43",
+    "Hiroki's schedule": "59b3332283ecac00"
   },
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "RAN1#124b commences at 09:00 on Monday",
+      "name": "RAN1#125 commences at 09:00 on Monday",
       "duration_minutes": 60,
       "specified_start_time": "09:00",
       "chair": "Hiroki",
       "group_header": "",
       "agenda_item": "1, 2, 3, 4, 5",
-      "description": "Opening of the meeting (Day 1: 9:00 am)",
+      "description": "Opening of the meeting",
       "agenda_descriptions": [
         {
           "agenda_item": "1",
           "matched_agenda_item": "1",
-          "description": "Opening of the meeting (Day 1: 9:00 am)",
+          "description": "Opening of the meeting",
           "hierarchy": [
             {
               "agenda_item": "1",
-              "description": "Opening of the meeting (Day 1: 9:00 am)",
+              "description": "Opening of the meeting",
               "has_description": true
             }
           ]
@@ -113,6 +113,6 @@
       ]
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.711010+00:00",
+  "merged_at": "2026-05-20T03:07:04.309226+00:00",
   "schema_version": 1
 }

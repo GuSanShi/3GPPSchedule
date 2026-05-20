@@ -2,9 +2,9 @@
   "day": "Wednesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "e2c0152239945cca",
-    "Hiroki's schedule": "504713881ce929ed",
-    "Sorour's schedule": "3dcfcf10b3a56920"
+    "Main Schedule": "c84fe3180e4cafd4",
+    "Hiroki's schedule": "eb5ebd08ba8feeac",
+    "Sorour's schedule": "b8cb6732a70c0b06"
   },
   "merged_sessions": [
     {
@@ -161,12 +161,12 @@
       "chair": "Hiroki",
       "group_header": "6G 10.5.4.x",
       "agenda_item": "10.5.4.3",
-      "description": "HARQ related Aspects",
+      "description": "HARQ related aspects",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related Aspects",
+          "description": "HARQ related aspects",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -185,7 +185,7 @@
             },
             {
               "agenda_item": "10.5.4.3",
-              "description": "HARQ related Aspects",
+              "description": "HARQ related aspects",
               "has_description": true
             }
           ]
@@ -230,6 +230,15 @@
           ]
         }
       ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "Early dinner",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -318,6 +327,6 @@
       ]
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.722818+00:00",
+  "merged_at": "2026-05-20T03:07:04.314659+00:00",
   "schema_version": 1
 }

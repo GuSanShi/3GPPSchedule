@@ -1,11 +1,12 @@
 import argparse
+import json
 import os
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from main import _extract_meeting_name, main
+from main import _agenda_state_for_save, _extract_meeting_name, main
 
 
 class ExtractMeetingNameTests(unittest.TestCase):
@@ -26,6 +27,31 @@ class ExtractMeetingNameTests(unittest.TestCase):
             _extract_meeting_name(Path("custom schedule name.docx")),
             "custom schedule name",
         )
+
+
+class AgendaStateForSaveTests(unittest.TestCase):
+    def test_uses_description_json_when_remote_agenda_is_unavailable(self):
+        with tempfile.TemporaryDirectory() as tmpdir:
+            json_path = Path(tmpdir) / "agenda_item_description.json"
+            json_path.write_text(
+                json.dumps(
+                    {
+                        "generated_at": "2026-05-19T23:24:55+00:00",
+                        "source_type": "agenda_docx",
+                        "source_file": "R1-2601750_Draft agenda.docx",
+                        "source_url": "https://example.com/Agenda/R1-2601750.zip",
+                        "source_uploaded_at": "2026-05-18T08:30:00",
+                        "source_agenda_file": "R1-2601750.zip",
+                    }
+                )
+            )
+
+            state = _agenda_state_for_save(None, None, json_path)
+
+        self.assertEqual(state["name"], "R1-2601750.zip")
+        self.assertEqual(state["document_file"], "R1-2601750_Draft agenda.docx")
+        self.assertEqual(state["description_json"], str(json_path))
+        self.assertEqual(state["description_source_agenda_file"], "R1-2601750.zip")
 
 
 class MainChairNotesLookupTests(unittest.TestCase):

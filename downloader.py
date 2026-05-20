@@ -28,6 +28,12 @@ DOCUMENT_EXTENSIONS = (".docx", ".pptx", ".pdf")
 # All extensions we accept from remote listings (documents + zip)
 SUPPORTED_EXTENSIONS = DOCUMENT_EXTENSIONS + (".zip",)
 
+# Agenda folders can expose a plain agenda.csv instead of a TDoc archive.
+# Preference is intentionally different from schedules: use CSV first,
+# then DOCX, then ZIP contents.
+AGENDA_EXTENSIONS = (".csv", ".docx", ".zip")
+AGENDA_EXTRACT_EXTENSIONS = (".csv", ".docx")
+
 # Retry configuration for transient server errors
 _MAX_RETRIES = 3
 _RETRY_BACKOFF_BASE = 5  # seconds
@@ -303,7 +309,11 @@ def _pick_latest_in_meeting_group(
     return latest
 
 
-def list_remote_files(url: str = BASE_URL) -> list[dict]:
+def list_remote_files(
+    url: str = BASE_URL,
+    *,
+    supported_extensions: tuple[str, ...] = SUPPORTED_EXTENSIONS,
+) -> list[dict]:
     """Fetch the FTP directory listing and return file info with upload timestamps.
 
     Each returned dict has keys: name, url, uploaded_at (datetime | None).
@@ -323,7 +333,7 @@ def list_remote_files(url: str = BASE_URL) -> list[dict]:
             continue
 
         href = link["href"]
-        if not any(href.lower().endswith(ext) for ext in SUPPORTED_EXTENSIONS):
+        if not any(href.lower().endswith(ext) for ext in supported_extensions):
             continue
 
         # Extract and decode filename
@@ -410,12 +420,16 @@ def get_remote_schedule_info(url: str = BASE_URL) -> dict | None:
     }
 
 
-def extract_document_from_zip(zip_path: Path) -> Path | None:
+def extract_document_from_zip(
+    zip_path: Path,
+    *,
+    document_extensions: tuple[str, ...] = DOCUMENT_EXTENSIONS,
+) -> Path | None:
     """Extract a document file from a ZIP archive.
 
-    Looks for .docx, .pptx, or .pdf files inside the ZIP (in that
-    preference order).  Returns the path of the extracted file, or
-    None if no supported document is found.
+    Looks for files matching ``document_extensions`` inside the ZIP in
+    the given preference order. Returns the path of the extracted file,
+    or None if no supported document is found.
     """
     if not zipfile.is_zipfile(zip_path):
         print(f"Warning: {zip_path.name} is not a valid ZIP file")
@@ -428,7 +442,7 @@ def extract_document_from_zip(zip_path: Path) -> Path | None:
             if entry.startswith("__MACOSX") or entry.endswith("/"):
                 continue
             lower = entry.lower()
-            for priority, ext in enumerate(DOCUMENT_EXTENSIONS):
+            for priority, ext in enumerate(document_extensions):
                 if lower.endswith(ext):
                     candidates.append((priority, entry))
                     break
@@ -778,26 +792,35 @@ def download_latest_chair_notes(
 def find_latest_agenda(files: list[dict]) -> dict | None:
     """Pick the newest agenda candidate from an Agenda-folder listing.
 
-    Agenda files in 3GPP per-meeting folders are typically a single
-    TDoc archive (e.g. ``R1-2601750.zip``) containing the agenda DOCX.
-    The filename is *not* a reliable indicator, so we simply pick the
-    most recently uploaded ZIP/DOCX/PPTX/PDF.
+    Agenda files in 3GPP per-meeting folders may be a plain
+    ``agenda.csv``, a DOCX, or a TDoc archive containing those files.
 
     Selection order:
-        1. Highest ``uploaded_at`` among supported documents/archives.
-        2. If no timestamps are available, return the first entry.
+        1. Prefer CSV, then DOCX, then ZIP.
+        2. Within the same type, use highest ``uploaded_at``.
+        3. If no timestamps are available, return the first entry for
+           the preferred type.
     """
     candidates = [
         f for f in files
-        if any(f["name"].lower().endswith(ext) for ext in SUPPORTED_EXTENSIONS)
+        if any(f["name"].lower().endswith(ext) for ext in AGENDA_EXTENSIONS)
     ]
     if not candidates:
         return None
 
-    with_ts = [f for f in candidates if f.get("uploaded_at") is not None]
+    def _agenda_priority(file_info: dict) -> int:
+        name = file_info["name"].lower()
+        for priority, ext in enumerate(AGENDA_EXTENSIONS):
+            if name.endswith(ext):
+                return priority
+        return len(AGENDA_EXTENSIONS)
+
+    best_priority = min(_agenda_priority(f) for f in candidates)
+    preferred = [f for f in candidates if _agenda_priority(f) == best_priority]
+    with_ts = [f for f in preferred if f.get("uploaded_at") is not None]
     if with_ts:
         return max(with_ts, key=lambda f: f["uploaded_at"])
-    return candidates[0]
+    return preferred[0]
 
 
 def get_latest_agenda_info(agenda_urls: list[str]) -> dict | None:
@@ -809,7 +832,10 @@ def get_latest_agenda_info(agenda_urls: list[str]) -> dict | None:
     candidates: list[dict] = []
     for agenda_url in agenda_urls:
         try:
-            files = list_remote_files(agenda_url)
+            files = list_remote_files(
+                agenda_url,
+                supported_extensions=AGENDA_EXTENSIONS,
+            )
         except Exception as e:
             print(f"Warning: Could not list agenda at {agenda_url}: {e}")
             continue
@@ -829,6 +855,8 @@ def get_latest_agenda_info(agenda_urls: list[str]) -> dict | None:
 def download_latest_agenda(
     agenda_urls: list[str],
     dest_dir: Path = DOWNLOADS_DIR / "Agenda",
+    *,
+    latest_info: dict | None = None,
 ) -> Path | None:
     """Download the latest agenda document from configured agenda URLs.
 
@@ -839,7 +867,7 @@ def download_latest_agenda(
     if not agenda_urls:
         return None
 
-    latest = get_latest_agenda_info(agenda_urls)
+    latest = latest_info or get_latest_agenda_info(agenda_urls)
     if latest is None:
         print("No agenda file found on FTP")
         return None
@@ -848,18 +876,33 @@ def download_latest_agenda(
 
     if dest_path.exists():
         if dest_path.suffix.lower() == ".zip":
-            extracted = _find_extracted_document(dest_path)
+            extracted = _find_extracted_document(
+                dest_path,
+                document_extensions=AGENDA_EXTRACT_EXTENSIONS,
+            )
             if extracted:
                 print(f"Using previously extracted agenda: {extracted}")
                 return extracted
-            extracted = extract_document_from_zip(dest_path)
+            extracted = extract_document_from_zip(
+                dest_path,
+                document_extensions=AGENDA_EXTRACT_EXTENSIONS,
+            )
             if extracted:
                 return extracted
         print(f"Agenda already exists: {dest_path}")
         return dest_path
 
     try:
-        return download_and_resolve(latest["url"], dest_path)
+        downloaded = download_file(latest["url"], dest_path)
+        if downloaded.suffix.lower() == ".zip":
+            extracted = extract_document_from_zip(
+                downloaded,
+                document_extensions=AGENDA_EXTRACT_EXTENSIONS,
+            )
+            if extracted is not None:
+                return extracted
+            print("Warning: agenda ZIP did not contain CSV or DOCX")
+        return downloaded
     except Exception as e:
         print(f"Warning: Failed to download agenda: {e}")
         return None
@@ -872,14 +915,18 @@ def find_local_latest_agenda(
     if not dest_dir.exists():
         return None
     candidates: list[Path] = []
-    for ext in DOCUMENT_EXTENSIONS:
+    for ext in AGENDA_EXTRACT_EXTENSIONS:
         candidates.extend(dest_dir.glob(f"*{ext}"))
     if not candidates:
         return None
     return max(candidates, key=lambda f: f.stat().st_mtime)
 
 
-def _find_extracted_document(zip_path: Path) -> Path | None:
+def _find_extracted_document(
+    zip_path: Path,
+    *,
+    document_extensions: tuple[str, ...] = DOCUMENT_EXTENSIONS,
+) -> Path | None:
     """Look for documents that may have been previously extracted from a ZIP.
 
     Searches the same directory for document files whose stem matches or
@@ -887,9 +934,11 @@ def _find_extracted_document(zip_path: Path) -> Path | None:
     """
     parent = zip_path.parent
     candidates = []
-    for ext in DOCUMENT_EXTENSIONS:
+    stem = zip_path.stem.lower()
+    for ext in document_extensions:
         for f in parent.glob(f"*{ext}"):
-            candidates.append(f)
+            if stem in f.stem.lower():
+                candidates.append(f)
     if not candidates:
         return None
     # Return the newest document file
@@ -1383,6 +1432,7 @@ def save_schedule_state(
     *,
     meeting_id: str | None = None,
     timezone: str | None = None,
+    agenda: dict | None = None,
 ) -> None:
     """Persist FTP state from already-fetched ScheduleSource objects.
 
@@ -1392,6 +1442,8 @@ def save_schedule_state(
     Optionally stores ``meeting_id`` (normalised, e.g. "ran1#124bis") and
     ``timezone`` (IANA, e.g. "Europe/Malta") so that expensive per-meeting
     operations (like LLM timezone detection) are only performed once.
+    ``agenda`` stores the remote/local agenda metadata that fed timezone and
+    agenda-item description generation.
     """
     import json
 
@@ -1414,6 +1466,8 @@ def save_schedule_state(
         state["meeting_id"] = meeting_id
     if timezone is not None:
         state["timezone"] = timezone
+    if agenda is not None:
+        state["agenda"] = agenda
 
     state_path.parent.mkdir(parents=True, exist_ok=True)
     state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2))

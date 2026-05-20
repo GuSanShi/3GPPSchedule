@@ -2,9 +2,9 @@
   "day": "Thursday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "af2f286d59d3aa46",
-    "Hiroki's schedule": "f3321183fdfb8045",
-    "Sorour's schedule": "1cce88a25f4bfe19"
+    "Main Schedule": "84e560a3c529d368",
+    "Hiroki's schedule": "2e75d3cf7ac1ef87",
+    "Sorour's schedule": "d5c41eb2cc771531"
   },
   "merged_sessions": [
     {
@@ -385,12 +385,12 @@
       "chair": "Hiroki",
       "group_header": "6G 10.5.4.x",
       "agenda_item": null,
-      "description": "HARQ related Aspects",
+      "description": "HARQ related aspects",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related Aspects",
+          "description": "HARQ related aspects",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -409,7 +409,7 @@
             },
             {
               "agenda_item": "10.5.4.3",
-              "description": "HARQ related Aspects",
+              "description": "HARQ related aspects",
               "has_description": true
             }
           ]
@@ -463,12 +463,12 @@
       "chair": "Hiroki",
       "group_header": "6G",
       "agenda_item": null,
-      "description": "HARQ related Aspects",
+      "description": "HARQ related aspects",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related Aspects",
+          "description": "HARQ related aspects",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -487,7 +487,7 @@
             },
             {
               "agenda_item": "10.5.4.3",
-              "description": "HARQ related Aspects",
+              "description": "HARQ related aspects",
               "has_description": true
             }
           ]
@@ -595,6 +595,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.726555+00:00",
+  "merged_at": "2026-05-20T03:07:04.316277+00:00",
   "schema_version": 1
 }

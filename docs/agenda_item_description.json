@@ -1,36 +1,14 @@
 {
-  "generated_at": "2026-05-19T23:24:55.378675+00:00",
-  "source_type": "agenda_docx",
-  "source_file": "R1-2601750_Draft agenda for RAN1#124bis_v01.docx",
-  "source_url": null,
+  "generated_at": "2026-05-20T03:07:03.903825+00:00",
+  "source_type": "agenda_csv",
+  "source_file": "agenda.csv",
+  "source_url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Agenda/agenda.csv",
+  "source_uploaded_at": "2026-05-19T05:42:00",
+  "source_agenda_file": "agenda.csv",
   "agenda_items": [
     {
       "agenda_item": "1",
-      "description": "Opening of the meeting (Day 1: 9:00 am)"
-    },
-    {
-      "agenda_item": "1.1",
-      "description": "Call for IPR"
-    },
-    {
-      "agenda_item": "1.2",
-      "description": "Competition Law Statement"
-    },
-    {
-      "agenda_item": "1.3",
-      "description": "Network Usage Conditions"
-    },
-    {
-      "agenda_item": "1.4",
-      "description": "Consensus Principles Reminder"
-    },
-    {
-      "agenda_item": "1.5",
-      "description": "Streamlined Standards"
-    },
-    {
-      "agenda_item": "1.6",
-      "description": "Check-in for Registered Delegates"
+      "description": "Opening of the meeting"
     },
     {
       "agenda_item": "2",
@@ -62,42 +40,14 @@
     },
     {
       "agenda_item": "8.1",
-      "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface"
+      "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN"
     },
     {
       "agenda_item": "8.2",
-      "description": "Maintenance on NR MIMO Phase 5"
-    },
-    {
-      "agenda_item": "8.3",
-      "description": "Maintenance on Evolution of NR duplex operation: Sub-band full duplex (SBFD)"
-    },
-    {
-      "agenda_item": "8.4",
-      "description": "Maintenance on Enhancements of network energy savings for NR"
-    },
-    {
-      "agenda_item": "8.5",
-      "description": "Maintenance on Low-power wake-up signal and receiver for NR (LP-WUS/WUR)"
-    },
-    {
-      "agenda_item": "8.6",
-      "description": "Maintenance on Non-Terrestrial Networks (NTN) for NR Phase 3, Internet of Things (IoT) Phase 3, and IoT-NTN TDD mode"
-    },
-    {
-      "agenda_item": "8.6.1",
-      "description": "Maintenance for Rel-19 NR NTN"
-    },
-    {
-      "agenda_item": "8.6.2",
-      "description": "Maintenance for Rel-19 IoT NTN"
-    },
-    {
-      "agenda_item": "8.7",
       "description": "Maintenance on others"
     },
     {
-      "agenda_item": "8.8",
+      "agenda_item": "8.3",
       "description": "Maintenance on UE features"
     },
     {
@@ -190,7 +140,7 @@
     },
     {
       "agenda_item": "10.4",
-      "description": "Energy efficiency"
+      "description": "Void"
     },
     {
       "agenda_item": "10.5",
@@ -266,7 +216,7 @@
     },
     {
       "agenda_item": "10.5.4.3",
-      "description": "HARQ related Aspects"
+      "description": "HARQ related aspects"
     },
     {
       "agenda_item": "10.5.4.4",
@@ -286,7 +236,7 @@
     },
     {
       "agenda_item": "10.6.1.1",
-      "description": "Design of WUS with OFDM based sequence"
+      "description": "Design of WUS with OFDM-based sequence"
     },
     {
       "agenda_item": "10.6.1.2",
@@ -314,7 +264,7 @@
     },
     {
       "agenda_item": "10.8",
-      "description": "ISAC"
+      "description": "Integrated Sensing And Communication (ISAC) for NR"
     },
     {
       "agenda_item": "10.8.1",
@@ -334,21 +284,11 @@
     },
     {
       "agenda_item": "12",
-      "description": "RAN1&RAN4 joint session"
-    },
-    {
-      "agenda_item": "13",
-      "description": "Closing of the meeting (Day 5, 17:00 pm at the latest)"
+      "description": "Closing of the meeting"
     }
   ],
   "descriptions": {
-    "1": "Opening of the meeting (Day 1: 9:00 am)",
-    "1.1": "Call for IPR",
-    "1.2": "Competition Law Statement",
-    "1.3": "Network Usage Conditions",
-    "1.4": "Consensus Principles Reminder",
-    "1.5": "Streamlined Standards",
-    "1.6": "Check-in for Registered Delegates",
+    "1": "Opening of the meeting",
     "2": "Approval of Agenda",
     "3": "Highlights from RAN plenary",
     "4": "Approval of Minutes from previous meetings",
@@ -356,16 +296,9 @@
     "6": "Pre-Rel-19 E-UTRA Maintenance",
     "7": "Pre-Rel-19 NR Maintenance",
     "8": "Maintenance on Rel-19 NR and E-UTRA",
-    "8.1": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
-    "8.2": "Maintenance on NR MIMO Phase 5",
-    "8.3": "Maintenance on Evolution of NR duplex operation: Sub-band full duplex (SBFD)",
-    "8.4": "Maintenance on Enhancements of network energy savings for NR",
-    "8.5": "Maintenance on Low-power wake-up signal and receiver for NR (LP-WUS/WUR)",
-    "8.6": "Maintenance on Non-Terrestrial Networks (NTN) for NR Phase 3, Internet of Things (IoT) Phase 3, and IoT-NTN TDD mode",
-    "8.6.1": "Maintenance for Rel-19 NR NTN",
-    "8.6.2": "Maintenance for Rel-19 IoT NTN",
-    "8.7": "Maintenance on others",
-    "8.8": "Maintenance on UE features",
+    "8.1": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
+    "8.2": "Maintenance on others",
+    "8.3": "Maintenance on UE features",
     "9": "Release 20 NR",
     "9.1": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
     "9.1.1": "CSI spatial/frequency compression without temporal aspects (“Case 0”)",
@@ -388,7 +321,7 @@
     "10.3": "Channel coding and modulation for 6GR interface",
     "10.3.1": "Channel coding",
     "10.3.2": "Modulation, Joint channel coding and modulation",
-    "10.4": "Energy efficiency",
+    "10.4": "Void",
     "10.5": "Multi-antenna system",
     "10.5.0": "General aspects and frameworks",
     "10.5.1": "Initial access and mobility",
@@ -407,24 +340,23 @@
     "10.5.4": "Downlink control channel, scheduling and HARQ operation",
     "10.5.4.1": "Downlink control channel, scheduling for downlink and uplink transmission",
     "10.5.4.2": "Downlink and uplink transmission without downlink control channel",
-    "10.5.4.3": "HARQ related Aspects",
+    "10.5.4.3": "HARQ related aspects",
     "10.5.4.4": "Handling of potential multiple uplink transmissions",
     "10.5.5": "Other physical layer signals, channels and procedure",
     "10.6": "WUS and operation",
     "10.6.1": "Downlink WUS and operation",
-    "10.6.1.1": "Design of WUS with OFDM based sequence",
+    "10.6.1.1": "Design of WUS with OFDM-based sequence",
     "10.6.1.2": "WUS operation in RRC states",
     "10.6.2": "Uplink WUS and operation",
     "10.6.3": "WUS operation with other functionalities",
     "10.7": "NTN",
     "10.7.1": "NTN specific requirements and design for GNSS based operation",
     "10.7.2": "NTN specific requirements and design for GNSS-less/resilient operation",
-    "10.8": "ISAC",
+    "10.8": "Integrated Sensing And Communication (ISAC) for NR",
     "10.8.1": "Evaluations",
     "10.8.2": "Aspects of integration with communication",
     "10.8.3": "Waveform and frame structure",
     "11": "TEI",
-    "12": "RAN1&RAN4 joint session",
-    "13": "Closing of the meeting (Day 5, 17:00 pm at the latest)"
+    "12": "Closing of the meeting"
   }
 }

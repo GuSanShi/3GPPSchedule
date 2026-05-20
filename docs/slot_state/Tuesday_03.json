@@ -2,9 +2,9 @@
   "day": "Tuesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "25d4feebd485a166",
-    "Hiroki's schedule": "71c4ca27f1e2886e",
-    "Sorour's schedule": "1686a11d293d1555"
+    "Main Schedule": "1edaaa74d670d277",
+    "Hiroki's schedule": "544e058ab1e5edd0",
+    "Sorour's schedule": "f4cdef488ffbed9e"
   },
   "merged_sessions": [
     {
@@ -171,12 +171,12 @@
       "chair": "Sorour",
       "group_header": "AI 7/8",
       "agenda_item": "8.1",
-      "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+      "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
       "agenda_descriptions": [
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
-          "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+          "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
           "hierarchy": [
             {
               "agenda_item": "8",
@@ -185,7 +185,7 @@
             },
             {
               "agenda_item": "8.1",
-              "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+              "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
               "has_description": true
             }
           ]
@@ -262,18 +262,18 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.5.4.x",
-      "duration_minutes": 80,
+      "name": "10.5.4.1",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
+      "group_header": "6GR / 10.5.4.x",
       "agenda_item": null,
-      "description": "Downlink control channel, scheduling and HARQ operation",
+      "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.4.x",
-          "matched_agenda_item": "10.5.4",
-          "description": "Downlink control channel, scheduling and HARQ operation",
+          "agenda_item": "10.5.4.1",
+          "matched_agenda_item": "10.5.4.1",
+          "description": "Downlink control channel, scheduling for downlink and uplink transmission",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -288,6 +288,50 @@
             {
               "agenda_item": "10.5.4",
               "description": "Downlink control channel, scheduling and HARQ operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.4.1",
+              "description": "Downlink control channel, scheduling for downlink and uplink transmission",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "10.5.4.3",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6GR / 10.5.4.x",
+      "agenda_item": null,
+      "description": "HARQ related aspects",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.4.3",
+          "matched_agenda_item": "10.5.4.3",
+          "description": "HARQ related aspects",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.4",
+              "description": "Downlink control channel, scheduling and HARQ operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.4.3",
+              "description": "HARQ related aspects",
               "has_description": true
             }
           ]
@@ -483,7 +527,7 @@
       "room_name": "RAN1_off2",
       "name": "A-IoT",
       "duration_minutes": 70,
-      "specified_start_time": null,
+      "specified_start_time": "17:00",
       "chair": "Hiroki",
       "group_header": "R20",
       "agenda_item": null
@@ -532,6 +576,6 @@
       ]
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.718710+00:00",
+  "merged_at": "2026-05-20T03:07:04.312858+00:00",
   "schema_version": 1
 }

@@ -5,6 +5,7 @@ import unittest
 from datetime import datetime
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+from zipfile import ZipFile, is_zipfile
 
 from downloader import (
     _extract_meeting_id,
@@ -12,6 +13,8 @@ from downloader import (
     _extract_version_from_name,
     _pick_latest_in_meeting_group,
     discover_schedule_sources,
+    extract_document_from_zip,
+    find_latest_agenda,
     find_latest_chair_notes,
     find_latest_schedule,
     get_all_remote_schedule_info,
@@ -24,6 +27,64 @@ from downloader import (
 def _f(name: str, uploaded_at: datetime | None = None, url: str = "") -> dict:
     """Helper to build a file dict for testing."""
     return {"name": name, "url": url, "uploaded_at": uploaded_at}
+
+
+def test_extract_document_from_agenda_zip_returns_valid_docx(tmp_path):
+    docx_path = tmp_path / "R1-2601750_Draft agenda for RAN1#125_v01.docx"
+    with ZipFile(docx_path, "w") as docx:
+        docx.writestr(
+            "[Content_Types].xml",
+            """<?xml version="1.0" encoding="UTF-8"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"/>""",
+        )
+        docx.writestr(
+            "word/document.xml",
+            """<?xml version="1.0" encoding="UTF-8"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body><w:p><w:r><w:t>9.3.2.1 Deep agenda item</w:t></w:r></w:p></w:body>
+</w:document>""",
+        )
+
+    agenda_zip = tmp_path / "R1-2601750.zip"
+    with ZipFile(agenda_zip, "w") as zf:
+        zf.write(docx_path, arcname=f"nested/{docx_path.name}")
+    docx_path.unlink()
+
+    extracted = extract_document_from_zip(agenda_zip)
+
+    assert extracted is not None
+    assert extracted.suffix == ".docx"
+    assert extracted.name == "R1-2601750_Draft agenda for RAN1#125_v01.docx"
+    assert is_zipfile(extracted)
+
+
+def test_extract_agenda_zip_prefers_csv_over_docx(tmp_path):
+    agenda_zip = tmp_path / "R1-2601750.zip"
+    with ZipFile(agenda_zip, "w") as zf:
+        zf.writestr("nested/agenda.docx", b"docx")
+        zf.writestr("nested/agenda.csv", '"1","Opening"\n')
+
+    extracted = extract_document_from_zip(
+        agenda_zip,
+        document_extensions=(".csv", ".docx"),
+    )
+
+    assert extracted is not None
+    assert extracted.name == "agenda.csv"
+    assert extracted.read_text() == '"1","Opening"\n'
+
+
+def test_find_latest_agenda_prefers_csv_before_newer_docx_or_zip():
+    latest = find_latest_agenda(
+        [
+            _f("agenda.docx", datetime(2026, 5, 20, 9, 0)),
+            _f("R1-2601750.zip", datetime(2026, 5, 21, 9, 0)),
+            _f("agenda.csv", datetime(2026, 5, 19, 5, 42)),
+        ]
+    )
+
+    assert latest is not None
+    assert latest["name"] == "agenda.csv"
 
 
 class ExtractMeetingIdTests(unittest.TestCase):
@@ -558,6 +619,32 @@ class SaveScheduleStateTests(unittest.TestCase):
             self.assertEqual(loaded["meeting_id"], "ran1#124bis")
             self.assertEqual(loaded["timezone"], "Europe/Malta")
             self.assertEqual(len(loaded["files"]), 2)
+        finally:
+            p.unlink(missing_ok=True)
+
+    def test_saves_agenda_metadata(self):
+        p = Path("/tmp/test_save_state_agenda.json")
+        sources = [
+            self._make_source("Chair_notes", "RAN1#125 schedule - v02.docx", datetime(2026, 5, 19, 0, 17)),
+        ]
+        agenda = {
+            "name": "R1-2601750.zip",
+            "uploaded_at": "2026-05-18T08:30:00",
+            "url": "https://example.com/Agenda/R1-2601750.zip",
+            "source_url": "https://example.com/Agenda/",
+            "document_file": "R1-2601750_Draft agenda.docx",
+            "local_path": "downloads/Agenda/R1-2601750_Draft agenda.docx",
+        }
+        try:
+            save_schedule_state(
+                sources,
+                p,
+                meeting_id="ran1#125",
+                timezone="Asia/Shanghai",
+                agenda=agenda,
+            )
+            loaded = load_schedule_state(p)
+            self.assertEqual(loaded["agenda"], agenda)
         finally:
             p.unlink(missing_ok=True)
 

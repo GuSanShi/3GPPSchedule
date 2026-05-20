@@ -2,9 +2,9 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "27cfe0aaffcee112",
-    "Hiroki's schedule": "bee93fa9f58b8690",
-    "Sorour's schedule": "deeb5d4cff30a61b"
+    "Main Schedule": "8b9198c9a46796bc",
+    "Hiroki's schedule": "6f8aa0e9b581d92b",
+    "Sorour's schedule": "d9973216dd858c4a"
   },
   "merged_sessions": [
     {
@@ -188,7 +188,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G ISAC",
+      "group_header": "6G ISAC / 6GR / 10.8 Sensing",
       "agenda_item": "10.8.2",
       "description": "Aspects of integration with communication",
       "agenda_descriptions": [
@@ -204,7 +204,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "ISAC",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             },
             {
@@ -222,7 +222,7 @@
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G ISAC",
+      "group_header": "6G ISAC / 6GR / 10.8 Sensing",
       "agenda_item": "10.8.1",
       "description": "Evaluations",
       "agenda_descriptions": [
@@ -238,7 +238,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "ISAC",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             },
             {
@@ -256,7 +256,7 @@
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20 / Coverage",
       "agenda_item": "9.4.1",
       "description": "Coverage enhancement",
       "agenda_descriptions": [
@@ -290,7 +290,7 @@
       "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "6GR",
+      "group_header": "6GR / 10.3.x",
       "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
@@ -324,7 +324,7 @@
       "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "6GR",
+      "group_header": "6GR / 10.3.x",
       "agenda_item": null,
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
@@ -504,6 +504,6 @@
       ]
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.721744+00:00",
+  "merged_at": "2026-05-20T03:07:04.314188+00:00",
   "schema_version": 1
 }

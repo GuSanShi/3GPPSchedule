@@ -2,9 +2,9 @@
   "day": "Tuesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "b50e4114572f6765",
-    "Hiroki's schedule": "817bb965e4a21a15",
-    "Sorour's schedule": "94344b5b6f393d2b"
+    "Main Schedule": "4f05d24d33533ca7",
+    "Hiroki's schedule": "1a7396a3ef06e4a8",
+    "Sorour's schedule": "e1d81010843b16ab"
   },
   "merged_sessions": [
     {
@@ -153,7 +153,7 @@
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
-          "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+          "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
           "hierarchy": [
             {
               "agenda_item": "8",
@@ -162,7 +162,7 @@
             },
             {
               "agenda_item": "8.1",
-              "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+              "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
               "has_description": true
             }
           ]
@@ -191,7 +191,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "ISAC",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             },
             {
@@ -225,7 +225,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "ISAC",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             },
             {
@@ -318,12 +318,12 @@
       "chair": "Hiroki",
       "group_header": "6G",
       "agenda_item": null,
-      "description": "HARQ related Aspects",
+      "description": "HARQ related aspects",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related Aspects",
+          "description": "HARQ related aspects",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -342,7 +342,7 @@
             },
             {
               "agenda_item": "10.5.4.3",
-              "description": "HARQ related Aspects",
+              "description": "HARQ related aspects",
               "has_description": true
             }
           ]
@@ -446,6 +446,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T00:04:38.716477+00:00",
+  "merged_at": "2026-05-20T03:07:04.311930+00:00",
   "schema_version": 1
 }
