@@ -12,7 +12,32 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "General aspects and frameworks",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.0",
+          "matched_agenda_item": "10.5.0",
+          "description": "General aspects and frameworks",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.0",
+              "description": "General aspects and frameworks",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "ALL_ONLINE",
@@ -21,7 +46,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Synchronization acquisition and beam measurement",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.1.1",
+          "matched_agenda_item": "10.5.1.1",
+          "description": "Synchronization acquisition and beam measurement",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.1",
+              "description": "Synchronization acquisition and beam measurement",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "ALL_ONLINE",
@@ -30,7 +85,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "PRACH and RACH procedure",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.1.2",
+          "matched_agenda_item": "10.5.1.2",
+          "description": "PRACH and RACH procedure",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.2",
+              "description": "PRACH and RACH procedure",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "ALL_ONLINE",
@@ -39,7 +124,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Bandwidth operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.1.3",
+          "matched_agenda_item": "10.5.1.3",
+          "description": "Bandwidth operation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.3",
+              "description": "Bandwidth operation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off1",
@@ -48,7 +163,37 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Downlink transmission scheme(s) for downlink control channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.1",
+          "matched_agenda_item": "10.5.2.1",
+          "description": "Downlink transmission scheme(s) for downlink control channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.1",
+              "description": "Downlink transmission scheme(s) for downlink control channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off1",
@@ -57,7 +202,37 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Uplink transmission scheme(s) for uplink channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.3",
+          "matched_agenda_item": "10.5.2.3",
+          "description": "Uplink transmission scheme(s) for uplink channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.3",
+              "description": "Uplink transmission scheme(s) for uplink channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off1",
@@ -66,7 +241,37 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Downlink transmission scheme(s) for downlink shared channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.2",
+          "matched_agenda_item": "10.5.2.2",
+          "description": "Downlink transmission scheme(s) for downlink shared channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.2",
+              "description": "Downlink transmission scheme(s) for downlink shared channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off2",
@@ -93,9 +298,34 @@
       "specified_start_time": null,
       "chair": "Sorouri",
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "NTN specific requirements and design for GNSS based operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.7.1",
+          "matched_agenda_item": "10.7.1",
+          "description": "NTN specific requirements and design for GNSS based operation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.7",
+              "description": "NTN",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.7.1",
+              "description": "NTN specific requirements and design for GNSS based operation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-05-17T15:00:59.323210+00:00",
+  "merged_at": "2026-05-20T00:01:02.417319+00:00",
   "schema_version": 1
 }

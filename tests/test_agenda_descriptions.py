@@ -1,3 +1,5 @@
+from zipfile import ZipFile
+
 import pandas as pd
 
 from agenda_descriptions import (
@@ -5,6 +7,7 @@ from agenda_descriptions import (
     AGENDA_ITEM_COLUMN,
     annotate_sessions_with_agenda_descriptions,
     build_agenda_description_pairs,
+    build_agenda_description_pairs_from_docx,
     strip_derived_description_fields,
 )
 
@@ -21,6 +24,62 @@ def test_build_agenda_description_pairs_deduplicates_rows():
     assert build_agenda_description_pairs(df) == [
         {"agenda_item": "10", "description": "Rel-20 Study of 6GR"},
         {"agenda_item": "10.5.4", "description": "Scheduling"},
+    ]
+
+
+def test_build_agenda_description_pairs_from_agenda_docx_restores_heading_numbers(tmp_path):
+    docx_path = tmp_path / "agenda.docx"
+    document_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:pPr><w:pStyle w:val="Heading1"/><w:numPr><w:ilvl w:val="0"/><w:numId w:val="13"/></w:numPr></w:pPr><w:r><w:t>Opening of the meeting</w:t></w:r></w:p>
+    <w:p><w:pPr><w:pStyle w:val="Heading2"/><w:numPr><w:ilvl w:val="0"/><w:numId w:val="16"/></w:numPr></w:pPr><w:r><w:t>Call for IPR</w:t></w:r></w:p>
+    <w:p><w:pPr><w:pStyle w:val="Heading2"/><w:numPr><w:ilvl w:val="1"/><w:numId w:val="13"/></w:numPr></w:pPr><w:r><w:t>Competition Law Statement</w:t></w:r></w:p>
+    <w:p><w:pPr><w:pStyle w:val="Heading1"/></w:pPr><w:r><w:t>10Rel-20 Study of 6GR</w:t></w:r></w:p>
+    <w:p><w:pPr><w:pStyle w:val="Heading2"/></w:pPr><w:r><w:t>10.5Multi-antenna system</w:t></w:r></w:p>
+    <w:p><w:pPr><w:pStyle w:val="Heading3"/><w:numPr><w:ilvl w:val="2"/><w:numId w:val="43"/></w:numPr></w:pPr><w:r><w:t>General aspects and frameworks</w:t></w:r></w:p>
+    <w:p><w:pPr><w:pStyle w:val="Heading1"/><w:numPr><w:ilvl w:val="1"/><w:numId w:val="43"/></w:numPr></w:pPr><w:r><w:t>WUS and operation</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+    styles_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:style w:type="paragraph" w:styleId="Heading1"><w:name w:val="heading 1"/><w:pPr><w:outlineLvl w:val="0"/></w:pPr></w:style>
+  <w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:pPr><w:outlineLvl w:val="1"/></w:pPr></w:style>
+  <w:style w:type="paragraph" w:styleId="Heading3"><w:name w:val="heading 3"/><w:pPr><w:outlineLvl w:val="2"/></w:pPr></w:style>
+</w:styles>
+"""
+    numbering_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:numbering xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:abstractNum w:abstractNumId="34">
+    <w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1."/></w:lvl>
+    <w:lvl w:ilvl="1"><w:start w:val="2"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1.%2"/></w:lvl>
+  </w:abstractNum>
+  <w:abstractNum w:abstractNumId="45">
+    <w:lvl w:ilvl="0"><w:start w:val="1"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1.1"/></w:lvl>
+  </w:abstractNum>
+  <w:abstractNum w:abstractNumId="41">
+    <w:lvl w:ilvl="1"><w:start w:val="5"/><w:numFmt w:val="decimal"/><w:lvlText w:val="%1.%2"/></w:lvl>
+    <w:lvl w:ilvl="2"><w:numFmt w:val="decimal"/><w:lvlText w:val="%1.%2.%3"/></w:lvl>
+  </w:abstractNum>
+  <w:num w:numId="13"><w:abstractNumId w:val="34"/></w:num>
+  <w:num w:numId="16"><w:abstractNumId w:val="45"/></w:num>
+  <w:num w:numId="43"><w:abstractNumId w:val="41"/></w:num>
+</w:numbering>
+"""
+    with ZipFile(docx_path, "w") as docx:
+        docx.writestr("word/document.xml", document_xml)
+        docx.writestr("word/styles.xml", styles_xml)
+        docx.writestr("word/numbering.xml", numbering_xml)
+
+    assert build_agenda_description_pairs_from_docx(docx_path) == [
+        {"agenda_item": "1", "description": "Opening of the meeting"},
+        {"agenda_item": "1.1", "description": "Call for IPR"},
+        {"agenda_item": "1.2", "description": "Competition Law Statement"},
+        {"agenda_item": "10", "description": "Rel-20 Study of 6GR"},
+        {"agenda_item": "10.5", "description": "Multi-antenna system"},
+        {"agenda_item": "10.5.0", "description": "General aspects and frameworks"},
+        {"agenda_item": "10.6", "description": "WUS and operation"},
     ]
 
 

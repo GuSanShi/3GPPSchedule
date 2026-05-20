@@ -13,7 +13,70 @@
       "specified_start_time": "09:00",
       "chair": "Hiroki",
       "group_header": "",
-      "agenda_item": "1, 2, 3, 4, 5"
+      "agenda_item": "1, 2, 3, 4, 5",
+      "description": "Opening of the meeting (Day 1: 9:00 am)",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "1",
+          "matched_agenda_item": "1",
+          "description": "Opening of the meeting (Day 1: 9:00 am)",
+          "hierarchy": [
+            {
+              "agenda_item": "1",
+              "description": "Opening of the meeting (Day 1: 9:00 am)",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "2",
+          "matched_agenda_item": "2",
+          "description": "Approval of Agenda",
+          "hierarchy": [
+            {
+              "agenda_item": "2",
+              "description": "Approval of Agenda",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "3",
+          "matched_agenda_item": "3",
+          "description": "Highlights from RAN plenary",
+          "hierarchy": [
+            {
+              "agenda_item": "3",
+              "description": "Highlights from RAN plenary",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "4",
+          "matched_agenda_item": "4",
+          "description": "Approval of Minutes from previous meetings",
+          "hierarchy": [
+            {
+              "agenda_item": "4",
+              "description": "Approval of Minutes from previous meetings",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "5",
+          "matched_agenda_item": "5",
+          "description": "Incoming Liaison Statements",
+          "hierarchy": [
+            {
+              "agenda_item": "5",
+              "description": "Incoming Liaison Statements",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "ALL_ONLINE",
@@ -22,9 +85,34 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "General aspects and frameworks",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.0",
+          "matched_agenda_item": "10.5.0",
+          "description": "General aspects and frameworks",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.0",
+              "description": "General aspects and frameworks",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-05-17T15:00:54.686993+00:00",
+  "merged_at": "2026-05-20T00:01:02.416804+00:00",
   "schema_version": 1
 }

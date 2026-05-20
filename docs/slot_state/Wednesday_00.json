@@ -14,7 +14,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Aspects of downlink-based CSI acquisition",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.3.1",
+          "matched_agenda_item": "10.5.3.1",
+          "description": "Aspects of downlink-based CSI acquisition",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3",
+              "description": "CSI acquisition and report",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3.1",
+              "description": "Aspects of downlink-based CSI acquisition",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_main",
@@ -23,7 +53,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Aspects of uplink-based CSI acquisition",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.3.2",
+          "matched_agenda_item": "10.5.3.2",
+          "description": "Aspects of uplink-based CSI acquisition",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3",
+              "description": "CSI acquisition and report",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3.2",
+              "description": "Aspects of uplink-based CSI acquisition",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_main",
@@ -32,7 +92,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Other aspects",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.3.3",
+          "matched_agenda_item": "10.5.3.3",
+          "description": "Other aspects",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3",
+              "description": "CSI acquisition and report",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3.3",
+              "description": "Other aspects",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_main",
@@ -41,7 +131,37 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": null,
+      "description": "Beam management for downlink and uplink",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.4",
+          "matched_agenda_item": "10.5.2.4",
+          "description": "Beam management for downlink and uplink",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.4",
+              "description": "Beam management for downlink and uplink",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk1",
@@ -50,7 +170,27 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": "9.5"
+      "agenda_item": "9.5",
+      "description": "Non-Terrestrial Networks (NTN) for NR Phase 4",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.5",
+          "matched_agenda_item": "9.5",
+          "description": "Non-Terrestrial Networks (NTN) for NR Phase 4",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.5",
+              "description": "Non-Terrestrial Networks (NTN) for NR Phase 4",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk1",
@@ -59,7 +199,32 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.7.1"
+      "agenda_item": "10.7.1",
+      "description": "NTN specific requirements and design for GNSS based operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.7.1",
+          "matched_agenda_item": "10.7.1",
+          "description": "NTN specific requirements and design for GNSS based operation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.7",
+              "description": "NTN",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.7.1",
+              "description": "NTN specific requirements and design for GNSS based operation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
@@ -68,7 +233,27 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "Maintenance",
-      "agenda_item": "8.2"
+      "agenda_item": "8.2",
+      "description": "Maintenance on NR MIMO Phase 5",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "8.2",
+          "matched_agenda_item": "8.2",
+          "description": "Maintenance on NR MIMO Phase 5",
+          "hierarchy": [
+            {
+              "agenda_item": "8",
+              "description": "Maintenance on Rel-19 NR and E-UTRA",
+              "has_description": true
+            },
+            {
+              "agenda_item": "8.2",
+              "description": "Maintenance on NR MIMO Phase 5",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
@@ -77,7 +262,32 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR / 6G waveform",
-      "agenda_item": "10.2.1"
+      "agenda_item": "10.2.1",
+      "description": "Waveform",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.2.1",
+          "matched_agenda_item": "10.2.1",
+          "description": "Waveform",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2",
+              "description": "Waveform for 6GR air interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2.1",
+              "description": "Waveform",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off1",
@@ -104,7 +314,32 @@
       "specified_start_time": "08:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.2.1"
+      "agenda_item": "10.2.1",
+      "description": "Waveform",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.2.1",
+          "matched_agenda_item": "10.2.1",
+          "description": "Waveform",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2",
+              "description": "Waveform for 6GR air interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2.1",
+              "description": "Waveform",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off2",
@@ -113,9 +348,56 @@
       "specified_start_time": "09:10",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.1, 10.8.2"
+      "agenda_item": "10.8.1, 10.8.2",
+      "description": "Evaluations",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-05-18T12:16:14.444191+00:00",
+  "merged_at": "2026-05-20T00:01:02.421316+00:00",
   "schema_version": 1
 }

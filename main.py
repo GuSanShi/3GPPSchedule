@@ -219,10 +219,26 @@ def main():
     else:
         print(f"  {len(time_slots)} time slots (from {len(cells)} cells)")
 
+    agenda_path: Path | None = None
+    agenda_urls = cfg.get("agenda_urls") or []
+    if agenda_urls and not args.no_download:
+        print(
+            f"\nLooking up meeting agenda from "
+            f"{len(agenda_urls)} agenda URL(s)..."
+        )
+        agenda_path = download_latest_agenda(agenda_urls)
+    if agenda_path is None:
+        agenda_path = find_local_latest_agenda()
+        if agenda_path is not None:
+            print(f"\nUsing local agenda: {agenda_path.name}")
+
     if not DEFAULT_JSON_PATH.exists() and not args.no_download:
         print("\nFetching agenda item descriptions...")
         try:
-            update_agenda_description_json(output_path=DEFAULT_JSON_PATH)
+            update_agenda_description_json(
+                output_path=DEFAULT_JSON_PATH,
+                agenda_docx_path=agenda_path,
+            )
             print(f"  Wrote {DEFAULT_JSON_PATH}")
         except Exception as e:
             print(f"  Warning: failed to fetch agenda item descriptions: {e}")
@@ -253,20 +269,7 @@ def main():
         # New meeting or no cached data → detect timezone.
         # Prefer the agenda DOCX (uploaded earlier than Chair notes), fall
         # back to Chair notes if no agenda is available.
-        location_source: Path | None = None
-
-        agenda_urls = cfg.get("agenda_urls") or []
-        if agenda_urls and not args.no_download:
-            print(
-                f"\nLooking up meeting agenda from "
-                f"{len(agenda_urls)} agenda URL(s)..."
-            )
-            location_source = download_latest_agenda(agenda_urls)
-        if location_source is None:
-            # Try a previously-cached agenda first (offline / no-download mode)
-            location_source = find_local_latest_agenda()
-            if location_source is not None:
-                print(f"\nUsing local agenda: {location_source.name}")
+        location_source: Path | None = agenda_path
 
         if location_source is None:
             # Fall back to Chair notes

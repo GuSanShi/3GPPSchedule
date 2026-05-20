@@ -111,7 +111,7 @@ def _agenda_description_popup_lines(session) -> list[str]:
             }
         ]
 
-    lines: list[str] = []
+    entries: list[dict[str, object]] = []
     for item in items:
         agenda_item = str(item.get("agenda_item") or "")
         matched = str(item.get("matched_agenda_item") or agenda_item)
@@ -122,34 +122,101 @@ def _agenda_description_popup_lines(session) -> list[str]:
         label = agenda_item
         if matched and matched != agenda_item:
             label = f"{agenda_item} -> {matched}"
-        header = (
-            f"<strong>{_esc(label)}:</strong> {_esc(description)}"
-            if label
-            else f"<strong>Description:</strong> {_esc(description)}"
+        entries.append(
+            {
+                "header": _agenda_description_header(label, description),
+                "hierarchy": _agenda_hierarchy_levels(item.get("hierarchy") or []),
+            }
         )
 
-        hierarchy_lines = []
-        for level in item.get("hierarchy") or []:
-            level_ai = str(level.get("agenda_item") or "")
-            level_desc = level.get("description")
-            if not level_ai:
-                continue
-            if level_desc:
-                hierarchy_lines.append(f"{_esc(level_ai)} - {_esc(str(level_desc))}")
-            else:
-                hierarchy_lines.append(_esc(level_ai))
-
-        path_html = ""
-        if len(hierarchy_lines) > 1:
+    if len(entries) > 1:
+        common_prefix = _common_hierarchy_prefix(
+            [entry["hierarchy"] for entry in entries]
+        )
+        if len(common_prefix) >= 2:
+            headers = [str(entry["header"]) for entry in entries]
+            leaf_levels = [
+                level
+                for entry in entries
+                for level in entry["hierarchy"][len(common_prefix):]
+            ]
+            path_lines = [
+                _agenda_hierarchy_line(level)
+                for level in [*common_prefix, *leaf_levels]
+            ]
             path_html = (
                 '<div class="popup-path">'
-                + "<br>".join(hierarchy_lines)
+                + "<br>".join(path_lines)
                 + "</div>"
             )
+            return [
+                '<div class="popup-description">'
+                + "<br>".join(headers)
+                + path_html
+                + "</div>"
+            ]
 
-        lines.append(f'<div class="popup-description">{header}{path_html}</div>')
+    lines: list[str] = []
+    for entry in entries:
+        hierarchy = entry["hierarchy"]
+        path_html = ""
+        if len(hierarchy) > 1:
+            path_html = (
+                '<div class="popup-path">'
+                + "<br>".join(_agenda_hierarchy_line(level) for level in hierarchy)
+                + "</div>"
+            )
+        lines.append(
+            f'<div class="popup-description">{entry["header"]}{path_html}</div>'
+        )
 
     return lines
+
+
+def _agenda_description_header(label: str, description: str) -> str:
+    if label:
+        return f"<strong>{_esc(label)}:</strong> {_esc(description)}"
+    return f"<strong>Description:</strong> {_esc(description)}"
+
+
+def _agenda_hierarchy_levels(raw_levels: list) -> list[dict[str, str | None]]:
+    levels: list[dict[str, str | None]] = []
+    for level in raw_levels:
+        level_ai = str(level.get("agenda_item") or "")
+        if not level_ai:
+            continue
+        level_desc = level.get("description")
+        levels.append(
+            {
+                "agenda_item": level_ai,
+                "description": str(level_desc) if level_desc else None,
+            }
+        )
+    return levels
+
+
+def _agenda_hierarchy_line(level: dict[str, str | None]) -> str:
+    agenda_item = level["agenda_item"] or ""
+    description = level.get("description")
+    if description:
+        return f"{_esc(agenda_item)} - {_esc(description)}"
+    return _esc(agenda_item)
+
+
+def _common_hierarchy_prefix(
+    hierarchies: list[list[dict[str, str | None]]],
+) -> list[dict[str, str | None]]:
+    if not hierarchies or any(not hierarchy for hierarchy in hierarchies):
+        return []
+
+    prefix: list[dict[str, str | None]] = []
+    for levels in zip(*hierarchies):
+        first = levels[0]
+        if all(level == first for level in levels[1:]):
+            prefix.append(first)
+        else:
+            break
+    return prefix
 
 
 def _generate_css(num_rooms_max: int) -> str:

@@ -1,0 +1,430 @@
+{
+  "generated_at": "2026-05-19T23:24:55.378675+00:00",
+  "source_type": "agenda_docx",
+  "source_file": "R1-2601750_Draft agenda for RAN1#124bis_v01.docx",
+  "source_url": null,
+  "agenda_items": [
+    {
+      "agenda_item": "1",
+      "description": "Opening of the meeting (Day 1: 9:00 am)"
+    },
+    {
+      "agenda_item": "1.1",
+      "description": "Call for IPR"
+    },
+    {
+      "agenda_item": "1.2",
+      "description": "Competition Law Statement"
+    },
+    {
+      "agenda_item": "1.3",
+      "description": "Network Usage Conditions"
+    },
+    {
+      "agenda_item": "1.4",
+      "description": "Consensus Principles Reminder"
+    },
+    {
+      "agenda_item": "1.5",
+      "description": "Streamlined Standards"
+    },
+    {
+      "agenda_item": "1.6",
+      "description": "Check-in for Registered Delegates"
+    },
+    {
+      "agenda_item": "2",
+      "description": "Approval of Agenda"
+    },
+    {
+      "agenda_item": "3",
+      "description": "Highlights from RAN plenary"
+    },
+    {
+      "agenda_item": "4",
+      "description": "Approval of Minutes from previous meetings"
+    },
+    {
+      "agenda_item": "5",
+      "description": "Incoming Liaison Statements"
+    },
+    {
+      "agenda_item": "6",
+      "description": "Pre-Rel-19 E-UTRA Maintenance"
+    },
+    {
+      "agenda_item": "7",
+      "description": "Pre-Rel-19 NR Maintenance"
+    },
+    {
+      "agenda_item": "8",
+      "description": "Maintenance on Rel-19 NR and E-UTRA"
+    },
+    {
+      "agenda_item": "8.1",
+      "description": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface"
+    },
+    {
+      "agenda_item": "8.2",
+      "description": "Maintenance on NR MIMO Phase 5"
+    },
+    {
+      "agenda_item": "8.3",
+      "description": "Maintenance on Evolution of NR duplex operation: Sub-band full duplex (SBFD)"
+    },
+    {
+      "agenda_item": "8.4",
+      "description": "Maintenance on Enhancements of network energy savings for NR"
+    },
+    {
+      "agenda_item": "8.5",
+      "description": "Maintenance on Low-power wake-up signal and receiver for NR (LP-WUS/WUR)"
+    },
+    {
+      "agenda_item": "8.6",
+      "description": "Maintenance on Non-Terrestrial Networks (NTN) for NR Phase 3, Internet of Things (IoT) Phase 3, and IoT-NTN TDD mode"
+    },
+    {
+      "agenda_item": "8.6.1",
+      "description": "Maintenance for Rel-19 NR NTN"
+    },
+    {
+      "agenda_item": "8.6.2",
+      "description": "Maintenance for Rel-19 IoT NTN"
+    },
+    {
+      "agenda_item": "8.7",
+      "description": "Maintenance on others"
+    },
+    {
+      "agenda_item": "8.8",
+      "description": "Maintenance on UE features"
+    },
+    {
+      "agenda_item": "9",
+      "description": "Release 20 NR"
+    },
+    {
+      "agenda_item": "9.1",
+      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements"
+    },
+    {
+      "agenda_item": "9.1.1",
+      "description": "CSI spatial/frequency compression without temporal aspects (“Case 0”)"
+    },
+    {
+      "agenda_item": "9.1.2",
+      "description": "Inter-vendor training collaboration for two-sided AI/ML models"
+    },
+    {
+      "agenda_item": "9.2",
+      "description": "NR MIMO Phase 6"
+    },
+    {
+      "agenda_item": "9.3",
+      "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2"
+    },
+    {
+      "agenda_item": "9.3.1",
+      "description": "R2D signals, channels, waveform and procedures"
+    },
+    {
+      "agenda_item": "9.3.2",
+      "description": "D2R signals, channels, waveform and procedures"
+    },
+    {
+      "agenda_item": "9.3.3",
+      "description": "Other procedures"
+    },
+    {
+      "agenda_item": "9.4",
+      "description": "Coverage Enhancement Phase 3"
+    },
+    {
+      "agenda_item": "9.4.1",
+      "description": "Coverage enhancement"
+    },
+    {
+      "agenda_item": "9.5",
+      "description": "Non-Terrestrial Networks (NTN) for NR Phase 4"
+    },
+    {
+      "agenda_item": "9.5.1",
+      "description": "NR-NTN GNSS resilience"
+    },
+    {
+      "agenda_item": "9.6",
+      "description": "Non-Terrestrial Networks (NTN) for Internet of Things (IoT) Phase 4"
+    },
+    {
+      "agenda_item": "9.6.1",
+      "description": "Semi-persistent scheduling for DL/UL data transmission for voice packets"
+    },
+    {
+      "agenda_item": "10",
+      "description": "Rel-20 Study of 6GR"
+    },
+    {
+      "agenda_item": "10.1",
+      "description": "Tasks from RP#111"
+    },
+    {
+      "agenda_item": "10.2",
+      "description": "Waveform for 6GR air interface"
+    },
+    {
+      "agenda_item": "10.2.1",
+      "description": "Waveform"
+    },
+    {
+      "agenda_item": "10.3",
+      "description": "Channel coding and modulation for 6GR interface"
+    },
+    {
+      "agenda_item": "10.3.1",
+      "description": "Channel coding"
+    },
+    {
+      "agenda_item": "10.3.2",
+      "description": "Modulation, Joint channel coding and modulation"
+    },
+    {
+      "agenda_item": "10.4",
+      "description": "Energy efficiency"
+    },
+    {
+      "agenda_item": "10.5",
+      "description": "Multi-antenna system"
+    },
+    {
+      "agenda_item": "10.5.0",
+      "description": "General aspects and frameworks"
+    },
+    {
+      "agenda_item": "10.5.1",
+      "description": "Initial access and mobility"
+    },
+    {
+      "agenda_item": "10.5.1.1",
+      "description": "Synchronization acquisition and beam measurement"
+    },
+    {
+      "agenda_item": "10.5.1.2",
+      "description": "PRACH and RACH procedure"
+    },
+    {
+      "agenda_item": "10.5.1.3",
+      "description": "Bandwidth operation"
+    },
+    {
+      "agenda_item": "10.5.2",
+      "description": "MIMO operation"
+    },
+    {
+      "agenda_item": "10.5.2.1",
+      "description": "Downlink transmission scheme(s) for downlink control channels"
+    },
+    {
+      "agenda_item": "10.5.2.2",
+      "description": "Downlink transmission scheme(s) for downlink shared channels"
+    },
+    {
+      "agenda_item": "10.5.2.3",
+      "description": "Uplink transmission scheme(s) for uplink channels"
+    },
+    {
+      "agenda_item": "10.5.2.4",
+      "description": "Beam management for downlink and uplink"
+    },
+    {
+      "agenda_item": "10.5.3",
+      "description": "CSI acquisition and report"
+    },
+    {
+      "agenda_item": "10.5.3.1",
+      "description": "Aspects of downlink-based CSI acquisition"
+    },
+    {
+      "agenda_item": "10.5.3.2",
+      "description": "Aspects of uplink-based CSI acquisition"
+    },
+    {
+      "agenda_item": "10.5.3.3",
+      "description": "Other aspects"
+    },
+    {
+      "agenda_item": "10.5.4",
+      "description": "Downlink control channel, scheduling and HARQ operation"
+    },
+    {
+      "agenda_item": "10.5.4.1",
+      "description": "Downlink control channel, scheduling for downlink and uplink transmission"
+    },
+    {
+      "agenda_item": "10.5.4.2",
+      "description": "Downlink and uplink transmission without downlink control channel"
+    },
+    {
+      "agenda_item": "10.5.4.3",
+      "description": "HARQ related Aspects"
+    },
+    {
+      "agenda_item": "10.5.4.4",
+      "description": "Handling of potential multiple uplink transmissions"
+    },
+    {
+      "agenda_item": "10.5.5",
+      "description": "Other physical layer signals, channels and procedure"
+    },
+    {
+      "agenda_item": "10.6",
+      "description": "WUS and operation"
+    },
+    {
+      "agenda_item": "10.6.1",
+      "description": "Downlink WUS and operation"
+    },
+    {
+      "agenda_item": "10.6.1.1",
+      "description": "Design of WUS with OFDM based sequence"
+    },
+    {
+      "agenda_item": "10.6.1.2",
+      "description": "WUS operation in RRC states"
+    },
+    {
+      "agenda_item": "10.6.2",
+      "description": "Uplink WUS and operation"
+    },
+    {
+      "agenda_item": "10.6.3",
+      "description": "WUS operation with other functionalities"
+    },
+    {
+      "agenda_item": "10.7",
+      "description": "NTN"
+    },
+    {
+      "agenda_item": "10.7.1",
+      "description": "NTN specific requirements and design for GNSS based operation"
+    },
+    {
+      "agenda_item": "10.7.2",
+      "description": "NTN specific requirements and design for GNSS-less/resilient operation"
+    },
+    {
+      "agenda_item": "10.8",
+      "description": "ISAC"
+    },
+    {
+      "agenda_item": "10.8.1",
+      "description": "Evaluations"
+    },
+    {
+      "agenda_item": "10.8.2",
+      "description": "Aspects of integration with communication"
+    },
+    {
+      "agenda_item": "10.8.3",
+      "description": "Waveform and frame structure"
+    },
+    {
+      "agenda_item": "11",
+      "description": "TEI"
+    },
+    {
+      "agenda_item": "12",
+      "description": "RAN1&RAN4 joint session"
+    },
+    {
+      "agenda_item": "13",
+      "description": "Closing of the meeting (Day 5, 17:00 pm at the latest)"
+    }
+  ],
+  "descriptions": {
+    "1": "Opening of the meeting (Day 1: 9:00 am)",
+    "1.1": "Call for IPR",
+    "1.2": "Competition Law Statement",
+    "1.3": "Network Usage Conditions",
+    "1.4": "Consensus Principles Reminder",
+    "1.5": "Streamlined Standards",
+    "1.6": "Check-in for Registered Delegates",
+    "2": "Approval of Agenda",
+    "3": "Highlights from RAN plenary",
+    "4": "Approval of Minutes from previous meetings",
+    "5": "Incoming Liaison Statements",
+    "6": "Pre-Rel-19 E-UTRA Maintenance",
+    "7": "Pre-Rel-19 NR Maintenance",
+    "8": "Maintenance on Rel-19 NR and E-UTRA",
+    "8.1": "Maintenance on Artificial Intelligence (AI)/Machine Learning (ML) for NR Air Interface",
+    "8.2": "Maintenance on NR MIMO Phase 5",
+    "8.3": "Maintenance on Evolution of NR duplex operation: Sub-band full duplex (SBFD)",
+    "8.4": "Maintenance on Enhancements of network energy savings for NR",
+    "8.5": "Maintenance on Low-power wake-up signal and receiver for NR (LP-WUS/WUR)",
+    "8.6": "Maintenance on Non-Terrestrial Networks (NTN) for NR Phase 3, Internet of Things (IoT) Phase 3, and IoT-NTN TDD mode",
+    "8.6.1": "Maintenance for Rel-19 NR NTN",
+    "8.6.2": "Maintenance for Rel-19 IoT NTN",
+    "8.7": "Maintenance on others",
+    "8.8": "Maintenance on UE features",
+    "9": "Release 20 NR",
+    "9.1": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+    "9.1.1": "CSI spatial/frequency compression without temporal aspects (“Case 0”)",
+    "9.1.2": "Inter-vendor training collaboration for two-sided AI/ML models",
+    "9.2": "NR MIMO Phase 6",
+    "9.3": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+    "9.3.1": "R2D signals, channels, waveform and procedures",
+    "9.3.2": "D2R signals, channels, waveform and procedures",
+    "9.3.3": "Other procedures",
+    "9.4": "Coverage Enhancement Phase 3",
+    "9.4.1": "Coverage enhancement",
+    "9.5": "Non-Terrestrial Networks (NTN) for NR Phase 4",
+    "9.5.1": "NR-NTN GNSS resilience",
+    "9.6": "Non-Terrestrial Networks (NTN) for Internet of Things (IoT) Phase 4",
+    "9.6.1": "Semi-persistent scheduling for DL/UL data transmission for voice packets",
+    "10": "Rel-20 Study of 6GR",
+    "10.1": "Tasks from RP#111",
+    "10.2": "Waveform for 6GR air interface",
+    "10.2.1": "Waveform",
+    "10.3": "Channel coding and modulation for 6GR interface",
+    "10.3.1": "Channel coding",
+    "10.3.2": "Modulation, Joint channel coding and modulation",
+    "10.4": "Energy efficiency",
+    "10.5": "Multi-antenna system",
+    "10.5.0": "General aspects and frameworks",
+    "10.5.1": "Initial access and mobility",
+    "10.5.1.1": "Synchronization acquisition and beam measurement",
+    "10.5.1.2": "PRACH and RACH procedure",
+    "10.5.1.3": "Bandwidth operation",
+    "10.5.2": "MIMO operation",
+    "10.5.2.1": "Downlink transmission scheme(s) for downlink control channels",
+    "10.5.2.2": "Downlink transmission scheme(s) for downlink shared channels",
+    "10.5.2.3": "Uplink transmission scheme(s) for uplink channels",
+    "10.5.2.4": "Beam management for downlink and uplink",
+    "10.5.3": "CSI acquisition and report",
+    "10.5.3.1": "Aspects of downlink-based CSI acquisition",
+    "10.5.3.2": "Aspects of uplink-based CSI acquisition",
+    "10.5.3.3": "Other aspects",
+    "10.5.4": "Downlink control channel, scheduling and HARQ operation",
+    "10.5.4.1": "Downlink control channel, scheduling for downlink and uplink transmission",
+    "10.5.4.2": "Downlink and uplink transmission without downlink control channel",
+    "10.5.4.3": "HARQ related Aspects",
+    "10.5.4.4": "Handling of potential multiple uplink transmissions",
+    "10.5.5": "Other physical layer signals, channels and procedure",
+    "10.6": "WUS and operation",
+    "10.6.1": "Downlink WUS and operation",
+    "10.6.1.1": "Design of WUS with OFDM based sequence",
+    "10.6.1.2": "WUS operation in RRC states",
+    "10.6.2": "Uplink WUS and operation",
+    "10.6.3": "WUS operation with other functionalities",
+    "10.7": "NTN",
+    "10.7.1": "NTN specific requirements and design for GNSS based operation",
+    "10.7.2": "NTN specific requirements and design for GNSS-less/resilient operation",
+    "10.8": "ISAC",
+    "10.8.1": "Evaluations",
+    "10.8.2": "Aspects of integration with communication",
+    "10.8.3": "Waveform and frame structure",
+    "11": "TEI",
+    "12": "RAN1&RAN4 joint session",
+    "13": "Closing of the meeting (Day 5, 17:00 pm at the latest)"
+  }
+}

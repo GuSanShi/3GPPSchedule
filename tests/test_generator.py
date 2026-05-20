@@ -1,0 +1,92 @@
+from types import SimpleNamespace
+
+from generator import _agenda_description_popup_lines
+
+
+def test_agenda_description_popup_deduplicates_common_hierarchy_prefix():
+    session = SimpleNamespace(
+        agenda_item="10.8.1, 10.8.2",
+        description="Evaluations",
+        agenda_descriptions=[
+            {
+                "agenda_item": "10.8.1",
+                "matched_agenda_item": "10.8.1",
+                "description": "Evaluations",
+                "hierarchy": [
+                    {
+                        "agenda_item": "10",
+                        "description": "Rel-20 Study of 6GR",
+                    },
+                    {"agenda_item": "10.8", "description": "ISAC"},
+                    {"agenda_item": "10.8.1", "description": "Evaluations"},
+                ],
+            },
+            {
+                "agenda_item": "10.8.2",
+                "matched_agenda_item": "10.8.2",
+                "description": "Aspects of integration with communication",
+                "hierarchy": [
+                    {
+                        "agenda_item": "10",
+                        "description": "Rel-20 Study of 6GR",
+                    },
+                    {"agenda_item": "10.8", "description": "ISAC"},
+                    {
+                        "agenda_item": "10.8.2",
+                        "description": "Aspects of integration with communication",
+                    },
+                ],
+            },
+        ],
+    )
+
+    lines = _agenda_description_popup_lines(session)
+
+    assert lines == [
+        '<div class="popup-description">'
+        "<strong>10.8.1:</strong> Evaluations<br>"
+        "<strong>10.8.2:</strong> Aspects of integration with communication"
+        '<div class="popup-path">'
+        "10 - Rel-20 Study of 6GR<br>"
+        "10.8 - ISAC<br>"
+        "10.8.1 - Evaluations<br>"
+        "10.8.2 - Aspects of integration with communication"
+        "</div></div>"
+    ]
+
+
+def test_agenda_description_popup_keeps_separate_paths_without_two_common_levels():
+    session = SimpleNamespace(
+        agenda_item="9.2, 10.3.1",
+        description="NR MIMO Phase 6",
+        agenda_descriptions=[
+            {
+                "agenda_item": "9.2",
+                "matched_agenda_item": "9.2",
+                "description": "NR MIMO Phase 6",
+                "hierarchy": [
+                    {"agenda_item": "9", "description": "Release 20 NR"},
+                    {"agenda_item": "9.2", "description": "NR MIMO Phase 6"},
+                ],
+            },
+            {
+                "agenda_item": "10.3.1",
+                "matched_agenda_item": "10.3.1",
+                "description": "Channel coding",
+                "hierarchy": [
+                    {"agenda_item": "10", "description": "Rel-20 Study of 6GR"},
+                    {
+                        "agenda_item": "10.3",
+                        "description": "Channel coding and modulation",
+                    },
+                    {"agenda_item": "10.3.1", "description": "Channel coding"},
+                ],
+            },
+        ],
+    )
+
+    lines = _agenda_description_popup_lines(session)
+
+    assert len(lines) == 2
+    assert "9 - Release 20 NR" in lines[0]
+    assert "10 - Rel-20 Study of 6GR" in lines[1]
