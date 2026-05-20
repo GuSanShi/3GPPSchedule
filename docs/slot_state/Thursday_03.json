@@ -3,7 +3,7 @@
   "time_block_index": 3,
   "source_hashes": {
     "Main Schedule": "84e560a3c529d368",
-    "Hiroki's schedule": "2e75d3cf7ac1ef87",
+    "Hiroki's schedule": "c51f5f38a8193073",
     "Sorour's schedule": "d5c41eb2cc771531"
   },
   "merged_sessions": [
@@ -262,7 +262,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -344,7 +344,7 @@
       "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4.x",
+      "group_header": "6G 10.5.4.x",
       "agenda_item": "10.5.4.1",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
@@ -383,7 +383,7 @@
       "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4.x",
+      "group_header": "6G 10.5.4.x",
       "agenda_item": "10.5.4.3",
       "description": "HARQ related aspects",
       "agenda_descriptions": [
@@ -422,7 +422,7 @@
       "duration_minutes": 25,
       "specified_start_time": "17:00",
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4.x",
+      "group_header": "6G",
       "agenda_item": "10.5.4.1",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
@@ -461,7 +461,7 @@
       "duration_minutes": 25,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4.x",
+      "group_header": "6G",
       "agenda_item": "10.5.4.3",
       "description": "HARQ related aspects",
       "agenda_descriptions": [
@@ -587,7 +587,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 60,
       "specified_start_time": "18:30",
       "chair": "Hiroki",
@@ -595,6 +595,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T10:19:58.788573+00:00",
+  "merged_at": "2026-05-20T11:01:20.452470+00:00",
   "schema_version": 1
 }

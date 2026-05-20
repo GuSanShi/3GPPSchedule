@@ -3,7 +3,7 @@
   "time_block_index": 0,
   "source_hashes": {
     "Main Schedule": "42b7f2fe1973daec",
-    "Hiroki's schedule": "dabb0840a4b97400",
+    "Hiroki's schedule": "d74187882f9867c0",
     "Sorour's schedule": "cd5c77b789b4132b"
   },
   "merged_sessions": [
@@ -149,7 +149,7 @@
       "duration_minutes": 10,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "AI 8 / Maintenance/TEI20",
+      "group_header": "Maintenance/TEI20",
       "agenda_item": "8.2",
       "description": "Maintenance on others",
       "agenda_descriptions": [
@@ -178,7 +178,7 @@
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "10.8 Sensing / 6G ISAC",
+      "group_header": "6G ISAC",
       "agenda_item": "10.8.1",
       "description": "Evaluations",
       "agenda_descriptions": [
@@ -212,7 +212,7 @@
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "R20 / Coverage / R20 Coverage",
+      "group_header": "R20 Coverage",
       "agenda_item": "9.4.1",
       "description": "Coverage enhancement",
       "agenda_descriptions": [
@@ -359,14 +359,14 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
       "specified_start_time": "08:30",
       "chair": "Hiroki",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T10:19:41.507573+00:00",
+  "merged_at": "2026-05-20T11:01:05.040059+00:00",
   "schema_version": 1
 }

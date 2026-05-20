@@ -3,7 +3,7 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "c052745c0ba7f5f9",
-    "Hiroki's schedule": "96911480f466297c",
+    "Hiroki's schedule": "d7e96e9b3b7bb647",
     "Sorour's schedule": "6e988ed202e232a5"
   },
   "merged_sessions": [
@@ -105,7 +105,7 @@
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 6G waveform",
+      "group_header": "6G waveform",
       "agenda_item": "10.2.1",
       "description": "Waveform",
       "agenda_descriptions": [
@@ -139,7 +139,7 @@
       "duration_minutes": 20,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 6G ISAC",
+      "group_header": "6G ISAC",
       "agenda_item": "10.8.2",
       "description": "Aspects of integration with communication",
       "agenda_descriptions": [
@@ -173,7 +173,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 6G ISAC",
+      "group_header": "6G ISAC",
       "agenda_item": "10.8.3",
       "description": "Waveform and frame structure",
       "agenda_descriptions": [
@@ -396,6 +396,6 @@
       ]
     }
   ],
-  "merged_at": "2026-05-20T10:19:52.578278+00:00",
+  "merged_at": "2026-05-20T11:01:13.315966+00:00",
   "schema_version": 1
 }
