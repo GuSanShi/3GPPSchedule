@@ -2,9 +2,9 @@
   "day": "Tuesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "4f05d24d33533ca7",
+    "Main Schedule": "bba7ec56ab8e74cc",
     "Hiroki's schedule": "1a7396a3ef06e4a8",
-    "Sorour's schedule": "e1d81010843b16ab"
+    "Sorour's schedule": "ef86f3db23c1cc99"
   },
   "merged_sessions": [
     {
@@ -76,7 +76,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "R20",
+      "group_header": "R20 / NTN-IoT",
       "agenda_item": "9.6",
       "description": "Non-Terrestrial Networks (NTN) for Internet of Things (IoT) Phase 4",
       "agenda_descriptions": [
@@ -105,7 +105,7 @@
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "R20",
+      "group_header": "R20 / MIMO",
       "agenda_item": "9.2",
       "description": "NR MIMO Phase 6",
       "agenda_descriptions": [
@@ -171,12 +171,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8.1",
-      "duration_minutes": 30,
+      "name": "10.8 Sensing",
+      "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G ISAC",
-      "agenda_item": "10.8.1",
+      "group_header": "6GR",
+      "agenda_item": "10.8.1, 10.8.3",
       "description": "Evaluations",
       "agenda_descriptions": [
         {
@@ -200,19 +200,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.3",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6G ISAC",
-      "agenda_item": "10.8.3",
-      "description": "Waveform and frame structure",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -239,7 +227,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 Coverage",
+      "name": "Coverage",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -274,10 +262,10 @@
     {
       "room_name": "RAN1_off1",
       "name": "10.5.4.1",
-      "duration_minutes": 20,
-      "specified_start_time": "11:00",
+      "duration_minutes": 60,
+      "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G",
+      "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
@@ -304,45 +292,6 @@
             {
               "agenda_item": "10.5.4.1",
               "description": "Downlink control channel, scheduling for downlink and uplink transmission",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_off1",
-      "name": "10.5.4.3",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6G",
-      "agenda_item": null,
-      "description": "HARQ related aspects",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.4.3",
-          "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related aspects",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.4",
-              "description": "Downlink control channel, scheduling and HARQ operation",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.4.3",
-              "description": "HARQ related aspects",
               "has_description": true
             }
           ]
@@ -429,7 +378,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 A-IoT",
+      "name": "A-IoT",
       "duration_minutes": 60,
       "specified_start_time": "11:00",
       "chair": "Hiroki",
@@ -446,6 +395,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-20T03:07:04.311930+00:00",
+  "merged_at": "2026-05-20T06:30:59.061135+00:00",
   "schema_version": 1
 }
