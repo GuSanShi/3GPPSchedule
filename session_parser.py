@@ -664,11 +664,24 @@ Example 3 – single leaf:
 
 4. Always prefer the MOST SPECIFIC name. "AI 9.1.1" > "AI/ML". "AI 9.6 R20 NTN-NR" > "NTN-NR".
 
-5. For offline rooms: the main schedule content is authoritative.
+5. When you enrich a coarse main-schedule entry with agenda metadata from
+   vice-chair detail, also check whether that same vice-chair detail provides
+   a clear leaf breakdown for the enriched agenda item.
+   - If the main entry is coarse (e.g. "AI 8 (60)") and the vice-chair detail
+     supplies same-agenda leaf items whose durations add up to that coarse
+     duration (e.g. "Maintenance (60) / 8.2 R19 Duplex (40) /
+     8.2 R19 LP-WUS (20)"), prefer the leaf sessions over the coarse entry.
+   - Treat the agenda metadata and the leaf breakdown as coming from the same
+     evidence. Avoid keeping only the agenda_item on the coarse entry when the
+     associated leaf schedule is clear.
+   - If the leaf relationship is ambiguous, conflicting, or does not fit the
+     main duration, keep the safer coarse entry.
+
+6. For offline rooms: the main schedule content is authoritative.
    e.g. "Hiroki (120) / R20 / A-IoT (120)" → Offline B has one session, chair=Hiroki.
    Vice-chair detail for offline rooms just confirms this.
 
-6. Total leaf durations per room must NOT exceed the time block duration,
+7. Total leaf durations per room must NOT exceed the time block duration,
    UNLESS the cell text contains explicit time ranges (see "Explicit time
    ranges" section below).
 

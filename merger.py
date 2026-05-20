@@ -18,6 +18,9 @@ from parser import parse_docx, build_room_list
 from slot_state import hash_source_text, load_slot_state
 
 
+MERGE_PROMPT_VERSION = 2
+
+
 # ── Room name resolution ────────────────────────────────────
 
 
@@ -178,7 +181,7 @@ class TimeSlotData:
 def _serialize_source(source: SlotSource) -> str:
     """Stable serialization of a source's entries for hashing."""
     entries = sorted(source.entries, key=lambda e: e.room_label)
-    lines = []
+    lines = [f"merge_prompt_v{MERGE_PROMPT_VERSION}"]
     for e in entries:
         cell = re.sub(r"\s+", " ", e.cell_text).strip()
         lines.append(f"{e.room_label}\t{cell}")
@@ -365,4 +368,3 @@ def _annotate_freshness(slot: TimeSlotData) -> None:
     slot.source_freshness = freshness
     slot.previous_merge = prev_state.merged_sessions
     slot.all_stale = bool(freshness) and all(v == "STALE" for v in freshness.values())
-
