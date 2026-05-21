@@ -2,7 +2,7 @@
   "day": "Friday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "8758136bc57a4d84",
+    "Main Schedule": "fab6de4788cc0af3",
     "Hiroki's schedule": "d3cea37c375e428c",
     "Sorour's schedule": "11112bae9621cdd8"
   },
@@ -70,18 +70,18 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "6G waveform",
+      "name": "10.8.x",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR check points",
-      "agenda_item": "10.2.1",
-      "description": "Waveform",
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Integrated Sensing And Communication (ISAC) for NR",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.2.1",
-          "matched_agenda_item": "10.2.1",
-          "description": "Waveform",
+          "agenda_item": "10.8.x",
+          "matched_agenda_item": "10.8",
+          "description": "Integrated Sensing And Communication (ISAC) for NR",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -89,13 +89,8 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.2",
-              "description": "Waveform for 6GR air interface",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2.1",
-              "description": "Waveform",
+              "agenda_item": "10.8",
+              "description": "Integrated Sensing And Communication (ISAC) for NR",
               "has_description": true
             }
           ]
@@ -104,18 +99,27 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "6G ISAC",
+      "name": "6GR check points",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR check points",
-      "agenda_item": "10.8.1, 10.8.2",
-      "description": "Evaluations",
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_off1",
+      "name": "10.5.2.4",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Xiaodong",
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Beam management for downlink and uplink",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.1",
-          "matched_agenda_item": "10.8.1",
-          "description": "Evaluations",
+          "agenda_item": "10.5.2.4",
+          "matched_agenda_item": "10.5.2.4",
+          "description": "Beam management for downlink and uplink",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -123,35 +127,18 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.8",
-              "description": "Integrated Sensing And Communication (ISAC) for NR",
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
               "has_description": true
             },
             {
-              "agenda_item": "10.8.1",
-              "description": "Evaluations",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "10.8.2",
-          "matched_agenda_item": "10.8.2",
-          "description": "Aspects of integration with communication",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
               "has_description": true
             },
             {
-              "agenda_item": "10.8",
-              "description": "Integrated Sensing And Communication (ISAC) for NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.2",
-              "description": "Aspects of integration with communication",
+              "agenda_item": "10.5.2.4",
+              "description": "Beam management for downlink and uplink",
               "has_description": true
             }
           ]
@@ -159,6 +146,6 @@
       ]
     }
   ],
-  "merged_at": "2026-05-21T09:01:08.362557+00:00",
+  "merged_at": "2026-05-21T11:45:56.153101+00:00",
   "schema_version": 1
 }
