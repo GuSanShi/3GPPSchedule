@@ -3,7 +3,7 @@
   "time_block_index": 1,
   "source_hashes": {
     "Main Schedule": "3b1b3d95eb29f19c",
-    "Hiroki's schedule": "66ac09350bdb0b7e",
+    "Hiroki's schedule": "c8188c7504ed9760",
     "Sorour's schedule": "08214663955ad150"
   },
   "merged_sessions": [
@@ -230,7 +230,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "R20",
-      "agenda_item": "9.3.2, 9.3.3, 9.3.1",
+      "agenda_item": "Draft LS, 9.3.2, 9.3.3, 9.3.1",
       "description": "D2R signals, channels, waveform and procedures",
       "agenda_descriptions": [
         {
@@ -405,6 +405,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-05-21T05:27:31.728040+00:00",
+  "merged_at": "2026-05-21T05:31:03.783651+00:00",
   "schema_version": 1
 }
