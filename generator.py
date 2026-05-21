@@ -114,17 +114,13 @@ def _agenda_description_popup_lines(session) -> list[str]:
     entries: list[dict[str, object]] = []
     for item in items:
         agenda_item = str(item.get("agenda_item") or "")
-        matched = str(item.get("matched_agenda_item") or agenda_item)
         description = str(item.get("description") or "")
         if not description:
             continue
 
-        label = agenda_item
-        if matched and matched != agenda_item:
-            label = f"{agenda_item} -> {matched}"
         entries.append(
             {
-                "header": _agenda_description_header(label, description),
+                "header": _agenda_description_header(agenda_item, description),
                 "hierarchy": _agenda_hierarchy_levels(item.get("hierarchy") or []),
             }
         )
@@ -133,26 +129,18 @@ def _agenda_description_popup_lines(session) -> list[str]:
         common_prefix = _common_hierarchy_prefix(
             [entry["hierarchy"] for entry in entries]
         )
-        if len(common_prefix) >= 2:
-            headers = [str(entry["header"]) for entry in entries]
-            leaf_levels = [
-                level
-                for entry in entries
-                for level in entry["hierarchy"][len(common_prefix):]
-            ]
-            path_lines = [
-                _agenda_hierarchy_line(level)
-                for level in [*common_prefix, *leaf_levels]
-            ]
+        if len(common_prefix) >= 1:
+            prefix_lines = [_agenda_hierarchy_line(level) for level in common_prefix]
             path_html = (
                 '<div class="popup-path">'
-                + "<br>".join(path_lines)
+                + "<br>".join(prefix_lines)
                 + "</div>"
             )
+            leaf_html = "<br>".join(str(entry["header"]) for entry in entries)
             return [
                 '<div class="popup-description">'
-                + "<br>".join(headers)
                 + path_html
+                + leaf_html
                 + "</div>"
             ]
 
@@ -160,14 +148,15 @@ def _agenda_description_popup_lines(session) -> list[str]:
     for entry in entries:
         hierarchy = entry["hierarchy"]
         path_html = ""
-        if len(hierarchy) > 1:
+        prefix = hierarchy[:-1] if len(hierarchy) > 1 else []
+        if prefix:
             path_html = (
                 '<div class="popup-path">'
-                + "<br>".join(_agenda_hierarchy_line(level) for level in hierarchy)
+                + "<br>".join(_agenda_hierarchy_line(level) for level in prefix)
                 + "</div>"
             )
         lines.append(
-            f'<div class="popup-description">{entry["header"]}{path_html}</div>'
+            f'<div class="popup-description">{path_html}{entry["header"]}</div>'
         )
 
     return lines
