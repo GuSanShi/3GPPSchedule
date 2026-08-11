@@ -204,7 +204,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "Integrated Sensing And Communication (ISAC) for NR",
+              "description": "ISAC",
               "has_description": true
             },
             {
@@ -226,7 +226,7 @@
             },
             {
               "agenda_item": "10.8",
-              "description": "Integrated Sensing And Communication (ISAC) for NR",
+              "description": "ISAC",
               "has_description": true
             },
             {
@@ -246,12 +246,12 @@
       "chair": "Hiroki",
       "group_header": "R20",
       "agenda_item": "9.4.1",
-      "description": "Coverage enhancement",
+      "description": "NR-NTN GNSS resilience",
       "agenda_descriptions": [
         {
           "agenda_item": "9.4.1",
           "matched_agenda_item": "9.4.1",
-          "description": "Coverage enhancement",
+          "description": "NR-NTN GNSS resilience",
           "hierarchy": [
             {
               "agenda_item": "9",
@@ -260,12 +260,12 @@
             },
             {
               "agenda_item": "9.4",
-              "description": "Coverage Enhancement Phase 3",
+              "description": "GNSS resilient NR-NTN operation",
               "has_description": true
             },
             {
               "agenda_item": "9.4.1",
-              "description": "Coverage enhancement",
+              "description": "NR-NTN GNSS resilience",
               "has_description": true
             }
           ]
@@ -492,6 +492,6 @@
       ]
     }
   ],
-  "merged_at": "2026-07-12T20:03:23.751055+00:00",
+  "merged_at": "2026-08-11T01:36:18.011310+00:00",
   "schema_version": 1
 }

@@ -93,12 +93,12 @@
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Beam management for downlink and uplink",
+      "description": "MIMO operation",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.2.4",
-          "matched_agenda_item": "10.5.2.4",
-          "description": "Beam management for downlink and uplink",
+          "matched_agenda_item": "10.5.2",
+          "description": "MIMO operation",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -113,11 +113,6 @@
             {
               "agenda_item": "10.5.2",
               "description": "MIMO operation",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.2.4",
-              "description": "Beam management for downlink and uplink",
               "has_description": true
             }
           ]
@@ -346,12 +341,12 @@
       "chair": "Hiroki",
       "group_header": "6G 10.5.4.x",
       "agenda_item": "10.5.4.3",
-      "description": "HARQ related aspects",
+      "description": "HARQ related Aspects",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related aspects",
+          "description": "HARQ related Aspects",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -370,7 +365,7 @@
             },
             {
               "agenda_item": "10.5.4.3",
-              "description": "HARQ related aspects",
+              "description": "HARQ related Aspects",
               "has_description": true
             }
           ]
@@ -463,12 +458,12 @@
       "chair": "Hiroki",
       "group_header": "6G",
       "agenda_item": "10.5.4.3",
-      "description": "HARQ related aspects",
+      "description": "HARQ related Aspects",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
-          "description": "HARQ related aspects",
+          "description": "HARQ related Aspects",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -487,7 +482,7 @@
             },
             {
               "agenda_item": "10.5.4.3",
-              "description": "HARQ related aspects",
+              "description": "HARQ related Aspects",
               "has_description": true
             }
           ]
@@ -502,12 +497,12 @@
       "chair": "Xiaodong",
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "General aspects and frameworks",
+      "description": "Multi-antenna system",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.0",
-          "matched_agenda_item": "10.5.0",
-          "description": "General aspects and frameworks",
+          "matched_agenda_item": "10.5",
+          "description": "Multi-antenna system",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -517,11 +512,6 @@
             {
               "agenda_item": "10.5",
               "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.0",
-              "description": "General aspects and frameworks",
               "has_description": true
             }
           ]
@@ -595,6 +585,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-07-12T20:03:23.757446+00:00",
+  "merged_at": "2026-08-11T01:36:18.016524+00:00",
   "schema_version": 1
 }

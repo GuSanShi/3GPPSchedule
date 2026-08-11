@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-07-12T20:03:22.170944+00:00",
+  "generated_at": "2026-08-11T01:36:16.410469+00:00",
   "source_type": "agenda_csv",
   "source_file": "agenda.csv",
-  "source_url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/Agenda/agenda.csv",
-  "source_uploaded_at": "2026-06-18T05:42:00",
+  "source_url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_126/Agenda/agenda.csv",
+  "source_uploaded_at": "2026-08-10T05:42:00",
   "source_agenda_file": "agenda.csv",
   "agenda_items": [
     {
@@ -40,7 +40,7 @@
     },
     {
       "agenda_item": "8.1",
-      "description": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN"
+      "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT"
     },
     {
       "agenda_item": "8.2",
@@ -88,27 +88,11 @@
     },
     {
       "agenda_item": "9.4",
-      "description": "Coverage Enhancement Phase 3"
+      "description": "GNSS resilient NR-NTN operation"
     },
     {
       "agenda_item": "9.4.1",
-      "description": "Coverage enhancement"
-    },
-    {
-      "agenda_item": "9.5",
-      "description": "Non-Terrestrial Networks (NTN) for NR Phase 4"
-    },
-    {
-      "agenda_item": "9.5.1",
       "description": "NR-NTN GNSS resilience"
-    },
-    {
-      "agenda_item": "9.6",
-      "description": "Non-Terrestrial Networks (NTN) for Internet of Things (IoT) Phase 4"
-    },
-    {
-      "agenda_item": "9.6.1",
-      "description": "Semi-persistent scheduling for DL/UL data transmission for voice packets"
     },
     {
       "agenda_item": "10",
@@ -140,15 +124,19 @@
     },
     {
       "agenda_item": "10.4",
-      "description": "Void"
+      "description": "Multiple carrier operation"
+    },
+    {
+      "agenda_item": "10.4.1",
+      "description": "Operation in idle mode"
+    },
+    {
+      "agenda_item": "10.4.2",
+      "description": "Operation in connected mode"
     },
     {
       "agenda_item": "10.5",
       "description": "Multi-antenna system"
-    },
-    {
-      "agenda_item": "10.5.0",
-      "description": "General aspects and frameworks"
     },
     {
       "agenda_item": "10.5.1",
@@ -183,10 +171,6 @@
       "description": "Uplink transmission scheme(s) for uplink channels"
     },
     {
-      "agenda_item": "10.5.2.4",
-      "description": "Beam management for downlink and uplink"
-    },
-    {
       "agenda_item": "10.5.3",
       "description": "CSI acquisition and report"
     },
@@ -203,6 +187,10 @@
       "description": "Other aspects"
     },
     {
+      "agenda_item": "10.5.3.4",
+      "description": "Beam management for downlink and uplink"
+    },
+    {
       "agenda_item": "10.5.4",
       "description": "Downlink control channel, scheduling and HARQ operation"
     },
@@ -216,7 +204,7 @@
     },
     {
       "agenda_item": "10.5.4.3",
-      "description": "HARQ related aspects"
+      "description": "HARQ related Aspects"
     },
     {
       "agenda_item": "10.5.4.4",
@@ -236,7 +224,7 @@
     },
     {
       "agenda_item": "10.6.1.1",
-      "description": "Design of WUS with OFDM-based sequence"
+      "description": "Design of WUS with OFDM based sequence"
     },
     {
       "agenda_item": "10.6.1.2",
@@ -256,15 +244,11 @@
     },
     {
       "agenda_item": "10.7.1",
-      "description": "NTN specific requirements and design for GNSS based operation"
-    },
-    {
-      "agenda_item": "10.7.2",
-      "description": "NTN specific requirements and design for GNSS-less/resilient operation"
+      "description": "NTN specific requirements and design"
     },
     {
       "agenda_item": "10.8",
-      "description": "Integrated Sensing And Communication (ISAC) for NR"
+      "description": "ISAC"
     },
     {
       "agenda_item": "10.8.1",
@@ -296,7 +280,7 @@
     "6": "Pre-Rel-19 E-UTRA Maintenance",
     "7": "Pre-Rel-19 NR Maintenance",
     "8": "Maintenance on Rel-19 NR and E-UTRA",
-    "8.1": "Maintenance on AI/ML for NR Air Interface, NR MIMO Phase 5, NES for NR, NTN",
+    "8.1": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
     "8.2": "Maintenance on others",
     "8.3": "Maintenance on UE features",
     "9": "Release 20 NR",
@@ -308,12 +292,8 @@
     "9.3.1": "R2D signals, channels, waveform and procedures",
     "9.3.2": "D2R signals, channels, waveform and procedures",
     "9.3.3": "Other procedures",
-    "9.4": "Coverage Enhancement Phase 3",
-    "9.4.1": "Coverage enhancement",
-    "9.5": "Non-Terrestrial Networks (NTN) for NR Phase 4",
-    "9.5.1": "NR-NTN GNSS resilience",
-    "9.6": "Non-Terrestrial Networks (NTN) for Internet of Things (IoT) Phase 4",
-    "9.6.1": "Semi-persistent scheduling for DL/UL data transmission for voice packets",
+    "9.4": "GNSS resilient NR-NTN operation",
+    "9.4.1": "NR-NTN GNSS resilience",
     "10": "Rel-20 Study of 6GR",
     "10.1": "Tasks from RP#111",
     "10.2": "Waveform for 6GR air interface",
@@ -321,9 +301,10 @@
     "10.3": "Channel coding and modulation for 6GR interface",
     "10.3.1": "Channel coding",
     "10.3.2": "Modulation, Joint channel coding and modulation",
-    "10.4": "Void",
+    "10.4": "Multiple carrier operation",
+    "10.4.1": "Operation in idle mode",
+    "10.4.2": "Operation in connected mode",
     "10.5": "Multi-antenna system",
-    "10.5.0": "General aspects and frameworks",
     "10.5.1": "Initial access and mobility",
     "10.5.1.1": "Synchronization acquisition and beam measurement",
     "10.5.1.2": "PRACH and RACH procedure",
@@ -332,27 +313,26 @@
     "10.5.2.1": "Downlink transmission scheme(s) for downlink control channels",
     "10.5.2.2": "Downlink transmission scheme(s) for downlink shared channels",
     "10.5.2.3": "Uplink transmission scheme(s) for uplink channels",
-    "10.5.2.4": "Beam management for downlink and uplink",
     "10.5.3": "CSI acquisition and report",
     "10.5.3.1": "Aspects of downlink-based CSI acquisition",
     "10.5.3.2": "Aspects of uplink-based CSI acquisition",
     "10.5.3.3": "Other aspects",
+    "10.5.3.4": "Beam management for downlink and uplink",
     "10.5.4": "Downlink control channel, scheduling and HARQ operation",
     "10.5.4.1": "Downlink control channel, scheduling for downlink and uplink transmission",
     "10.5.4.2": "Downlink and uplink transmission without downlink control channel",
-    "10.5.4.3": "HARQ related aspects",
+    "10.5.4.3": "HARQ related Aspects",
     "10.5.4.4": "Handling of potential multiple uplink transmissions",
     "10.5.5": "Other physical layer signals, channels and procedure",
     "10.6": "WUS and operation",
     "10.6.1": "Downlink WUS and operation",
-    "10.6.1.1": "Design of WUS with OFDM-based sequence",
+    "10.6.1.1": "Design of WUS with OFDM based sequence",
     "10.6.1.2": "WUS operation in RRC states",
     "10.6.2": "Uplink WUS and operation",
     "10.6.3": "WUS operation with other functionalities",
     "10.7": "NTN",
-    "10.7.1": "NTN specific requirements and design for GNSS based operation",
-    "10.7.2": "NTN specific requirements and design for GNSS-less/resilient operation",
-    "10.8": "Integrated Sensing And Communication (ISAC) for NR",
+    "10.7.1": "NTN specific requirements and design",
+    "10.8": "ISAC",
     "10.8.1": "Evaluations",
     "10.8.2": "Aspects of integration with communication",
     "10.8.3": "Waveform and frame structure",

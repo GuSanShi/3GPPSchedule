@@ -13,12 +13,12 @@
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "General aspects and frameworks",
+      "description": "Multi-antenna system",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.0",
-          "matched_agenda_item": "10.5.0",
-          "description": "General aspects and frameworks",
+          "matched_agenda_item": "10.5",
+          "description": "Multi-antenna system",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -28,11 +28,6 @@
             {
               "agenda_item": "10.5",
               "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.0",
-              "description": "General aspects and frameworks",
               "has_description": true
             }
           ]
@@ -299,12 +294,12 @@
       "chair": "Sorouri",
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "NTN specific requirements and design for GNSS based operation",
+      "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
           "agenda_item": "10.7.1",
           "matched_agenda_item": "10.7.1",
-          "description": "NTN specific requirements and design for GNSS based operation",
+          "description": "NTN specific requirements and design",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -318,7 +313,7 @@
             },
             {
               "agenda_item": "10.7.1",
-              "description": "NTN specific requirements and design for GNSS based operation",
+              "description": "NTN specific requirements and design",
               "has_description": true
             }
           ]
@@ -326,6 +321,6 @@
       ]
     }
   ],
-  "merged_at": "2026-07-12T20:03:23.740652+00:00",
+  "merged_at": "2026-08-11T01:36:18.000988+00:00",
   "schema_version": 1
 }
