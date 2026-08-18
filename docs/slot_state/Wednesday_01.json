@@ -112,11 +112,23 @@
       "name": "AI 6/8.1",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "",
-      "agenda_item": "8.1",
-      "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+      "agenda_item": null,
+      "description": "Pre-Rel-19 E-UTRA Maintenance",
       "agenda_descriptions": [
+        {
+          "agenda_item": "6",
+          "matched_agenda_item": "6",
+          "description": "Pre-Rel-19 E-UTRA Maintenance",
+          "hierarchy": [
+            {
+              "agenda_item": "6",
+              "description": "Pre-Rel-19 E-UTRA Maintenance",
+              "has_description": true
+            }
+          ]
+        },
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
@@ -141,7 +153,7 @@
       "name": "AI/ML",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": null
     },
@@ -150,7 +162,7 @@
       "name": "10.2.1 Waveform",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Waveform",
@@ -181,32 +193,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
+      "name": "Sensing",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "ISAC",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": null,
+      "group_header": "6GR / 10.8",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -359,6 +351,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-18T01:44:55.882243+00:00",
+  "merged_at": "2026-08-18T02:01:46.769695+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

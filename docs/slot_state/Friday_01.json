@@ -31,42 +31,9 @@
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_off1",
-      "name": "10.5.2.4",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Xiaodong",
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "MIMO operation",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.2.4",
-          "matched_agenda_item": "10.5.2",
-          "description": "MIMO operation",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.2",
-              "description": "MIMO operation",
-              "has_description": true
-            }
-          ]
-        }
-      ]
     }
   ],
-  "merged_at": "2026-08-18T01:45:30.667623+00:00",
+  "merged_at": "2026-08-18T02:02:14.089064+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

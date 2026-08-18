@@ -12,7 +12,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -127,33 +127,18 @@
       "name": "NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
       "name": "10.7.1 NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -194,11 +179,23 @@
       "name": "AI 7/8.2",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "",
-      "agenda_item": "8.2",
-      "description": "Maintenance on others",
+      "agenda_item": null,
+      "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
+        {
+          "agenda_item": "7",
+          "matched_agenda_item": "7",
+          "description": "Pre-Rel-19 NR Maintenance",
+          "hierarchy": [
+            {
+              "agenda_item": "7",
+              "description": "Pre-Rel-19 NR Maintenance",
+              "has_description": true
+            }
+          ]
+        },
         {
           "agenda_item": "8.2",
           "matched_agenda_item": "8.2",
@@ -257,7 +254,7 @@
       "name": "A-IoT Phase2",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": null
     },
@@ -334,6 +331,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-18T01:45:10.737787+00:00",
+  "merged_at": "2026-08-18T02:01:57.896702+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

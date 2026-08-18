@@ -154,9 +154,9 @@
     {
       "room_name": "RAN1_brk2",
       "name": "AI 7/8.2",
-      "duration_minutes": 120,
+      "duration_minutes": 90,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "",
       "agenda_item": null,
       "description": "Pre-Rel-19 NR Maintenance",
@@ -191,6 +191,15 @@
           ]
         }
       ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "TEI",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -265,6 +274,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-18T01:44:59.647732+00:00",
+  "merged_at": "2026-08-18T02:01:50.008468+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

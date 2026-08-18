@@ -127,33 +127,18 @@
       "name": "NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
       "name": "10.7.1 NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -194,7 +179,7 @@
       "name": "10.5.4",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink control channel, scheduling and HARQ operation",
@@ -312,7 +297,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
+      "agenda_item": null,
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -346,13 +331,13 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.1, 10.8.3",
-      "description": "Evaluations",
+      "agenda_item": null,
+      "description": "ISAC",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.1",
-          "matched_agenda_item": "10.8.1",
-          "description": "Evaluations",
+          "agenda_item": "10.8.x",
+          "matched_agenda_item": "10.8",
+          "description": "ISAC",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -362,33 +347,6 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.1",
-              "description": "Evaluations",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "10.8.3",
-          "matched_agenda_item": "10.8.3",
-          "description": "Waveform and frame structure",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.3",
-              "description": "Waveform and frame structure",
               "has_description": true
             }
           ]
@@ -396,6 +354,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-18T01:44:28.808437+00:00",
+  "merged_at": "2026-08-18T02:01:27.698446+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

@@ -68,33 +68,18 @@
       "name": "NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
       "name": "10.7.1 NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -135,93 +120,24 @@
       "name": "A-IoT Phase2",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.3.1, 9.3.2, 9.3.3",
-      "description": "R2D signals, channels, waveform and procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.1",
-          "matched_agenda_item": "9.3.1",
-          "description": "R2D signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.1",
-              "description": "R2D signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.3",
-          "matched_agenda_item": "9.3.3",
-          "description": "Other procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.3",
-              "description": "Other procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk2",
       "name": "10.8 Sensing",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.8.2",
-      "description": "Aspects of integration with communication",
+      "agenda_item": null,
+      "description": "ISAC",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.2",
-          "matched_agenda_item": "10.8.2",
-          "description": "Aspects of integration with communication",
+          "agenda_item": "10.8",
+          "matched_agenda_item": "10.8",
+          "description": "ISAC",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -231,11 +147,6 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.2",
-              "description": "Aspects of integration with communication",
               "has_description": true
             }
           ]
@@ -438,7 +349,7 @@
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
+      "group_header": "",
       "agenda_item": null,
       "description": "Downlink control channel, scheduling and HARQ operation",
       "agenda_descriptions": [
@@ -467,6 +378,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-18T01:44:17.761923+00:00",
+  "merged_at": "2026-08-18T02:01:19.366858+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

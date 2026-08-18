@@ -78,31 +78,16 @@
       "name": "AI/ML",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
       "name": "Sweep 6GR",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null
     },
@@ -111,78 +96,9 @@
       "name": "A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.3.3, 9.3.2, 9.3.1",
-      "description": "Other procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.3",
-          "matched_agenda_item": "9.3.3",
-          "description": "Other procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.3",
-              "description": "Other procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.1",
-          "matched_agenda_item": "9.3.1",
-          "description": "R2D signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.1",
-              "description": "R2D signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -291,6 +207,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-18T01:45:28.305871+00:00",
+  "merged_at": "2026-08-18T02:02:11.811030+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

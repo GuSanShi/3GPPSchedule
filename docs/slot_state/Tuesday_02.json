@@ -208,54 +208,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "R20",
-      "agenda_item": "9.3.1, 9.3.2",
-      "description": "R2D signals, channels, waveform and procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.1",
-          "matched_agenda_item": "9.3.1",
-          "description": "R2D signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.1",
-              "description": "R2D signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -443,6 +396,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-18T01:44:39.118804+00:00",
+  "merged_at": "2026-08-18T02:01:35.070907+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }

@@ -166,9 +166,9 @@
       "name": "10.3.2 Modulation",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.3.2",
+      "agenda_item": null,
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
@@ -200,9 +200,9 @@
       "name": "10.3.1 Channel coding",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -273,9 +273,9 @@
       "name": "10.2.1 Waveform",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
+      "agenda_item": null,
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -307,7 +307,7 @@
       "name": "10.5.4",
       "duration_minutes": 110,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink control channel, scheduling and HARQ operation",
@@ -639,10 +639,11 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorouri",
-      "group_header": "R20",
+      "group_header": "6GR / R20",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-18T01:44:23.977870+00:00",
+  "merged_at": "2026-08-18T02:01:24.003824+00:00",
+  "meeting_id": "ran1#126",
   "schema_version": 1
 }
