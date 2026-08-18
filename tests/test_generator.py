@@ -3,7 +3,7 @@ from types import SimpleNamespace
 from generator import _agenda_description_popup_lines
 
 
-def test_agenda_description_popup_deduplicates_common_hierarchy_prefix():
+def test_agenda_description_popup_shares_common_hierarchy_prefix():
     session = SimpleNamespace(
         agenda_item="10.8.1, 10.8.2",
         description="Evaluations",
@@ -44,14 +44,13 @@ def test_agenda_description_popup_deduplicates_common_hierarchy_prefix():
 
     assert lines == [
         '<div class="popup-description">'
-        "<strong>10.8.1:</strong> Evaluations<br>"
-        "<strong>10.8.2:</strong> Aspects of integration with communication"
         '<div class="popup-path">'
         "10 - Rel-20 Study of 6GR<br>"
-        "10.8 - ISAC<br>"
-        "10.8.1 - Evaluations<br>"
-        "10.8.2 - Aspects of integration with communication"
-        "</div></div>"
+        "10.8 - ISAC"
+        "</div>"
+        "<strong>10.8.1:</strong> Evaluations<br>"
+        "<strong>10.8.2:</strong> Aspects of integration with communication"
+        "</div>"
     ]
 
 
