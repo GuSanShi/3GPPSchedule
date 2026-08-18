@@ -1,7 +1,8 @@
 """Lightweight FTP change-detection script for GitHub Actions.
 
-Checks if the selected schedule files on the 3GPP FTP have changed since
-the last run.  Outputs `changed=true/false` to $GITHUB_OUTPUT.
+Checks if the selected schedule files on the 3GPP FTP (or the
+manually-provided chairman documents in ``ref_in_manual/``) have changed
+since the last run.  Outputs `changed=true/false` to $GITHUB_OUTPUT.
 
 State is persisted in docs/.schedule_state.json (committed to the repo
 by the build-and-deploy job). The cached ``meeting_id`` is fed back into
@@ -17,7 +18,11 @@ import os
 import sys
 
 from config import load_config
-from downloader import get_all_remote_schedule_info, load_schedule_state
+from downloader import (
+    get_all_remote_schedule_info,
+    local_reference_hashes,
+    load_schedule_state,
+)
 
 
 def _normalize_for_compare(entries: list[dict]) -> set[tuple]:
@@ -99,6 +104,28 @@ def main() -> None:
                 print(f"  New/updated entries: {added}")
             if removed:
                 print(f"  Removed entries: {removed}")
+
+    # 3. Compare manually-provided local reference files (ref_in_manual/).
+    # These are committed to the repo, so content hashes are stable across
+    # CI checkouts and detect local-only changes that the FTP scan misses.
+    local_refs = local_reference_hashes()
+    cached_local_refs = state.get("local_refs")
+    if local_refs:
+        print(f"Local reference files: {sorted(local_refs)}")
+        if cached_local_refs is None:
+            changed = True
+            print(
+                "Local reference files present but not tracked in state — "
+                "treating as changed (first run)."
+            )
+        elif cached_local_refs != local_refs:
+            changed = True
+            for name in sorted(set(cached_local_refs) | set(local_refs)):
+                old = cached_local_refs.get(name)
+                new = local_refs.get(name)
+                if old != new:
+                    kind = "modified" if old is not None else "added"
+                    print(f"  Local {kind}: {name}")
 
     print(f"Cached: {cached}")
     print(f"Changed: {changed}")

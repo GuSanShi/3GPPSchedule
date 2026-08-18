@@ -19,6 +19,7 @@ from downloader import (
     find_latest_schedule,
     get_all_remote_schedule_info,
     get_latest_chair_notes_info,
+    local_reference_hashes,
     load_schedule_state,
     save_schedule_state,
 )
@@ -647,6 +648,64 @@ class SaveScheduleStateTests(unittest.TestCase):
             self.assertEqual(loaded["agenda"], agenda)
         finally:
             p.unlink(missing_ok=True)
+
+    def test_saves_local_refs_metadata(self):
+        p = Path("/tmp/test_save_state_local_refs.json")
+        sources = [
+            self._make_source("Chair_notes", "schedule.docx", datetime(2026, 4, 14, 8, 0)),
+        ]
+        local_refs = {"draft - v01.docx": "abc123"}
+        try:
+            save_schedule_state(
+                sources, p, meeting_id="ran1#125", local_refs=local_refs
+            )
+            loaded = load_schedule_state(p)
+            self.assertEqual(loaded["local_refs"], local_refs)
+        finally:
+            p.unlink(missing_ok=True)
+
+    def test_omits_local_refs_when_not_provided(self):
+        p = Path("/tmp/test_save_state_no_local_refs.json")
+        sources = [
+            self._make_source("Chair_notes", "schedule.docx", datetime(2026, 4, 14, 8, 0)),
+        ]
+        try:
+            save_schedule_state(sources, p)
+            loaded = load_schedule_state(p)
+            self.assertNotIn("local_refs", loaded)
+        finally:
+            p.unlink(missing_ok=True)
+
+
+def test_local_reference_hashes_contents(tmp_path):
+    ref_dir = tmp_path / "ref_in_manual"
+    ref_dir.mkdir()
+    (ref_dir / "schedule - v01.docx").write_bytes(b"draft-v1")
+    (ref_dir / "schedule - v02.docx").write_bytes(b"draft-v2")
+    (ref_dir / "notes.txt").write_bytes(b"ignored")
+
+    result = local_reference_hashes(ref_dir)
+
+    import hashlib
+
+    assert set(result) == {"schedule - v01.docx", "schedule - v02.docx"}
+    assert result["schedule - v01.docx"] == hashlib.sha256(b"draft-v1").hexdigest()
+    assert result["schedule - v02.docx"] == hashlib.sha256(b"draft-v2").hexdigest()
+
+
+def test_local_reference_hashes_missing_dir(tmp_path):
+    assert local_reference_hashes(tmp_path / "nope") == {}
+
+
+def test_local_reference_hashes_detects_content_change(tmp_path):
+    ref_dir = tmp_path / "ref_in_manual"
+    ref_dir.mkdir()
+    f = ref_dir / "schedule - v01.docx"
+    f.write_bytes(b"v1")
+    first = local_reference_hashes(ref_dir)
+    f.write_bytes(b"v2")
+    second = local_reference_hashes(ref_dir)
+    assert first != second
 
 
 if __name__ == "__main__":

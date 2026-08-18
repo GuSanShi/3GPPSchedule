@@ -1406,6 +1406,28 @@ def find_local_schedule_sources(
     return sources, chosen
 
 
+def local_reference_hashes(
+    ref_dir: Path = REF_IN_MANUAL_DIR,
+) -> dict[str, str]:
+    """Hash manually-provided local reference files for change detection.
+
+    Returns ``{filename: sha256-hex}`` for every supported document in
+    ``ref_dir``.  Content-based (not mtime) so the result is stable across
+    CI checkouts — the files are committed to the repository, so identical
+    contents always produce identical hashes.
+    """
+    import hashlib
+
+    if not ref_dir.is_dir():
+        return {}
+    out: dict[str, str] = {}
+    for ext in SUPPORTED_EXTENSIONS:
+        for f in sorted(ref_dir.glob(f"*{ext}")):
+            if f.is_file() and f.name not in out:
+                out[f.name] = hashlib.sha256(f.read_bytes()).hexdigest()
+    return out
+
+
 def discover_schedule_sources(
     url: str | None = None,
     *,
@@ -1563,6 +1585,7 @@ def save_schedule_state(
     meeting_id: str | None = None,
     timezone: str | None = None,
     agenda: dict | None = None,
+    local_refs: dict[str, str] | None = None,
 ) -> None:
     """Persist FTP state from already-fetched ScheduleSource objects.
 
@@ -1573,7 +1596,10 @@ def save_schedule_state(
     ``timezone`` (IANA, e.g. "Europe/Malta") so that expensive per-meeting
     operations (like LLM timezone detection) are only performed once.
     ``agenda`` stores the remote/local agenda metadata that fed timezone and
-    agenda-item description generation.
+    agenda-item description generation.  ``local_refs`` stores content
+    hashes (name → sha256) of manually-provided documents in
+    ``ref_in_manual/`` so ``check_update.py`` can detect when those
+    committed local files change.
     """
     import json
 
@@ -1598,6 +1624,8 @@ def save_schedule_state(
         state["timezone"] = timezone
     if agenda is not None:
         state["agenda"] = agenda
+    if local_refs is not None:
+        state["local_refs"] = local_refs
 
     state_path.parent.mkdir(parents=True, exist_ok=True)
     state_path.write_text(json.dumps(state, ensure_ascii=False, indent=2))

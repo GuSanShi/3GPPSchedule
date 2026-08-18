@@ -48,6 +48,7 @@ from downloader import (
     find_local_latest_agenda,
     find_local_vice_chair_schedules,
     find_local_schedule_sources,
+    local_reference_hashes,
     discover_schedule_sources,
     download_all_schedules,
     save_schedule_state,
@@ -418,6 +419,7 @@ def main():
             meeting_id=current_meeting_id,
             timezone=meeting_tz,
             agenda=_agenda_state_for_save(agenda_info, agenda_path),
+            local_refs=local_reference_hashes(),
         )
 
     days = []
