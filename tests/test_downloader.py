@@ -746,5 +746,404 @@ def test_local_reference_hashes_detects_content_change(tmp_path):
     assert first != second
 
 
+# ── External files (config.json ``extra_files``) ───────────────
+
+import io
+import zipfile as _zipfile
+from urllib.parse import quote
+
+from downloader import (
+    EXTRA_FILES_DIR,
+    EXTRA_FILES_STATE_PATH,
+    _resolve_external_filename,
+    _sanitize_filename,
+    check_external_files,
+    download_external_files,
+    load_external_files_state,
+    save_external_files_state,
+)
+import httpx
+
+
+class FakeStreamResponse:
+    """Context-manager mimicking httpx's stream response for mocking."""
+
+    def __init__(self, headers: dict | None = None, body: bytes = b"", status_code: int = 200):
+        self.headers = httpx.Headers(headers or {})
+        self._body = body
+        self.status_code = status_code
+        self.request = httpx.Request("GET", "https://example.com/x")
+        self._consumed = False
+
+    def raise_for_status(self):
+        if self.status_code >= 400:
+            raise httpx.HTTPStatusError(
+                f"HTTP {self.status_code}",
+                request=self.request,
+                response=httpx.Response(self.status_code, headers=self.headers, request=self.request),
+            )
+
+    def iter_bytes(self, chunk_size: int = 8192):
+        if self._consumed:
+            raise httpx.StreamConsumed("Attempted to stream already consumed response")
+        self._consumed = True
+        yield self._body
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+
+class SanitizeFilenameTests(unittest.TestCase):
+    def test_replaces_unsafe_chars(self):
+        self.assertEqual(_sanitize_filename('a\\b/c:d*e?f"g<h>i|j'), "a_b_c_d_e_f_g_h_i_j")
+
+    def test_strips_whitespace_and_dots(self):
+        self.assertEqual(_sanitize_filename("  ..name.docx..  "), "name.docx")
+
+    def test_drops_control_chars(self):
+        self.assertEqual(_sanitize_filename("a\x01b.docx"), "ab.docx")
+
+
+class ResolveExternalFilenameTests(unittest.TestCase):
+    def test_content_disposition_filename_star_wins(self):
+        hdrs = {"content-disposition": "attachment; filename*=UTF-8''A%20B%20v01.docx"}
+        self.assertEqual(
+            _resolve_external_filename(hdrs, "https://example.com/x/y.zip", {}, 0),
+            "A B v01.docx",
+        )
+
+    def test_content_disposition_quoted_filename(self):
+        hdrs = {"content-disposition": 'attachment; filename="my file.docx"'}
+        self.assertEqual(
+            _resolve_external_filename(hdrs, "https://example.com/x", {}, 0),
+            "my file.docx",
+        )
+
+    def test_content_disposition_plain_filename(self):
+        hdrs = {"content-disposition": "attachment; filename=some_file.pptx"}
+        self.assertEqual(
+            _resolve_external_filename(hdrs, "https://example.com/x", {}, 0),
+            "some_file.pptx",
+        )
+
+    def test_url_path_fallback_when_no_cd(self):
+        self.assertEqual(
+            _resolve_external_filename({}, "https://example.com/dir/RAN1%23124 sched.docx", {}, 3),
+            "RAN1#124 sched.docx",
+        )
+
+    def test_entry_name_fallback(self):
+        self.assertEqual(
+            _resolve_external_filename({}, "https://example.com/", {"name": "picked.pdf"}, 7),
+            "picked.pdf",
+        )
+
+    def test_numeric_fallback_last(self):
+        self.assertEqual(
+            _resolve_external_filename({}, "https://example.com/", {}, 5),
+            "external_5",
+        )
+
+    def test_unsafe_cd_name_sanitized(self):
+        hdrs = {"content-disposition": 'attachment; filename="a<b>c.docx"'}
+        self.assertEqual(
+            _resolve_external_filename(hdrs, "https://example.com/", {}, 0),
+            "a_b_c.docx",
+        )
+
+    def test_cd_name_sanitizes_empty_falls_to_url(self):
+        hdrs = {"content-disposition": "attachment; filename=\"   \""}
+        self.assertEqual(
+            _resolve_external_filename(hdrs, "https://example.com/final.pdf", {}, 1),
+            "final.pdf",
+        )
+
+
+class _IsolatedDownloadEnv:
+    """Keeps a TemporaryDirectory alive until the test releases it.
+
+    Usage: with _IsolatedDownloadEnv() as env: ...
+    """
+
+    def __init__(self):
+        import tempfile
+        self._tmp = tempfile.TemporaryDirectory()
+
+    @property
+    def root(self) -> Path:
+        return Path(self._tmp.name)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        self._tmp.cleanup()
+
+
+def _run_download_external(entries, resp_factory):
+    """Run download_external_files with patched stream responses into an isolated temp dir."""
+    env = _IsolatedDownloadEnv()
+
+    def make_stream(m, u, **k):
+        return _OneshotCtx(resp_factory())
+
+    with (
+        patch("downloader.httpx.stream", side_effect=make_stream),
+        patch("time.sleep"),
+    ):
+        result = download_external_files(entries, dest_dir=env.root)
+
+    return result, env
+
+
+def test_file_download_returns_paths_and_state():
+    url = "https://example.com/wa.exe?A3=x"
+    entry = {"url": url, "type": "schedule"}
+    resp = FakeStreamResponse(
+        headers={
+            "content-disposition": 'attachment; filename="RAN1#126 schedule - v02.docx"',
+        },
+        body=b"docx!\x00",
+    )
+    with _IsolatedDownloadEnv() as env:
+        (results, state), _ = _run_download_external([entry], lambda: resp)
+        assert len(results) == 1
+        assert results[0][0] is entry
+        assert results[0][1].name == "RAN1#126 schedule - v02.docx"
+    import hashlib
+    assert state == {url: hashlib.sha256(b"docx!\x00").hexdigest()}
+
+
+def test_file_download_entry_name_fallback():
+    url = "https://example.com/?L=ran1"
+    entry = {"url": url, "type": "chair_notes", "name": "RAN1#126 Chair_notes - v03.docx"}
+    resp = FakeStreamResponse(body=b"chair")
+    with _IsolatedDownloadEnv() as env:
+        (results, state), _ = _run_download_external([entry], lambda: resp)
+        assert results[0][1].name == "RAN1#126 Chair_notes - v03.docx"
+        assert results[0][1].read_bytes() == b"chair"
+    import hashlib
+    assert state == {url: hashlib.sha256(b"chair").hexdigest()}
+
+
+def test_zip_extraction_appends_doc_path():
+    docx_bytes = b"PK\x03\x04 fake docx payload"
+    buf = io.BytesIO()
+    with _zipfile.ZipFile(buf, "w") as zf:
+        zf.writestr("nested/RAN1#126 schedule - v01.docx", docx_bytes)
+    zip_bytes = buf.getvalue()
+
+    url = "https://example.com/zip?dl=1"
+    entry = {"url": url, "type": "schedule"}
+    resp = FakeStreamResponse(
+        headers={"content-disposition": 'attachment; filename="RAN1#126.zip"'},
+        body=zip_bytes,
+    )
+    with _IsolatedDownloadEnv() as env:
+        (results, state), _ = _run_download_external([entry], lambda: resp)
+        # one result, pointing at the unpacked document
+        assert len(results) == 1
+        assert results[0][1].read_bytes() == docx_bytes
+    import hashlib
+    assert state == {url: hashlib.sha256(zip_bytes).hexdigest()}
+
+
+def test_4xx_no_retry_no_state():
+    url = "https://example.com/missing"
+    entry = {"url": url, "type": "schedule", "name": "x.docx"}
+    resp = FakeStreamResponse(status_code=404, body=b"")
+    sleeps = []
+    with _IsolatedDownloadEnv() as env:
+        with (
+            patch("downloader.httpx.stream", side_effect=lambda m, u, **k: _OneshotCtx(resp)),
+            patch("time.sleep", side_effect=sleeps.append),
+        ):
+            results, state = download_external_files([entry], dest_dir=env.root)
+    assert results == []
+    assert state == {}
+    assert sleeps == []  # no retry on 4xx
+
+
+def test_5xx_retries_then_succeeds():
+    url = "https://example.com/dir/flaky.docx"
+    entry = {"url": url, "type": "schedule"}
+    calls = {"n": 0}
+
+    def make_stream(m, u, **k):
+        calls["n"] += 1
+        if calls["n"] < 3:
+            return _OneshotCtx(FakeStreamResponse(status_code=503, body=b"err"))
+        return _OneshotCtx(FakeStreamResponse(body=b"ok-docx"))
+
+    sleeps = []
+    with _IsolatedDownloadEnv() as env:
+        with (
+            patch("downloader.httpx.stream", side_effect=make_stream),
+            patch("time.sleep", side_effect=sleeps.append),
+        ):
+            results, state = download_external_files([entry], dest_dir=env.root)
+        assert len(results) == 1
+        assert results[0][1].read_bytes() == b"ok-docx"
+    assert sleeps == [5, 10]  # backoff applied
+    import hashlib
+    assert state == {url: hashlib.sha256(b"ok-docx").hexdigest()}
+
+
+def test_filename_from_url_when_no_cd():
+    url = "https://example.com/dir/RAN1%23126%20sched%20v04.docx"
+    entry = {"url": url, "type": "chair_notes"}
+    resp = FakeStreamResponse(body=b"d")
+    with _IsolatedDownloadEnv() as env:
+        (results, state), _ = _run_download_external([entry], lambda: resp)
+        assert results[0][1].name == "RAN1#126 sched v04.docx"
+
+
+class _OneshotCtx:
+    """Wraps a FakeStreamResponse so it's usable as a context manager entry."""
+
+    def __init__(self, resp):
+        self._resp = resp
+
+    def __enter__(self):
+        return self._resp
+
+    def __exit__(self, *a):
+        return self._resp.__exit__(*a)
+
+
+class CheckExternalFilesTests(unittest.TestCase):
+    def _patch_stream_bodies(self, bodies: dict[str, bytes], errors: dict[str, Exception] | None = None):
+        """Patch httpx.stream: URL → body, or URL → raised exception."""
+        errors = errors or {}
+
+        def fake_stream(m, u, **k):
+            if u in errors:
+                raise errors[u]
+            return _OneshotCtx(FakeStreamResponse(body=bodies[u]))
+
+        return patch("downloader.httpx.stream", side_effect=fake_stream), {}
+
+    def test_empty_list_noop(self):
+        changed, state = check_external_files([])
+        self.assertFalse(changed)
+        self.assertEqual(state, {"files": {}})
+
+    def test_matching_hash_unchanged(self):
+        import hashlib
+        url = "https://example.com/f?x=1"
+        body = b"unchanged-content"
+        state_in = {"files": {url: hashlib.sha256(body).hexdigest()}}
+        p, _ = self._patch_stream_bodies({url: body})
+        with p:
+            changed, state_out = check_external_files([{"url": url, "type": "schedule"}], state=state_in)
+        self.assertFalse(changed)
+        self.assertEqual(state_out, state_in)
+
+    def test_different_hash_changed(self):
+        import hashlib
+        url = "https://example.com/f?x=2"
+        state_in = {"files": {url: hashlib.sha256(b"v1").hexdigest()}}
+        p, _ = self._patch_stream_bodies({url: b"v2"})
+        with p:
+            changed, state_out = check_external_files([{"url": url, "type": "schedule"}], state=state_in)
+        self.assertTrue(changed)
+        self.assertEqual(state_out["files"][url], hashlib.sha256(b"v2").hexdigest())
+
+    def test_new_url_counts_as_changed(self):
+        import hashlib
+        url = "https://example.com/brand-new"
+        p, _ = self._patch_stream_bodies({url: b"fresh"})
+        with p:
+            changed, state_out = check_external_files([{"url": url, "type": "chair_notes"}], state={"files": {}})
+        self.assertTrue(changed)
+        self.assertEqual(state_out, {"files": {url: hashlib.sha256(b"fresh").hexdigest()}})
+
+    def test_404_url_ignored_no_effect(self):
+        import hashlib
+        deleted = "https://example.com/missing"
+        other = "https://example.com/ok"
+        ok_body = b"okay"
+        state_in = {"files": {
+            deleted: hashlib.sha256(b"old-gone").hexdigest(),
+            other: hashlib.sha256(ok_body).hexdigest(),
+        }}
+        p, _ = self._patch_stream_bodies(
+            {other: ok_body},
+            errors={deleted: httpx.HTTPStatusError(
+                "HTTP 404",
+                request=httpx.Request("GET", deleted),
+                response=httpx.Response(404, request=httpx.Request("GET", deleted)),
+            )},
+        )
+        with p:
+            changed, state_out = check_external_files(
+                [
+                    {"url": deleted, "type": "schedule"},
+                    {"url": other, "type": "schedule"},
+                ],
+                state=state_in,
+            )
+        # 404 is ignored: unchanged other URL keeps changed=False, and the
+        # deleted URL drops out of the returned state (stale auto-removal).
+        self.assertFalse(changed)
+        self.assertNotIn(deleted, state_out["files"])
+        self.assertEqual(state_out["files"][other], hashlib.sha256(ok_body).hexdigest())
+
+    def test_transport_error_url_ignored_no_effect(self):
+        import hashlib
+        broken = "https://example.com/broken"
+        state_in = {"files": {broken: hashlib.sha256(b"old").hexdigest()}}
+        p, _ = self._patch_stream_bodies({}, errors={broken: httpx.ConnectError("boom")})
+        with p:
+            changed, state_out = check_external_files([{"url": broken, "type": "schedule"}], state=state_in)
+        self.assertFalse(changed)
+        self.assertEqual(state_out, {"files": {}})
+
+
+def test_state_roundtrip(tmp_path):
+    import hashlib
+    p = tmp_path / ".extra_files_state.json"
+    state = {
+        "files": {
+            "https://example.com/a": hashlib.sha256(b"abc").hexdigest()
+        }
+    }
+    save_external_files_state(state, p)
+    loaded = load_external_files_state(p)
+    assert loaded == state
+
+
+def test_load_missing_returns_empty(tmp_path):
+    p = tmp_path / "nope.json"
+    assert load_external_files_state(p) == {"files": {}}
+
+
+def test_load_invalid_json_returns_empty(tmp_path):
+    p = tmp_path / "bad.json"
+    p.write_text("not json", encoding="utf-8")
+    assert load_external_files_state(p) == {"files": {}}
+
+
+def test_load_wrong_shape_returns_empty(tmp_path):
+    p = tmp_path / "weird.json"
+    p.write_text(json.dumps([1, 2, 3]), encoding="utf-8")
+    assert load_external_files_state(p) == {"files": {}}
+
+
+def test_load_files_not_dict_returns_empty(tmp_path):
+    p = tmp_path / "list_files.json"
+    p.write_text(json.dumps({"files": [1, 2]}), encoding="utf-8")
+    assert load_external_files_state(p) == {"files": {}}
+
+
+def test_save_creates_parent_dirs(tmp_path):
+    p = tmp_path / "nested" / "dir" / ".state.json"
+    save_external_files_state({"files": {}}, p)
+    assert p.exists()
+
+
 if __name__ == "__main__":
     unittest.main()

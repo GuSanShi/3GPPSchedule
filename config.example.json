@@ -3,5 +3,10 @@
   "meeting_specific": [
     "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_125/"
   ],
-  "extra_folders": []
+  "extra_folders": [],
+  "extra_files": [
+    {"url": "https://list.etsi.org/scripts/wa.exe?A3=ind2608C&L=3GPP_TSG_RAN_WG1&E=base64&P=1718759", "type": "schedule"},
+    {"url": "https://example.org/hiroki_notes.docx", "type": "schedule", "person_name": "Hiroki"},
+    {"url": "https://example.org/chair_notes.docx", "type": "chair_notes"}
+  ]
 }

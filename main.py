@@ -35,7 +35,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from models import DAY_ORDER, DaySchedule, Schedule
+from models import DAY_ORDER, DaySchedule, Schedule, ScheduleSource
 from parser import build_room_list, parse_docx, extract_meeting_location, find_chair_notes_docx
 from session_parser import parse_time_slots, get_timezone_from_location, normalize_group_headers, fill_missing_groups
 from generator import save_html
@@ -54,6 +54,9 @@ from downloader import (
     save_schedule_state,
     load_schedule_state,
     _extract_meeting_id,
+    download_external_files,
+    save_external_files_state,
+    EXTRA_FILES_DIR,
 )
 from merger import collect_time_slot_data
 from config import load_config
@@ -226,6 +229,7 @@ def main():
     docx_path: Path | None = None
     vice_chair_paths: dict[str, Path] = {}
     sources: list | None = None  # set during FTP discovery (step 1)
+    extra_chair_notes_paths: list[Path] = []
 
     if args.local:
         docx_path = Path(args.local)
@@ -234,9 +238,15 @@ def main():
             sys.exit(1)
     elif args.no_download:
         # Locally-provided chairman references (ref_in_manual/) take
-        # precedence over cached downloaded copies.
+        # precedence over cached downloaded copies, which in turn take
+        # precedence over extra_files (previously-downloaded external URLs).
         _local_ref_sources, _local_ref_chosen = find_local_schedule_sources()
         docx_path = _local_ref_chosen
+        if docx_path is None:
+            _extra_ref_sources, _extra_ref_chosen = find_local_schedule_sources(
+                ref_dir=EXTRA_FILES_DIR
+            )
+            docx_path = _extra_ref_chosen
         if docx_path is None:
             docx_path = find_local_latest_schedule()
             if docx_path is None:
@@ -247,6 +257,8 @@ def main():
         vice_chair_paths = find_local_vice_chair_schedules()
         if vice_chair_paths:
             print(f"Vice-chair schedules: {', '.join(vice_chair_paths.keys())}")
+        extra_chair_notes_paths = [find_chair_notes_docx(EXTRA_FILES_DIR)]
+        extra_chair_notes_paths = [p for p in extra_chair_notes_paths if p is not None]
     else:
         # Discover all schedule sources from configured inbox URLs
         print(
@@ -259,6 +271,38 @@ def main():
         local_ref_sources, _local_ref_chosen = find_local_schedule_sources(
             preferred_meeting_id=cached_meeting_id
         )
+        # Download external files (curl -OJL equivalent) into
+        # downloads/extra_files/.  Schedule entries become local
+        # ScheduleSources so they go through the same meeting filter /
+        # dedup as ref_in_manual/; chair_notes entries are kept for the
+        # timezone block below.
+        ext_results: list[tuple[dict, Path]] = []
+        if cfg.get("extra_files"):
+            print(f"Downloading extra files ({len(cfg['extra_files'])} URL(s))…")
+            try:
+                ext_results, ext_file_state = download_external_files(
+                    cfg["extra_files"]
+                )
+                save_external_files_state({"files": ext_file_state})
+            except Exception as e:
+                print(f"Warning: extra files download failed: {e}")
+        for entry, path in ext_results:
+            if str(entry.get("type", "")).lower() == "chair_notes":
+                extra_chair_notes_paths.append(path)
+            else:
+                local_ref_sources.append(
+                    ScheduleSource(
+                        folder_name=EXTRA_FILES_DIR.name,
+                        person_name=entry.get("person_name"),
+                        is_main=bool(entry.get("is_main", True)),
+                        file_info={
+                            "name": path.name,
+                            "url": entry["url"],
+                            "uploaded_at": None,
+                        },
+                        local_path=path,
+                    )
+                )
         try:
             sources = discover_schedule_sources(
                 urls=cfg["inbox_urls"],
@@ -389,6 +433,13 @@ def main():
         if location_source is None:
             # Fall back to Chair notes
             chair_notes_path = find_chair_notes_docx(docx_path.parent)
+            # Check extra_files chair notes (external URLs or local scan)
+            if chair_notes_path is None and extra_chair_notes_paths:
+                chair_notes_path = max(
+                    extra_chair_notes_paths,
+                    key=lambda f: f.stat().st_mtime,
+                )
+                print(f"  Using extra files chair notes: {chair_notes_path.name}")
             if chair_notes_path is None and not args.no_download:
                 print("\nNo local Chair notes found, downloading from FTP...")
                 chair_notes_path = download_latest_chair_notes(

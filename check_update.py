@@ -19,6 +19,7 @@ import sys
 
 from config import load_config
 from downloader import (
+    check_external_files,
     get_all_remote_schedule_info,
     local_reference_hashes,
     load_schedule_state,
@@ -126,6 +127,17 @@ def main() -> None:
                 if old != new:
                     kind = "modified" if old is not None else "added"
                     print(f"  Local {kind}: {name}")
+
+    # 4. Check external files (config.json ``extra_files``)
+    extra_files = cfg.get("extra_files") or []
+    if extra_files:
+        print(f"Checking extra files ({len(extra_files)} URL(s))…")
+        try:
+            ext_changed, _ = check_external_files(extra_files)
+            if ext_changed:
+                changed = True
+        except Exception as e:
+            print(f"Extra files check failed: {e}")
 
     print(f"Cached: {cached}")
     print(f"Changed: {changed}")

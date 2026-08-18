@@ -164,6 +164,36 @@ FTP Inbox/
 - `AH`, `adhoc`, `e` 등 **비정규 미팅**은 이름만으로 전체 순서를 확정할 수 없으므로 업로드 시각을 기준으로 선택합니다.
 - Vice-chair/Hiroki/Sorour 같은 보조 소스도 가능한 한 현재 메인 미팅에 맞춰 정렬되며, 같은 폴더 안의 오래된 미팅 파일이 늦게 업로드되어도 현재 미팅을 덮어쓰지 못합니다.
 
+## 외부 파일 참조 (`extra_files`)
+
+`config.json`의 `extra_files`에는 폴더가 아닌 **개별 원격 파일 URL**을 나열할 수 있습니다.
+
+```json
+{
+  "extra_files": [
+    {"url": "https://list.etsi.org/scripts/wa.exe?A3=ind2608C&...", "type": "schedule"},
+    {"url": "https://example.org/hiroki_notes.docx", "type": "schedule", "person_name": "Hiroki"},
+    {"url": "https://example.org/chair_notes.docx", "type": "chair_notes"}
+  ]
+}
+```
+
+각 엔트리의 필드:
+
+- `url` (필수): 다운로드 대상 파일 URL
+- `type` (필수): `schedule` 또는 `chair_notes`
+  - `schedule` → 로컬 제공 스케줄 소스(`ScheduleSource`)로 주입되어 main/vice-chair 중복 제거 규칙에 참여합니다. `is_main: true`면 메인 스케줄로, `person_name`을 주면 해당 부의장 소스로 취급됩니다.
+  - `chair_notes` → 다운로드된 Chair notes 문서는 미팅 개최지/타임존 감지에 사용됩니다.
+- `name` (선택): 파일명 폴백 — `Content-Disposition`, URL 경로에 파일명이 없을 때만 사용
+- `person_name` (선택): 명시 시 부의장(vice-chair) 소스
+- `is_main` (선택): 생략 시 **자동 구성** — `person_name`이 있으면 `false`, 없으면 `true`. 명시한(bool) 값은 항상 우선
+
+빌드 시 `curl -OJL`과 등가 동작(redirect follow + Content-Disposition 기반 파일명)으로 `downloads/extra_files/`에 저장합니다: 파일명은 `Content-Disposition` → URL 경로 마지막 세그먼트 → `name` 필드 → 생성 순서로 결정됩니다. 빌드마다 항상 재다운로드합니다.
+
+CI 변경 감지는 각 URL의 **콘텐츠 sha256**을 `docs/.extra_files_state.json`과 비교해 동작합니다(`check_update.py`). 헤더(ETag/Last-Modified) 비교는 ETSI가 해당 헤더를 제공하지 않아 사용하지 않으며, `ref_in_manual`과 동일한 콘텐츠 해시 방식을 따릅니다.
+
+환경 변수 `SCHEDULE_EXTRA_FILES`로 JSON 배열을 지정하면 config.json 값을 대체합니다.
+
 ## 상태 파일(`docs/.schedule_state.json`)의 의미
 
 성공적으로 HTML이 생성되면 다음 정보가 저장됩니다.

@@ -38,6 +38,12 @@ SCHEDULE_EXTRA_FOLDERS
     JSON array of extra folder entries; each entry is an object with keys
     ``url`` (required), ``name`` (optional — derived from URL if missing),
     ``person_name`` (optional), ``is_main`` (optional, default false).
+SCHEDULE_EXTRA_FILES
+    JSON array of external file entries; each entry is an object with keys
+    ``url`` (required), ``type`` (required, one of ``schedule`` or
+    ``chair_notes``), ``name`` (optional), ``person_name`` (optional),
+    ``is_main`` (optional — unset: ``True`` when ``person_name`` is absent,
+    ``False`` when present; explicit value always wins).
 
 config.json shape
 -----------------
@@ -48,8 +54,21 @@ config.json shape
   ],
   "extra_folders": [
     {"url": "https://.../custom/", "person_name": "Alice"}
+  ],
+  "extra_files": [
+    {"url": "https://list.etsi.org/scripts/wa.exe?...", "type": "schedule"},
+    {"url": "https://example.org/hiroki_notes.docx", "type": "schedule", "person_name": "Hiroki"},
+    {"url": "https://example.org/chair_notes.docx", "type": "chair_notes"}
   ]
 }
+
+``extra_files`` entries reference single remote files (not folders). At
+build time they are downloaded to ``downloads/extra_files/`` (equivalent
+of ``curl -OJL`` — redirects followed, file name taken from
+``Content-Disposition`` when present).  CI change-detection
+(``check_update.py``) compares the sha256 of each URL's content against
+``docs/.extra_files_state.json`` (same content-hash scheme as
+``ref_in_manual`` — ETSI provides no ETag/Last-Modified headers).
 
 The legacy ``inbox_urls`` key is still accepted (with a deprecation
 warning) and contributes to the derived ``inbox_urls`` only.
@@ -90,6 +109,38 @@ def _normalize_extra(entry: dict) -> dict | None:
     }
 
 
+def _normalize_extra_file(entry: dict) -> dict | None:
+    """Validate/normalise a single ``extra_files`` entry.
+
+    Requires a non-empty ``url`` and a ``type`` of ``schedule`` or
+    ``chair_notes``; anything else is dropped with a warning.
+    """
+    if not isinstance(entry, dict):
+        print(f"Warning: Skipping extra_files entry without valid url/type: {entry!r}")
+        return None
+    url = entry.get("url")
+    url = url.strip() if isinstance(url, str) else ""
+    etype = entry.get("type")
+    if not url or etype not in ("schedule", "chair_notes"):
+        print(f"Warning: Skipping extra_files entry without valid url/type: {entry!r}")
+        return None
+    person_name = entry.get("person_name")
+    # Default: named entries are vice-chair (main=False); unnamed entries
+    # are main (main=True).  An explicit bool always takes precedence.
+    is_main_raw = entry.get("is_main")
+    if isinstance(is_main_raw, bool):
+        is_main = is_main_raw
+    else:
+        is_main = person_name is None
+    return {
+        "url": url,
+        "type": etype,
+        "name": entry.get("name") or None,
+        "person_name": person_name,
+        "is_main": is_main,
+    }
+
+
 def _parse_url_list_env(raw: str) -> list[str]:
     """Parse JSON array or comma-separated URL list from an env var."""
     try:
@@ -113,11 +164,13 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> dict:
         agenda_urls      : list[str]    — derived from meeting_specific only,
                                           each base + 'Agenda/'
         extra_folders    : list[dict]   — manually-listed folders
+        extra_files      : list[dict]   — manually-listed external files
     """
     meeting_sync: str | None = DEFAULT_MEETING_SYNC
     meeting_specific: list[str] = []
     legacy_inbox: list[str] = []
     extra_folders: list[dict] = []
+    extra_files: list[dict] = []
 
     # 1. config.json
     if path.exists():
@@ -160,6 +213,9 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> dict:
         if isinstance(data.get("extra_folders"), list):
             extra_folders = [e for e in data["extra_folders"] if isinstance(e, dict)]
 
+        if isinstance(data.get("extra_files"), list):
+            extra_files = [e for e in data["extra_files"] if isinstance(e, dict)]
+
     # 2. Environment overrides
     env_sync = os.environ.get("SCHEDULE_MEETING_SYNC")
     env_specific = os.environ.get("SCHEDULE_MEETING_SPECIFIC")
@@ -185,6 +241,15 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> dict:
         except json.JSONDecodeError:
             print("Warning: SCHEDULE_EXTRA_FOLDERS is not valid JSON — ignoring")
 
+    env_files = os.environ.get("SCHEDULE_EXTRA_FILES")
+    if env_files:
+        try:
+            parsed_files = json.loads(env_files)
+            if isinstance(parsed_files, list):
+                extra_files = [e for e in parsed_files if isinstance(e, dict)]
+        except json.JSONDecodeError:
+            print("Warning: SCHEDULE_EXTRA_FILES is not valid JSON — ignoring")
+
     # 3. Normalise + derive
     if meeting_sync:
         meeting_sync = _normalize_url(meeting_sync)
@@ -208,6 +273,9 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> dict:
     extra_folders = [
         e for e in (_normalize_extra(x) for x in extra_folders) if e is not None
     ]
+    extra_files = [
+        e for e in (_normalize_extra_file(x) for x in extra_files) if e is not None
+    ]
 
     return {
         "meeting_sync": meeting_sync,
@@ -215,4 +283,5 @@ def load_config(path: Path = DEFAULT_CONFIG_PATH) -> dict:
         "inbox_urls": inbox_urls,
         "agenda_urls": agenda_urls,
         "extra_folders": extra_folders,
+        "extra_files": extra_files,
     }
