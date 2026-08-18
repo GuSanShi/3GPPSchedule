@@ -47,6 +47,7 @@ from downloader import (
     find_local_latest_schedule,
     find_local_latest_agenda,
     find_local_vice_chair_schedules,
+    find_local_schedule_sources,
     discover_schedule_sources,
     download_all_schedules,
     save_schedule_state,
@@ -231,10 +232,15 @@ def main():
             print(f"Error: File not found: {docx_path}")
             sys.exit(1)
     elif args.no_download:
-        docx_path = find_local_latest_schedule()
+        # Locally-provided chairman references (ref_in_manual/) take
+        # precedence over cached downloaded copies.
+        _local_ref_sources, _local_ref_chosen = find_local_schedule_sources()
+        docx_path = _local_ref_chosen
         if docx_path is None:
-            print("Error: No schedule files found locally in downloads/Chair_notes/")
-            sys.exit(1)
+            docx_path = find_local_latest_schedule()
+            if docx_path is None:
+                print("Error: No schedule files found locally in downloads/Chair_notes/")
+                sys.exit(1)
         print(f"Using local file: {docx_path}")
         # Discover local vice-chair schedules (mirrors default download behavior)
         vice_chair_paths = find_local_vice_chair_schedules()
@@ -247,10 +253,16 @@ def main():
             f"({len(cfg['inbox_urls'])} inbox URL(s), "
             f"{len(cfg['extra_folders'])} extra folder(s))..."
         )
+        # Locally-provided chairman schedule references (ref_in_manual/)
+        # always take precedence over FTP-discovered documents.
+        local_ref_sources, _local_ref_chosen = find_local_schedule_sources(
+            preferred_meeting_id=cached_meeting_id
+        )
         try:
             sources = discover_schedule_sources(
                 urls=cfg["inbox_urls"],
                 extra_folders=cfg["extra_folders"],
+                local_schedule_sources=local_ref_sources,
                 preferred_meeting_id=cached_meeting_id,
             )
             if sources:
@@ -270,6 +282,9 @@ def main():
                 print(f"Download failed: {e}")
                 print("Trying local files...")
                 docx_path = find_local_latest_schedule()
+                if docx_path is None:
+                    # Last resort: use the locally-provided chairman reference
+                    docx_path = _local_ref_chosen
                 if docx_path is None:
                     print("Error: No schedule files found locally either")
                     sys.exit(1)
@@ -393,10 +408,13 @@ def main():
         else:
             print("\nWarning: No agenda or Chair notes DOCX found, using UTC timezone")
 
-    # Persist state (FTP file listing + meeting metadata) for next run
+    # Persist state (FTP file listing + meeting metadata) for the next run.
+    # Locally-provided chairman documents (ref_in_manual/) are excluded: the
+    # state is compared by check_update.py against a fresh remote scan, and
+    # local mtimes are not stable across CI checkouts.
     if sources is not None:
         save_schedule_state(
-            sources,
+            [s for s in sources if s.local_path is None],
             meeting_id=current_meeting_id,
             timezone=meeting_tz,
             agenda=_agenda_state_for_save(agenda_info, agenda_path),

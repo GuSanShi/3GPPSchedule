@@ -20,6 +20,12 @@ INBOX_URL = "https://www.3gpp.org/ftp/Meetings_3GPP_SYNC/RAN1/Inbox/"
 # Default local storage root for downloaded artifacts
 DOWNLOADS_DIR = Path("downloads")
 
+# Local directory containing manually-provided chairman schedule documents.
+# Documents placed here (e.g. from manual/printed references) are treated as
+# chairman (main) schedules alongside FTP downloads and take precedence
+# over remotely discovered ones.
+REF_IN_MANUAL_DIR = Path("ref_in_manual")
+
 # Folders in Inbox/ that never contain schedule files
 BLACKLISTED_FOLDERS = {"Agenda", "drafts", "Tdoc_list", "Welcome_speech"}
 
@@ -1210,7 +1216,8 @@ def _source_from_extra_folder(
 def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
     """Resolve collisions when aggregating across multiple inboxes.
 
-    - At most one ``is_main`` survives (newest ``uploaded_at`` wins).
+    - At most one ``is_main`` survives (locally-provided mains win over FTP
+      mains; among the rest, newest ``uploaded_at`` wins).
     - Vice-chair sources with the same ``person_name`` collapse to the newest.
     - Non-main, no-person entries with the same ``folder_name`` collapse to the newest.
     """
@@ -1220,13 +1227,17 @@ def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
         v = s.file_info.get("uploaded_at")
         return v if isinstance(v, datetime) else datetime.min
 
+    def main_rank(s: ScheduleSource) -> tuple[int, datetime]:
+        # Locally-provided chairman documents always beat FTP-discovered ones.
+        return (1 if s.local_path is not None else 0, ts(s))
+
     main: ScheduleSource | None = None
     by_person: dict[str, ScheduleSource] = {}
     by_folder: dict[str, ScheduleSource] = {}
 
     for s in sources:
         if s.is_main:
-            if main is None or ts(s) > ts(main):
+            if main is None or main_rank(s) > main_rank(main):
                 if main is not None:
                     main.is_main = False
                     by_folder[main.folder_name] = main
@@ -1283,12 +1294,20 @@ def _filter_sources_to_meeting(
     sources: list[ScheduleSource],
     meeting_id: str | None,
 ) -> list[ScheduleSource]:
-    """Drop schedule sources that do not belong to the selected meeting."""
+    """Drop schedule sources that do not belong to the selected meeting.
+
+    Locally-provided sources (``local_path`` set) are always kept: they are
+    manually curated, so the operator's choice is authoritative even when
+    their filename doesn't reference the selected meeting id.
+    """
     if meeting_id is None:
         return sources
 
     filtered: list[ScheduleSource] = []
     for source in sources:
+        if source.local_path is not None:
+            filtered.append(source)
+            continue
         source_mid = _extract_meeting_id(source.file_info["name"])
         if source_mid == meeting_id:
             filtered.append(source)
@@ -1301,11 +1320,98 @@ def _filter_sources_to_meeting(
     return filtered
 
 
+def _latest_local_schedule(
+    paths: list[Path], preferred_meeting_id: str | None = None
+) -> Path:
+    """From a set of local schedule document paths, pick the one to use.
+
+    Manual references carry no remote version info, so selection is
+    by filename version (treating an unparseable version as 0), then
+    modification time. Filename filtering ("schedule" substring, meeting id)
+    is intentionally NOT applied here — the operator decides what belongs in
+    the folder.
+
+    ``preferred_meeting_id`` is only used to order matches: if any candidate
+    filename references it, prefer those over files from other meetings.
+    """
+    if len(paths) == 1:
+        return paths[0]
+
+    def _key(p: Path):
+        mid = _extract_meeting_id(p.name)
+        favored = 1 if (preferred_meeting_id is not None and mid == preferred_meeting_id) else 0
+        return (
+            favored,
+            _extract_version_parts_from_name(p.name),
+            datetime.fromtimestamp(p.stat().st_mtime),
+        )
+
+    return max(paths, key=_key)
+
+
+def find_local_schedule_sources(
+    ref_dir: Path = REF_IN_MANUAL_DIR,
+    preferred_meeting_id: str | None = None,
+) -> tuple[list[ScheduleSource], Path | None]:
+    """Build chairman-schedule sources from manually-provided local documents.
+
+    Scans ``ref_dir`` for supported document files (.docx, .pptx, .pdf, .zip)
+    and returns ``(sources, chosen_path)``:
+
+    - ``sources``: one ``ScheduleSource`` per candidate, all marked
+      ``is_main=True`` (chairman schedule), ``local_path`` set, and deduped
+      against each other by folder name.
+    - ``chosen_path``: the single document selected for this run
+      (or ``None`` when the directory is absent/empty).
+
+    ``preferred_meeting_id`` biases candidate selection toward files that
+    reference that meeting in their filename, and falls back to the highest
+    filename version, then newest mtime when none do.
+    """
+    if not ref_dir.is_dir():
+        return [], None
+
+    candidates = [
+        f
+        for ext in SUPPORTED_EXTENSIONS
+        for f in ref_dir.glob(f"*{ext}")
+        if f.is_file()
+    ]
+    seen: set[str] = set()
+    candidates = [
+        f for f in candidates if not (f.name in seen or seen.add(f.name))
+    ]
+
+    if not candidates:
+        return [], None
+
+    chosen = _latest_local_schedule(candidates, preferred_meeting_id)
+    print(f"  Local chairman schedule reference: {chosen.name}")
+
+    sources: list[ScheduleSource] = []
+    for f in sorted(candidates, key=lambda p: p.name):
+        sources.append(
+            ScheduleSource(
+                folder_name=ref_dir.name,
+                person_name=None,
+                is_main=True,
+                file_info={
+                    "name": f.name,
+                    "url": None,
+                    "uploaded_at": datetime.fromtimestamp(f.stat().st_mtime),
+                },
+                local_path=f,
+            )
+        )
+    return sources, chosen
+
+
 def discover_schedule_sources(
     url: str | None = None,
     *,
     urls: list[str] | None = None,
     extra_folders: list[dict] | None = None,
+    local_schedule_sources: list[ScheduleSource] | None = None,
     preferred_meeting_id: str | None = None,
 ) -> list[ScheduleSource]:
     """Discover schedule sources across one or more inbox URLs and extra folders.
@@ -1315,6 +1421,12 @@ def discover_schedule_sources(
     ``extra_folders`` is a list of dicts with keys ``url`` (required),
     ``name``, ``person_name``, ``is_main`` — manually-specified folders
     to include alongside the inbox scans.
+
+    ``local_schedule_sources`` are pre-built ``ScheduleSource`` objects for
+    locally-provided chairman documents (see
+    :func:`find_local_schedule_sources`); they participate in the same
+    meeting-filtering and dedup as remote sources and win main-schedule
+    collisions.
 
     ``preferred_meeting_id`` is typically loaded from persisted state and
     used as the current-meeting hint. Older meetings are ignored when a
@@ -1340,6 +1452,9 @@ def discover_schedule_sources(
         )
         if src is not None:
             all_sources.append(src)
+
+    if local_schedule_sources:
+        all_sources.extend(local_schedule_sources)
 
     current_meeting_id = _current_meeting_from_sources(
         all_sources,
@@ -1413,7 +1528,22 @@ def download_all_schedules(
     vice_chair_paths: dict[str, Path] = {}
 
     for source in sources:
-        local = download_schedule_source(source, base_dir)
+        if source.local_path is not None:
+            local = source.local_path
+            if local.suffix.lower() == ".zip":
+                extracted = _find_extracted_document(local)
+                if extracted is None:
+                    extracted = extract_document_from_zip(local)
+                if extracted is not None:
+                    local = extracted
+                else:
+                    print(
+                        f"  Warning: local ZIP {local.name} contained no "
+                        f"supported document; skipping"
+                    )
+                    continue
+        else:
+            local = download_schedule_source(source, base_dir)
         if local is None:
             continue
         source.local_path = local
