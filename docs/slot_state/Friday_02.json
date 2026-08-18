@@ -2,13 +2,12 @@
   "day": "Friday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "ee7492ac9c0a746a",
-    "Hiroki's schedule": "d3126ca9af653451"
+    "Main Schedule": "8d6432551a6322e7"
   },
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "Any other open issues. Session reports. etc (including surprise event)",
+      "name": "Any other open issues. Session reports",
       "duration_minutes": 150,
       "specified_start_time": "14:30",
       "chair": null,
@@ -34,6 +33,6 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-11T01:36:18.019205+00:00",
+  "merged_at": "2026-08-18T01:45:33.194793+00:00",
   "schema_version": 1
 }
