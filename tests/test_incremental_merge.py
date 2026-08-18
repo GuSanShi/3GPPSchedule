@@ -166,6 +166,63 @@ class FreshnessClassificationTests(unittest.TestCase):
         # Not all_stale because REMOVED is a change too.
         self.assertFalse(slot2.all_stale)
 
+    def test_meeting_change_forces_cold_rebuild(self):
+        # Snapshot saved for meeting M1; next run targets meeting M2 with
+        # identical source content. The slot must be treated as brand-new
+        # (no baseline) because meeting content cannot be incrementally
+        # carried over.
+        slot1 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
+        _annotate_freshness(slot1)
+        save_slot_state(
+            SlotState(
+                day=slot1.day,
+                time_block_index=slot1.time_block_index,
+                source_hashes=slot1.current_hashes,
+                merged_sessions=[{"name": "AI/ML", "room_name": "RAN1_main"}],
+                meeting_id="M1",
+            )
+        )
+        slot2 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
+        _annotate_freshness(slot2, meeting_id="M2")
+        self.assertEqual(slot2.source_freshness, {"Main": "NEW"})
+        self.assertIsNone(slot2.previous_merge)
+        self.assertFalse(slot2.all_stale)
+
+    def test_same_meeting_id_still_incremental(self):
+        slot1 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
+        _annotate_freshness(slot1)
+        save_slot_state(
+            SlotState(
+                day=slot1.day,
+                time_block_index=slot1.time_block_index,
+                source_hashes=slot1.current_hashes,
+                merged_sessions=[{"name": "AI/ML", "room_name": "RAN1_main"}],
+                meeting_id="M1",
+            )
+        )
+        slot2 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
+        _annotate_freshness(slot2, meeting_id="M1")
+        self.assertEqual(slot2.source_freshness, {"Main": "STALE"})
+        self.assertTrue(slot2.all_stale)
+
+    def test_legacy_snapshot_without_meeting_id_invalid(self):
+        # Pre-upgrade snapshots have meeting_id=""; any current meeting id
+        # must force a cold path on the first run after upgrading.
+        slot1 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
+        _annotate_freshness(slot1)
+        save_slot_state(
+            SlotState(
+                day=slot1.day,
+                time_block_index=slot1.time_block_index,
+                source_hashes=slot1.current_hashes,
+                merged_sessions=[{"name": "AI/ML", "room_name": "RAN1_main"}],
+            )
+        )
+        slot2 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
+        _annotate_freshness(slot2, meeting_id="M1")
+        self.assertEqual(slot2.source_freshness, {"Main": "NEW"})
+        self.assertIsNone(slot2.previous_merge)
+
     def test_new_source_classification(self):
         slot1 = _build_slot({"Main": [("F1+F2+F3", "AI/ML (120)")]})
         _annotate_freshness(slot1)

@@ -1023,6 +1023,7 @@ def _extract_agenda_item_from_name(name: str) -> tuple[str, str | None]:
 def parse_time_slots(
     time_slots: list,
     day_rooms_map: dict[str, list[RoomInfo]],
+    meeting_id: str | None = None,
 ) -> list[Session]:
     """Parse all time slots into Session objects using multi-source Gemini calls.
 
@@ -1089,6 +1090,7 @@ def parse_time_slots(
                         source_hashes=dict(slot.current_hashes),
                         merged_sessions=parsed_result.get("sessions", []),
                         merged_at=datetime.now(timezone.utc).isoformat(),
+                        meeting_id=meeting_id or "",
                     )
                 )
             except OSError as e:
@@ -1175,6 +1177,7 @@ def parse_time_slots(
                     source_hashes=dict(slot.current_hashes),
                     merged_sessions=parsed_result.get("sessions", []),
                     merged_at=datetime.now(timezone.utc).isoformat(),
+                    meeting_id=meeting_id or "",
                 )
             )
         except OSError as e:

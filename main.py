@@ -305,9 +305,15 @@ def main():
         room_names = [r.name for r in rooms]
         print(f"  {day}: {len(rooms)} rooms — {', '.join(room_names)}")
 
+    # Extract meeting id early so slot-state freshness can invalidate the
+    # incremental cache when the target meeting changes.
+    current_meeting_id = _extract_meeting_id(docx_path.name)
+
     # Step 4: Parse sessions (always use time-slot grouping for fewer LLM calls)
     print("\nCollecting schedule data...")
-    time_slots = collect_time_slot_data(cells, day_rooms_map, vice_chair_paths)
+    time_slots = collect_time_slot_data(
+        cells, day_rooms_map, vice_chair_paths, meeting_id=current_meeting_id
+    )
     n_enriched = sum(1 for s in time_slots if len(s.sources) > 1)
     if vice_chair_paths:
         print(f"  {len(time_slots)} time slots ({n_enriched} enriched with vice-chair detail)")
@@ -350,7 +356,7 @@ def main():
         print(f"\nUsing agenda item descriptions: {DEFAULT_JSON_PATH}")
 
     print("\nParsing time slots (Gemini API)...")
-    sessions = parse_time_slots(time_slots, day_rooms_map)
+    sessions = parse_time_slots(time_slots, day_rooms_map, meeting_id=current_meeting_id)
     print(f"Parsed {len(sessions)} sessions")
 
     # Step 4b: Normalize group headers for cleaner legend
@@ -361,7 +367,6 @@ def main():
 
     # Step 5: Build Schedule model
     meeting_name = _extract_meeting_name(docx_path)
-    current_meeting_id = _extract_meeting_id(docx_path.name)
 
     # Detect meeting timezone — reuse cached value when the meeting hasn't changed
     meeting_tz = "UTC"

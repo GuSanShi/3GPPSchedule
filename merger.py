@@ -227,6 +227,7 @@ def collect_time_slot_data(
     main_cells: list[CellData],
     main_rooms_map: dict[str, list[RoomInfo]],
     vice_chair_paths: dict[str, Path],
+    meeting_id: str | None = None,
 ) -> list[TimeSlotData]:
     """Collect all schedule data grouped by (day, time_block).
 
@@ -332,20 +333,23 @@ def collect_time_slot_data(
 
     # Classify each source's freshness relative to the previous run.
     for slot in time_slots:
-        _annotate_freshness(slot)
+        _annotate_freshness(slot, meeting_id=meeting_id)
 
     return time_slots
 
 
-def _annotate_freshness(slot: TimeSlotData) -> None:
+def _annotate_freshness(slot: TimeSlotData, meeting_id: str | None = None) -> None:
     """Compute current source hashes, compare against the previous snapshot,
     and tag each source as FRESH / STALE / NEW. Sources present in the
     previous snapshot but missing now are tagged REMOVED.
+
+    When ``meeting_id`` is given and differs from the snapshot's meeting, the
+    snapshot is discarded and the slot is treated as brand-new (cold).
     """
     current_hashes = {s.label: hash_source_text(_serialize_source(s)) for s in slot.sources}
     slot.current_hashes = current_hashes
 
-    prev_state = load_slot_state(slot.day, slot.time_block_index)
+    prev_state = load_slot_state(slot.day, slot.time_block_index, meeting_id)
     if prev_state is None:
         slot.previous_merge = None
         slot.source_freshness = {label: "NEW" for label in current_hashes}

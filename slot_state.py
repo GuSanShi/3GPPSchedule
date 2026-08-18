@@ -36,6 +36,7 @@ class SlotState:
     source_hashes: dict[str, str] = field(default_factory=dict)
     merged_sessions: list[dict] = field(default_factory=list)
     merged_at: str = ""
+    meeting_id: str = ""
     schema_version: int = SCHEMA_VERSION
 
 
@@ -49,8 +50,16 @@ def _state_path(day: str, time_block_index: int) -> Path:
     return SLOT_STATE_DIR / f"{day}_{time_block_index:02d}.json"
 
 
-def load_slot_state(day: str, time_block_index: int) -> SlotState | None:
-    """Load a persisted slot state, or None if missing/unreadable."""
+def load_slot_state(
+    day: str, time_block_index: int, meeting_id: str | None = None
+) -> SlotState | None:
+    """Load a persisted slot state, or None if missing/unreadable.
+
+    If ``meeting_id`` is given and differs from the one recorded in the
+    snapshot, the state is ignored (returns None): the schedule changed
+    enough that previous merge results cannot be trusted for incremental
+    use, and the slot must be rebuilt cold.
+    """
     path = _state_path(day, time_block_index)
     if not path.exists():
         return None
@@ -61,6 +70,8 @@ def load_slot_state(day: str, time_block_index: int) -> SlotState | None:
         return None
     if data.get("schema_version") != SCHEMA_VERSION:
         return None
+    if meeting_id is not None and data.get("meeting_id", "") != meeting_id:
+        return None
     return SlotState(
         day=data.get("day", day),
         time_block_index=data.get("time_block_index", time_block_index),
@@ -69,6 +80,7 @@ def load_slot_state(day: str, time_block_index: int) -> SlotState | None:
             data.get("merged_sessions", [])
         ),
         merged_at=data.get("merged_at", ""),
+        meeting_id=data.get("meeting_id", ""),
         schema_version=data.get("schema_version", SCHEMA_VERSION),
     )
 
