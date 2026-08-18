@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "00c7f3724271c5b4"
+    "Main Schedule": "b08a7c64d75286d2"
   },
   "merged_sessions": [
     {
@@ -154,7 +154,7 @@
     {
       "room_name": "RAN1_brk2",
       "name": "AI 7/8.2",
-      "duration_minutes": 90,
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": null,
       "group_header": "",
@@ -191,15 +191,6 @@
           ]
         }
       ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "TEI",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "",
-      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -274,7 +265,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-18T04:45:56.158452+00:00",
+  "merged_at": "2026-08-18T05:01:39.768506+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
