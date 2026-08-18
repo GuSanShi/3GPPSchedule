@@ -1268,26 +1268,58 @@ def _current_meeting_from_sources(
     sources: list[ScheduleSource],
     preferred_meeting_id: str | None = None,
 ) -> str | None:
-    """Determine the current meeting from discovered main schedule sources."""
+    """Determine the current meeting from discovered main schedule sources.
+
+    Only files whose names contain a parseable *regular plenary* meeting id
+    can establish a current meeting. When no main file has a regular id the
+    meeting is unidentifiable; in that case the cached
+    ``preferred_meeting_id`` is kept and the meeting-filter keeps the
+    previous meeting's sources rather than switching to an unidentifiable
+    one.
+    """
     main_files = [s.file_info for s in sources if s.is_main]
     if not main_files:
         return preferred_meeting_id
 
-    if all(f.get("uploaded_at") is not None for f in main_files):
-        latest_main = _pick_latest_in_meeting_group(
-            main_files,
-            label="schedule",
-            preferred_meeting_id=preferred_meeting_id,
-        )
-    else:
-        latest_main = find_latest_schedule(
-            main_files,
-            preferred_meeting_id=preferred_meeting_id,
-        )
-
-    if latest_main is None:
+    if not any(f.get("uploaded_at") is not None for f in main_files):
+        # Without timestamps we cannot order anything; keep the cached hint.
         return preferred_meeting_id
-    return _extract_meeting_id(latest_main["name"]) or preferred_meeting_id
+
+    files_with_ts = [f for f in main_files if f.get("uploaded_at") is not None]
+    groups: dict[str | None, list[dict]] = {}
+    for f in files_with_ts:
+        mid = _extract_meeting_id(f["name"])
+        groups.setdefault(mid, []).append(f)
+
+    regular = {mid: grp for mid, grp in groups.items() if _meeting_rank(mid) is not None}
+    if not regular:
+        print(
+            "  No regular plenary meeting id found in main schedule file "
+            "names; keeping previous meeting "
+            f"{preferred_meeting_id!r} for filtering."
+        )
+        return preferred_meeting_id
+
+    current_mid = max(regular, key=lambda m: _meeting_rank(m))
+    pref_rank = _meeting_rank(preferred_meeting_id)
+    if (
+        preferred_meeting_id is not None
+        and preferred_meeting_id in regular
+        and pref_rank is not None
+        and pref_rank >= _meeting_rank(current_mid)
+    ):
+        current_mid = preferred_meeting_id
+        return current_mid
+
+    if (
+        preferred_meeting_id is not None
+        and _meeting_rank(current_mid) is not None
+        and _meeting_rank(current_mid) > pref_rank
+    ):
+        print(
+            f"  Newer meeting detected: {preferred_meeting_id} → {current_mid}"
+        )
+    return current_mid
 
 
 def _filter_sources_to_meeting(
@@ -1299,6 +1331,10 @@ def _filter_sources_to_meeting(
     Locally-provided sources (``local_path`` set) are always kept: they are
     manually curated, so the operator's choice is authoritative even when
     their filename doesn't reference the selected meeting id.
+
+    Files whose names do not contain a parseable meeting id are never
+    adopted: an unidentifiable meeting cannot establish a new current
+    meeting, so such files are dropped as well when a meeting is selected.
     """
     if meeting_id is None:
         return sources
@@ -1313,9 +1349,14 @@ def _filter_sources_to_meeting(
             filtered.append(source)
         else:
             label = "MAIN" if source.is_main else source.person_name or source.folder_name
+            detail = (
+                source_mid
+                if source_mid is not None
+                else "unidentifiable meeting id"
+            )
             print(
-                f"  Skipping {source.folder_name}/ outside current meeting "
-                f"{meeting_id}: {source.file_info['name']} [{label}]"
+                f"  Skipping {source.folder_name}/ {detail} "
+                f"(current meeting {meeting_id}): {source.file_info['name']} [{label}]"
             )
     return filtered
 

@@ -8,7 +8,9 @@ from unittest.mock import MagicMock, patch
 from zipfile import ZipFile, is_zipfile
 
 from downloader import (
+    _current_meeting_from_sources,
     _extract_meeting_id,
+    _filter_sources_to_meeting,
     _meeting_rank,
     _extract_version_from_name,
     _pick_latest_in_meeting_group,
