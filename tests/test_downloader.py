@@ -123,6 +123,42 @@ class ExtractMeetingIdTests(unittest.TestCase):
             "ran1#120e",
         )
 
+    def test_tsg_folder_style_plain(self):
+        self.assertEqual(
+            _extract_meeting_id("TSGR1_126 online and offline schedules - v02.docx"),
+            "ran1#126",
+        )
+
+    def test_tsg_folder_style_short_bis(self):
+        self.assertEqual(
+            _extract_meeting_id("TSGR1_124b online and offline schedules - v01.docx"),
+            "ran1#124bis",
+        )
+
+    def test_tsg_folder_style_full_bis(self):
+        self.assertEqual(
+            _extract_meeting_id("TSGR1_124bis schedule - v01.docx"),
+            "ran1#124bis",
+        )
+
+    def test_tsg_lower_case_and_mixed(self):
+        # Filename case folding is handled by the IGNORECASE flag; verify
+        # a whole filename still parses when the meeting token is lowercase.
+        self.assertEqual(
+            _extract_meeting_id("tsgR1_126 agenda.csv"),
+            "ran1#126",
+        )
+
+    def test_tsg_group_number_example(self):
+        self.assertEqual(
+            _extract_meeting_id("TSGR1_123 chair schedule.docx"),
+            "ran1#123",
+        )
+
+    def test_ran_hash_style_still_wins_over_tsg(self):
+        both = "RAN1#124 and TSGR1_126 in one name.docx"
+        self.assertEqual(_extract_meeting_id(both), "ran1#124")
+
     def test_e_suffix_with_hyphen(self):
         self.assertEqual(
             _extract_meeting_id("RAN1#120-e online schedules - v03.docx"),

@@ -168,6 +168,20 @@ _MEETING_ID_PATTERN = re.compile(
 )
 
 
+# Suffixes used in TSGR_*_NNN folder/file names (``b`` is 3GPP's short
+# form of ``bis`` for these newer per-meeting folders).
+_TSGR_SUFFIXES = r"(?:b|bis)"
+
+# Pattern to extract meeting identifiers like TSGR1_126, TSGR1_124b, etc.
+# (per-meeting folders in the tsg_ran FTP tree).  Both short suffixes and
+# full ones are accepted; the result is normalised to the same
+# ``ran<team>#<num>`` form as the ``RAN1#124`` pattern.
+_TSGR_ID_PATTERN = re.compile(
+    rf"TSG[_ ]?R(\d+)[_ ](\d+)(?:[ _-]?({_TSGR_SUFFIXES}))?",
+    re.IGNORECASE,
+)
+
+
 def _extract_meeting_id(filename: str) -> str | None:
     """Extract a normalised meeting identifier from a filename.
 
@@ -176,17 +190,35 @@ def _extract_meeting_id(filename: str) -> str | None:
         'RAN1#124bis schedule for Hiroki_v07.docx'          → 'ran1#124bis'
         'RAN1#124-bis schedule - v01.docx'                  → 'ran1#124bis'
         'RAN1#124 bis schedule - v01.docx'                  → 'ran1#124bis'
+        'TSGR1_126 online and offline schedules - v02.docx' → 'ran1#126'
+        'TSGR1_124b schedule - v01.docx'                    → 'ran1#124bis'
         'custom schedule name.docx'                         → None
 
     The returned string is always lowercased with any hyphen/space between
     the number and the suffix removed (e.g. '124-bis' → '124bis').
+
+    Two naming conventions are recognised:
+
+    - Legacy ``RAN<N>#<num>`` (regex ``_MEETING_ID_PATTERN``)
+    - Newer ``TSGR<N>_<num>`` (regex ``_TSGR_ID_PATTERN``), used by the
+      ``tsg_ran/WG*/TSGR*_*`` FTP folders for recent meetings.  Both
+      normalise to the same output so that files from the same meeting
+      written in either style compare equal.
     """
     m = _MEETING_ID_PATTERN.search(filename)
-    if not m:
-        return None
-    base = m.group(1).lower()
-    suffix = (m.group(2) or "").lower()
-    return f"{base}{suffix}"
+    if m:
+        base = m.group(1).lower()
+        suffix = (m.group(2) or "").lower()
+        return f"{base}{suffix}"
+
+    m = _TSGR_ID_PATTERN.search(filename)
+    if m:
+        team, num, suffix = int(m.group(1)), m.group(2), (m.group(3) or "").lower()
+        if suffix == "b":
+            suffix = "bis"
+        return f"ran{team}#{num}{suffix}"
+
+    return None
 
 
 # Regular plenary meeting ids look like ``ran1#124`` or ``ran1#124bis``.
