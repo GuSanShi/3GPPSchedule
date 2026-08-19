@@ -54,10 +54,13 @@ from downloader import (
     save_schedule_state,
     load_schedule_state,
     _extract_meeting_id,
+    local_reference_meeting_id,
     download_external_files,
     save_external_files_state,
+    _external_config_fingerprint,
     EXTRA_FILES_DIR,
     _local_doc_preference,
+    _meeting_rank,
 )
 from merger import collect_time_slot_data
 from config import load_config
@@ -224,6 +227,11 @@ def main():
     cfg = load_config()
     prev_state = load_schedule_state()
     cached_meeting_id = prev_state.get("meeting_id")
+    if not isinstance(cached_meeting_id, str) or not cached_meeting_id:
+        cached_meeting_id = None
+    local_meeting_hint = local_reference_meeting_id()
+    preferred_meeting_id = local_meeting_hint or cached_meeting_id
+    locked_meeting_id = local_meeting_hint
     cached_tz = prev_state.get("timezone")
 
     # Step 1: Get the DOCX file(s)
@@ -241,7 +249,9 @@ def main():
         # Locally-provided chairman references (ref_in_manual/) take
         # precedence over cached downloaded copies, which in turn take
         # precedence over extra_files (previously-downloaded external URLs).
-        _local_ref_sources, _local_ref_chosen = find_local_schedule_sources()
+        _local_ref_sources, _local_ref_chosen = find_local_schedule_sources(
+            preferred_meeting_id=preferred_meeting_id
+        )
         docx_path = _local_ref_chosen
         if docx_path is None:
             _extra_ref_sources, _extra_ref_chosen = find_local_schedule_sources(
@@ -270,7 +280,7 @@ def main():
         # Locally-provided chairman schedule references (ref_in_manual/)
         # always take precedence over FTP-discovered documents.
         local_ref_sources, _local_ref_chosen = find_local_schedule_sources(
-            preferred_meeting_id=cached_meeting_id
+            preferred_meeting_id=preferred_meeting_id
         )
         # Download external files (curl -OJL equivalent) into
         # downloads/extra_files/.  Schedule entries become local
@@ -284,9 +294,24 @@ def main():
                 ext_results, ext_file_state = download_external_files(
                     cfg["extra_files"]
                 )
-                save_external_files_state({"files": ext_file_state})
+                save_external_files_state(
+                    {
+                        "files": ext_file_state,
+                        "config": _external_config_fingerprint(cfg["extra_files"]),
+                    }
+                )
             except Exception as e:
                 print(f"Warning: extra files download failed: {e}")
+        else:
+            # Keep the committed state aligned when extra_files is removed
+            # from config; otherwise the check job would report a change on
+            # every run after the removal.
+            save_external_files_state(
+                {
+                    "files": {},
+                    "config": _external_config_fingerprint([]),
+                }
+            )
         for entry, path in ext_results:
             if str(entry.get("type", "")).lower() == "chair_notes":
                 extra_chair_notes_paths.append(path)
@@ -304,12 +329,32 @@ def main():
                         local_path=path,
                     )
                 )
+        local_main_ids = {
+            _extract_meeting_id(source.file_info["name"])
+            for source in local_ref_sources
+            if source.is_main
+            and _extract_meeting_id(source.file_info["name"]) is not None
+        }
+        regular_local_ids = [
+            meeting_id
+            for meeting_id in local_main_ids
+            if _meeting_rank(meeting_id) is not None
+        ]
+        if regular_local_ids:
+            locked_meeting_id = max(regular_local_ids, key=_meeting_rank)
+            preferred_meeting_id = locked_meeting_id
+        elif len(local_main_ids) == 1:
+            # There is no total ordering for irregular meetings, but a
+            # single explicit local meeting is still safe to pin exactly.
+            locked_meeting_id = next(iter(local_main_ids))
+            preferred_meeting_id = locked_meeting_id
         try:
             sources = discover_schedule_sources(
                 urls=cfg["inbox_urls"],
                 extra_folders=cfg["extra_folders"],
                 local_schedule_sources=local_ref_sources,
-                preferred_meeting_id=cached_meeting_id,
+                preferred_meeting_id=preferred_meeting_id,
+                locked_meeting_id=locked_meeting_id,
             )
             if sources:
                 print(f"Found {len(sources)} schedule source(s)")
@@ -471,9 +516,17 @@ def main():
     # state is compared by check_update.py against a fresh remote scan, and
     # local mtimes are not stable across CI checkouts.
     if sources is not None:
+        selected_main_source = next((s for s in sources if s.is_main), None)
+        meeting_source = (
+            "local"
+            if selected_main_source is not None
+            and selected_main_source.local_path is not None
+            else "remote"
+        )
         save_schedule_state(
             [s for s in sources if s.local_path is None],
             meeting_id=current_meeting_id,
+            meeting_source=meeting_source,
             timezone=meeting_tz,
             agenda=_agenda_state_for_save(agenda_info, agenda_path),
             local_refs=local_reference_hashes(),

@@ -228,7 +228,20 @@ class MainExtraFilesWiringTests(unittest.TestCase):
                 main()
 
                 mock_dl.assert_called_once_with(entries)
-                mock_save.assert_called_once_with({"files": {url: "deadbeef"}})
+                mock_save.assert_called_once_with(
+                    {
+                        "files": {url: "deadbeef"},
+                        "config": [
+                            {
+                                "url": url,
+                                "type": "schedule",
+                                "name": None,
+                                "person_name": None,
+                                "is_main": True,
+                            }
+                        ],
+                    }
+                )
                 self.assertIn(
                     extra_source,
                     mock_disc.call_args.kwargs["local_schedule_sources"],

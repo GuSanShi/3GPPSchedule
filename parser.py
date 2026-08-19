@@ -7,7 +7,7 @@ from pathlib import Path
 
 from docx import Document
 
-from downloader import _local_doc_preference
+from downloader import _iter_local_files, _local_doc_preference
 from models import TIME_BLOCKS, CellData, DAY_ORDER, RoomInfo, time_to_minutes
 
 _TIME_BLOCK_MINUTES = [
@@ -57,8 +57,7 @@ def find_chair_notes_docx(dest_dir: Path = Path("downloads/Chair_notes")) -> Pat
     supported_extensions = (".docx", ".pptx", ".pdf")
     chair_files = [
         f
-        for ext in supported_extensions
-        for f in dest_dir.glob(f"*{ext}")
+        for f in _iter_local_files(dest_dir, supported_extensions)
         if "chair note" in f.name.lower() or "chair_note" in f.name.lower()
     ]
     if not chair_files:

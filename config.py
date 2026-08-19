@@ -66,9 +66,10 @@ config.json shape
 build time they are downloaded to ``downloads/extra_files/`` (equivalent
 of ``curl -OJL`` — redirects followed, file name taken from
 ``Content-Disposition`` when present).  CI change-detection
-(``check_update.py``) compares the sha256 of each URL's content against
-``docs/.extra_files_state.json`` (same content-hash scheme as
-``ref_in_manual`` — ETSI provides no ETag/Last-Modified headers).
+(``check_update.py``) compares the resolved filename, sha256, and routing
+metadata of each URL's content against ``docs/.extra_files_state.json``
+(same content-hash scheme as ``ref_in_manual`` — ETSI provides no
+ETag/Last-Modified headers).
 
 The legacy ``inbox_urls`` key is still accepted (with a deprecation
 warning) and contributes to the derived ``inbox_urls`` only.

@@ -21,10 +21,13 @@ from downloader import (
     find_latest_schedule,
     get_all_remote_schedule_info,
     get_latest_chair_notes_info,
+    find_local_schedule_sources,
     local_reference_hashes,
+    local_reference_meeting_id,
     load_schedule_state,
     save_schedule_state,
 )
+from models import ScheduleSource
 
 
 def _f(name: str, uploaded_at: datetime | None = None, url: str = "") -> dict:
@@ -373,6 +376,82 @@ class FindLatestScheduleMeetingAwareTests(unittest.TestCase):
         assert result is not None
         self.assertEqual(result["name"], "schedule.docx")
 
+    def test_preferred_meeting_does_not_fall_back_to_older_file(self):
+        files = [
+            _f("RAN1#125 schedule - v99.docx", datetime(2026, 5, 1, 9, 0)),
+        ]
+        self.assertIsNone(
+            find_latest_schedule(files, preferred_meeting_id="ran1#126")
+        )
+
+    def test_preferred_meeting_still_allows_later_meeting(self):
+        files = [
+            _f("RAN1#125 schedule - v99.docx", datetime(2026, 5, 1, 9, 0)),
+            _f("RAN1#127 schedule - v01.docx", datetime(2026, 5, 2, 9, 0)),
+        ]
+        result = find_latest_schedule(files, preferred_meeting_id="ran1#126")
+        assert result is not None
+        self.assertIn("127", result["name"])
+
+    def test_locked_meeting_excludes_later_remote_meeting(self):
+        files = [
+            _f("RAN1#126 schedule - v03.docx", datetime(2026, 5, 1, 9, 0)),
+            _f("RAN1#127 schedule - v01.docx", datetime(2026, 5, 2, 9, 0)),
+        ]
+        result = find_latest_schedule(
+            files,
+            preferred_meeting_id="ran1#126",
+            locked_meeting_id="ran1#126",
+        )
+        assert result is not None
+        self.assertIn("126", result["name"])
+
+
+def test_local_reference_selection_uses_filename_not_mtime(tmp_path):
+    ref_dir = tmp_path / "ref_in_manual"
+    ref_dir.mkdir()
+    older_name = ref_dir / "RAN1#125 online and offline schedules - v99.DOCX"
+    newer_name = ref_dir / "RAN1#126 online and offline schedules - v01.docx"
+    older_name.write_bytes(b"old")
+    newer_name.write_bytes(b"new")
+
+    # Deliberately make the older meeting appear newer on disk.
+    older_name.touch()
+    newer_name.touch()
+    import os
+
+    os.utime(older_name, (2_000_000_000, 2_000_000_000))
+    os.utime(newer_name, (1_000_000_000, 1_000_000_000))
+
+    sources, chosen = find_local_schedule_sources(ref_dir)
+
+    assert chosen == newer_name
+    assert sources[0].local_path == newer_name
+    assert local_reference_meeting_id(ref_dir) == "ran1#126"
+
+
+def test_local_main_source_meeting_is_authoritative(tmp_path):
+    local_path = tmp_path / "RAN1#126 schedule.docx"
+    local_path.write_bytes(b"local")
+    local = ScheduleSource(
+        folder_name="ref_in_manual",
+        person_name=None,
+        is_main=True,
+        file_info={"name": local_path.name, "uploaded_at": None},
+        local_path=local_path,
+    )
+    remote = ScheduleSource(
+        folder_name="Chair_notes",
+        person_name=None,
+        is_main=True,
+        file_info={
+            "name": "RAN1#127 schedule.docx",
+            "uploaded_at": datetime(2026, 5, 2, 9, 0),
+        },
+    )
+
+    assert _current_meeting_from_sources([remote, local]) == "ran1#126"
+
 
 class FindLatestChairNotesMeetingAwareTests(unittest.TestCase):
     """Integration tests for find_latest_chair_notes with meeting grouping."""
@@ -629,6 +708,27 @@ class SaveScheduleStateTests(unittest.TestCase):
             self.assertEqual(state["timezone"], "Europe/Malta")
             self.assertIsInstance(state["files"], list)
             self.assertEqual(len(state["files"]), 1)
+        finally:
+            p.unlink(missing_ok=True)
+
+    def test_saves_meeting_source_metadata(self):
+        p = Path("/tmp/test_save_state_meeting_source.json")
+        sources = [
+            self._make_source(
+                "Chair_notes",
+                "RAN1#126 schedule - v01.docx",
+                datetime(2026, 5, 1, 8, 0),
+            ),
+        ]
+        try:
+            save_schedule_state(
+                sources,
+                p,
+                meeting_id="ran1#126",
+                meeting_source="local",
+            )
+            state = json.loads(p.read_text())
+            self.assertEqual(state["meeting_source"], "local")
         finally:
             p.unlink(missing_ok=True)
 
@@ -914,7 +1014,12 @@ def test_file_download_returns_paths_and_state():
         assert results[0][0] is entry
         assert results[0][1].name == "RAN1#126 schedule - v02.docx"
     import hashlib
-    assert state == {url: hashlib.sha256(b"docx!\x00").hexdigest()}
+    assert state == {
+        url: {
+            "sha256": hashlib.sha256(b"docx!\x00").hexdigest(),
+            "filename": "RAN1#126 schedule - v02.docx",
+        }
+    }
 
 
 def test_file_download_entry_name_fallback():
@@ -926,7 +1031,12 @@ def test_file_download_entry_name_fallback():
         assert results[0][1].name == "RAN1#126 Chair_notes - v03.docx"
         assert results[0][1].read_bytes() == b"chair"
     import hashlib
-    assert state == {url: hashlib.sha256(b"chair").hexdigest()}
+    assert state == {
+        url: {
+            "sha256": hashlib.sha256(b"chair").hexdigest(),
+            "filename": "RAN1#126 Chair_notes - v03.docx",
+        }
+    }
 
 
 def test_zip_extraction_appends_doc_path():
@@ -948,7 +1058,12 @@ def test_zip_extraction_appends_doc_path():
         assert len(results) == 1
         assert results[0][1].read_bytes() == docx_bytes
     import hashlib
-    assert state == {url: hashlib.sha256(zip_bytes).hexdigest()}
+    assert state == {
+        url: {
+            "sha256": hashlib.sha256(zip_bytes).hexdigest(),
+            "filename": "RAN1#126.zip",
+        }
+    }
 
 
 def test_4xx_no_retry_no_state():
@@ -989,7 +1104,12 @@ def test_5xx_retries_then_succeeds():
         assert results[0][1].read_bytes() == b"ok-docx"
     assert sleeps == [5, 10]  # backoff applied
     import hashlib
-    assert state == {url: hashlib.sha256(b"ok-docx").hexdigest()}
+    assert state == {
+        url: {
+            "sha256": hashlib.sha256(b"ok-docx").hexdigest(),
+            "filename": "flaky.docx",
+        }
+    }
 
 
 def test_filename_from_url_when_no_cd():
@@ -1052,6 +1172,71 @@ class CheckExternalFilesTests(unittest.TestCase):
         self.assertTrue(changed)
         self.assertEqual(state_out["files"][url], hashlib.sha256(b"v2").hexdigest())
 
+    def test_same_hash_different_filename_changed(self):
+        import hashlib
+
+        url = "https://example.com/f?x=filename"
+        body = b"unchanged-body"
+        state_in = {
+            "files": {
+                url: {
+                    "sha256": hashlib.sha256(body).hexdigest(),
+                    "filename": "RAN1#126 schedule - v01.docx",
+                }
+            }
+        }
+
+        def fake_stream(method, request_url, **kwargs):
+            return _OneshotCtx(
+                FakeStreamResponse(
+                    headers={
+                        "content-disposition": (
+                            'attachment; filename="RAN1#126 schedule - v02.docx"'
+                        )
+                    },
+                    body=body,
+                )
+            )
+
+        with patch("downloader.httpx.stream", side_effect=fake_stream):
+            changed, state_out = check_external_files(
+                [{"url": url, "type": "schedule"}],
+                state=state_in,
+            )
+
+        self.assertTrue(changed)
+        self.assertEqual(
+            state_out["files"][url]["filename"],
+            "RAN1#126 schedule - v02.docx",
+        )
+
+    def test_same_url_and_body_different_routing_changed(self):
+        import hashlib
+
+        url = "https://example.com/f?x=routing"
+        body = b"same-body"
+        p, _ = self._patch_stream_bodies({url: body})
+        state_in = {
+            "files": {url: hashlib.sha256(body).hexdigest()},
+            "config": [
+                {
+                    "url": url,
+                    "type": "schedule",
+                    "name": None,
+                    "person_name": None,
+                    "is_main": True,
+                }
+            ],
+        }
+        with p:
+            changed, state_out = check_external_files(
+                [{"url": url, "type": "chair_notes"}],
+                state=state_in,
+            )
+
+        self.assertTrue(changed)
+        self.assertEqual(state_out["config"][0]["type"], "chair_notes")
+
     def test_new_url_counts_as_changed(self):
         import hashlib
         url = "https://example.com/brand-new"
@@ -1059,7 +1244,17 @@ class CheckExternalFilesTests(unittest.TestCase):
         with p:
             changed, state_out = check_external_files([{"url": url, "type": "chair_notes"}], state={"files": {}})
         self.assertTrue(changed)
-        self.assertEqual(state_out, {"files": {url: hashlib.sha256(b"fresh").hexdigest()}})
+        self.assertEqual(
+            state_out,
+            {
+                "files": {
+                    url: {
+                        "sha256": hashlib.sha256(b"fresh").hexdigest(),
+                        "filename": "brand-new",
+                    }
+                }
+            },
+        )
 
     def test_404_url_ignored_no_effect(self):
         import hashlib

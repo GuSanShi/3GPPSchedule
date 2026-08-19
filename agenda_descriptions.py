@@ -17,7 +17,7 @@ import httpx
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from downloader import _local_doc_preference
+from downloader import _iter_local_files, _local_doc_preference
 
 
 TDOC_LIST_URL = "https://www.3gpp.org/ftp/Meetings_3GPP_SYNC/RAN1/Inbox/Tdoc_list"
@@ -595,7 +595,7 @@ def find_local_latest_agenda_docx(
     Selection is deterministic (filename version, then name) — mtime is
     not stable across CI checkouts.
     """
-    agenda_files = list(download_dir.glob("*.docx"))
+    agenda_files = _iter_local_files(download_dir, (".docx",))
     if not agenda_files:
         return None
     return max(agenda_files, key=_local_doc_preference)
@@ -609,7 +609,7 @@ def find_local_latest_agenda_file(
     Selection is deterministic (filename version, then name) — mtime is
     not stable across CI checkouts.
     """
-    agenda_files = list(download_dir.glob("*.csv")) + list(download_dir.glob("*.docx"))
+    agenda_files = _iter_local_files(download_dir, (".csv", ".docx"))
     if not agenda_files:
         return None
     return max(agenda_files, key=_local_doc_preference)

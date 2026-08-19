@@ -260,7 +260,33 @@ def _local_doc_preference(
         _meeting_rank(mid) or (0, 0, 0),
         _extract_version_parts_from_name(p.name),
         p.name.lower(),
+        p.name,
     )
+
+
+def _iter_local_files(
+    directory: Path,
+    extensions: tuple[str, ...],
+) -> list[Path]:
+    """Return files with supported suffixes, case-insensitively.
+
+    ``Path.glob("*.docx")`` is case-sensitive on Linux but not on the
+    default Windows filesystem.  CI runs on Linux, so relying on glob case
+    behaviour would make the same checkout behave differently by platform.
+    """
+    if not directory.is_dir():
+        return []
+    try:
+        return sorted(
+            (
+                path
+                for path in directory.iterdir()
+                if path.is_file() and path.suffix.lower() in extensions
+            ),
+            key=lambda path: (path.name.lower(), path.name),
+        )
+    except OSError:
+        return []
 
 
 def _meeting_rank(meeting_id: str | None) -> tuple[int, int, int] | None:
@@ -286,11 +312,54 @@ def _meeting_rank(meeting_id: str | None) -> tuple[int, int, int] | None:
     return (series, number, suffix_rank)
 
 
+def _files_at_or_after_preferred_meeting(
+    files: list[dict],
+    preferred_meeting_id: str | None,
+) -> list[dict]:
+    """Keep files compatible with a cached/local regular meeting hint.
+
+    A fresh FTP listing can temporarily omit the current meeting while still
+    returning older folders.  Selecting one of those older files would make
+    the check job disagree with a build that uses the cached/local meeting.
+    For regular meetings, therefore, older and unidentifiable files are not
+    eligible when a preferred meeting is known.  A later regular meeting is
+    retained so normal meeting advancement still works.
+
+    Irregular preferred meetings cannot be ordered reliably and retain the
+    historical fallback behaviour.
+    """
+    preferred_rank = _meeting_rank(preferred_meeting_id)
+    if preferred_rank is None:
+        return files
+
+    preferred = preferred_meeting_id.lower()
+    regular_files: list[tuple[dict, tuple[int, int, int]]] = []
+    for file_info in files:
+        rank = _meeting_rank(_extract_meeting_id(file_info["name"]))
+        if rank is not None:
+            regular_files.append((file_info, rank))
+
+    if regular_files:
+        return [
+            file_info
+            for file_info, rank in regular_files
+            if rank >= preferred_rank
+        ]
+
+    # No regular IDs are available.  Only an exact irregular/current group
+    # match is safe; an unrelated group must not displace a regular hint.
+    return [
+        file_info
+        for file_info in files
+        if (_extract_meeting_id(file_info["name"]) or "").lower() == preferred
+    ]
+
+
 def _pick_latest_in_meeting_group(
     files: list[dict],
     label: str = "schedule",
     preferred_meeting_id: str | None = None,
-) -> dict:
+) -> dict | None:
     """Select the best file using meeting-aware grouping.
 
     1. Group *files* by meeting identifier.
@@ -313,6 +382,18 @@ def _pick_latest_in_meeting_group(
     """
     from collections import defaultdict
 
+    if preferred_meeting_id is not None:
+        preferred_meeting_id = preferred_meeting_id.lower()
+
+    files = _files_at_or_after_preferred_meeting(files, preferred_meeting_id)
+    if not files:
+        if preferred_meeting_id is not None:
+            print(
+                f"  No {label} file at or after preferred meeting "
+                f"{preferred_meeting_id}; ignoring older/unidentified files."
+            )
+        return None
+
     groups: dict[str | None, list[dict]] = defaultdict(list)
     for f in files:
         mid = _extract_meeting_id(f["name"])
@@ -332,12 +413,12 @@ def _pick_latest_in_meeting_group(
         highest_regular_rank = _meeting_rank(highest_regular_mid)
         if (
             preferred_meeting_id is not None
-            and preferred_meeting_id in regular
+            and preferred_meeting_id.lower() in regular
             and pref_rank is not None
             and highest_regular_rank is not None
             and pref_rank >= highest_regular_rank
         ):
-            current_mid = preferred_meeting_id
+            current_mid = preferred_meeting_id.lower()
         else:
             current_mid = highest_regular_mid
 
@@ -373,6 +454,7 @@ def _pick_latest_in_meeting_group(
             _extract_version_parts_from_name(x["name"]),
             x["uploaded_at"],
             x["name"].lower(),
+            x["name"],
         ),
     )
     print(
@@ -429,6 +511,7 @@ def list_remote_files(
 def find_latest_schedule(
     files: list[dict],
     preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
 ) -> dict | None:
     """Find the latest schedule file using meeting-aware grouping.
 
@@ -446,10 +529,22 @@ def find_latest_schedule(
     do not displace the current meeting's schedule, while still
     preferring the highest version within the current meeting.
 
-    Falls back to version number (then timestamp) if timestamps are
-    unavailable.
+    Falls back to version number (then filename) if timestamps are
+    unavailable.  When ``locked_meeting_id`` is set, only that exact meeting
+    is considered; this is used for authoritative local reference files.
     """
     schedule_files = [f for f in files if "schedule" in f["name"].lower()]
+    if locked_meeting_id is not None:
+        locked = locked_meeting_id.lower()
+        schedule_files = [
+            f for f in schedule_files
+            if _extract_meeting_id(f["name"]) == locked
+        ]
+        preferred_meeting_id = locked
+    schedule_files = _files_at_or_after_preferred_meeting(
+        schedule_files,
+        preferred_meeting_id,
+    )
 
     if not schedule_files:
         return None
@@ -470,20 +565,35 @@ def find_latest_schedule(
         if version >= 0:
             versioned.append({**f, "version": version})
     if versioned:
-        return max(versioned, key=lambda x: _extract_version_parts_from_name(x["name"]))
+        return max(
+            versioned,
+            key=lambda x: (
+                _extract_version_parts_from_name(x["name"]),
+                x["name"].lower(),
+                x["name"],
+            ),
+        )
 
-    # Last resort: return the first schedule file
-    return schedule_files[0]
+    # Last resort: use a stable filename order rather than listing order.
+    return max(schedule_files, key=lambda f: (f["name"].lower(), f["name"]))
 
 
-def get_remote_schedule_info(url: str = BASE_URL) -> dict | None:
+def get_remote_schedule_info(
+    url: str = BASE_URL,
+    preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
+) -> dict | None:
     """Return metadata (name + uploaded_at) of the latest schedule on FTP.
 
     This is a lightweight check — only fetches the directory listing,
     does NOT download any file.  Used for change detection.
     """
     files = list_remote_files(url)
-    latest = find_latest_schedule(files)
+    latest = find_latest_schedule(
+        files,
+        preferred_meeting_id=preferred_meeting_id,
+        locked_meeting_id=locked_meeting_id,
+    )
     if latest is None:
         return None
     return {
@@ -669,8 +779,7 @@ def find_local_latest_schedule(
     """
     schedule_files = [
         f
-        for ext in DOCUMENT_EXTENSIONS
-        for f in dest_dir.glob(f"*{ext}")
+        for f in _iter_local_files(dest_dir, DOCUMENT_EXTENSIONS)
         if "schedule" in f.name.lower()
     ]
 
@@ -742,6 +851,13 @@ def find_latest_chair_notes(
     if not chair_files:
         return None
 
+    chair_files = _files_at_or_after_preferred_meeting(
+        chair_files,
+        preferred_meeting_id,
+    )
+    if not chair_files:
+        return None
+
     # Use meeting-aware grouping when timestamps are available.
     files_with_ts = [f for f in chair_files if f.get("uploaded_at") is not None]
     if files_with_ts:
@@ -758,9 +874,16 @@ def find_latest_chair_notes(
         if version >= 0:
             versioned.append({**f, "version": version})
     if versioned:
-        return max(versioned, key=lambda x: _extract_version_parts_from_name(x["name"]))
+        return max(
+            versioned,
+            key=lambda x: (
+                _extract_version_parts_from_name(x["name"]),
+                x["name"].lower(),
+                x["name"],
+            ),
+        )
 
-    return chair_files[0]
+    return max(chair_files, key=lambda f: (f["name"].lower(), f["name"]))
 
 
 def _chair_notes_url_from_inbox(url: str) -> str:
@@ -894,8 +1017,15 @@ def find_latest_agenda(files: list[dict]) -> dict | None:
     preferred = [f for f in candidates if _agenda_priority(f) == best_priority]
     with_ts = [f for f in preferred if f.get("uploaded_at") is not None]
     if with_ts:
-        return max(with_ts, key=lambda f: f["uploaded_at"])
-    return preferred[0]
+        return max(
+            with_ts,
+            key=lambda f: (
+                f["uploaded_at"],
+                f["name"].lower(),
+                f["name"],
+            ),
+        )
+    return max(preferred, key=lambda f: (f["name"].lower(), f["name"]))
 
 
 def get_latest_agenda_info(agenda_urls: list[str]) -> dict | None:
@@ -987,11 +1117,7 @@ def find_local_latest_agenda(
     dest_dir: Path = DOWNLOADS_DIR / "Agenda",
 ) -> Path | None:
     """Return the newest locally-cached agenda document, if any."""
-    if not dest_dir.exists():
-        return None
-    candidates: list[Path] = []
-    for ext in AGENDA_EXTRACT_EXTENSIONS:
-        candidates.extend(dest_dir.glob(f"*{ext}"))
+    candidates = _iter_local_files(dest_dir, AGENDA_EXTRACT_EXTENSIONS)
     if not candidates:
         return None
     # Deterministic filename selection — mtimes are not stable across
@@ -1012,10 +1138,9 @@ def _find_extracted_document(
     parent = zip_path.parent
     candidates = []
     stem = zip_path.stem.lower()
-    for ext in document_extensions:
-        for f in parent.glob(f"*{ext}"):
-            if stem in f.stem.lower():
-                candidates.append(f)
+    for f in _iter_local_files(parent, document_extensions):
+        if stem in f.stem.lower():
+            candidates.append(f)
     if not candidates:
         return None
     # Return the highest-version document file (deterministic across CI
@@ -1120,6 +1245,7 @@ def _filter_files_to_meeting(files: list[dict], meeting_id: str | None) -> list[
 def _discover_from_inbox(
     url: str,
     preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
 ) -> list[ScheduleSource]:
     """Scan a single inbox URL for schedule sources (subfolders + stray root files)."""
     sources: list[ScheduleSource] = []
@@ -1130,30 +1256,39 @@ def _discover_from_inbox(
         subfolders = list_inbox_subfolders(url)
     except Exception as e:
         print(f"Warning: Failed to list Inbox subfolders at {url}: {e}")
-        return _fallback_chair_only(chair_notes_url)
+        return _fallback_chair_only(
+            chair_notes_url,
+            preferred_meeting_id=preferred_meeting_id,
+            locked_meeting_id=locked_meeting_id,
+        )
 
     # First pass: locate the Chair_notes folder so we can determine the
     # canonical meeting for this run. The cached state meeting id is a
     # hint, not a lock: a newer regular meeting is allowed to take over.
     main_meeting_id: str | None = None
     main_folder_name: str | None = None
+    chair_folder_seen = False
+    chair_scan_failed = False
     for folder in subfolders:
         if folder["name"] in BLACKLISTED_FOLDERS:
             continue
         person_name = _extract_person_name(folder["name"])
         if "chair" in folder["name"].lower() and person_name is None:
+            chair_folder_seen = True
+            main_folder_name = folder["name"]
             try:
                 chair_files = list_remote_files(folder["url"])
             except Exception as e:
                 print(f"  Warning: Cannot access {folder['name']}/: {e}")
+                chair_scan_failed = True
                 break
             chair_latest = find_latest_schedule(
                 chair_files,
                 preferred_meeting_id=preferred_meeting_id,
+                locked_meeting_id=locked_meeting_id,
             )
             if chair_latest is not None:
                 main_meeting_id = _extract_meeting_id(chair_latest["name"])
-                main_folder_name = folder["name"]
                 if main_meeting_id is not None:
                     print(f"  Current meeting (from {folder['name']}/): {main_meeting_id}")
                 sources.append(
@@ -1196,6 +1331,7 @@ def _discover_from_inbox(
         latest = find_latest_schedule(
             files,
             preferred_meeting_id=main_meeting_id or preferred_meeting_id,
+            locked_meeting_id=locked_meeting_id,
         )
         if latest is None:
             continue
@@ -1225,7 +1361,7 @@ def _discover_from_inbox(
             existing_persons = {s.person_name for s in sources if s.person_name}
             if person in existing_persons:
                 continue
-            meeting_hint = main_meeting_id or preferred_meeting_id
+            meeting_hint = locked_meeting_id or main_meeting_id or preferred_meeting_id
             if meeting_hint is not None:
                 file_mid = _extract_meeting_id(sf["name"])
                 if file_mid != meeting_hint:
@@ -1246,9 +1382,15 @@ def _discover_from_inbox(
     except Exception as e:
         print(f"  Warning: Cannot scan Inbox root for schedule files: {e}")
 
-    if not any(s.is_main for s in sources):
+    if not any(s.is_main for s in sources) and (
+        not chair_folder_seen or chair_scan_failed
+    ):
         print(f"  Warning: No main schedule (Chair_notes) found at {url}, using fallback")
-        fallback = _fallback_chair_only(chair_notes_url)
+        fallback = _fallback_chair_only(
+            chair_notes_url,
+            preferred_meeting_id=main_meeting_id or preferred_meeting_id,
+            locked_meeting_id=locked_meeting_id,
+        )
         if fallback:
             sources.extend(fallback)
 
@@ -1258,6 +1400,7 @@ def _discover_from_inbox(
 def _source_from_extra_folder(
     folder: dict,
     preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
 ) -> ScheduleSource | None:
     """Build a ScheduleSource from a manually-configured extra folder entry."""
     folder_url = folder["url"]
@@ -1268,7 +1411,11 @@ def _source_from_extra_folder(
         print(f"  Warning: Cannot access extra folder {folder_name}/: {e}")
         return None
 
-    latest = find_latest_schedule(files, preferred_meeting_id=preferred_meeting_id)
+    latest = find_latest_schedule(
+        files,
+        preferred_meeting_id=preferred_meeting_id,
+        locked_meeting_id=locked_meeting_id,
+    )
     if latest is None:
         print(f"  No schedule file in extra folder {folder_name}/")
         return None
@@ -1288,10 +1435,13 @@ def _source_from_extra_folder(
 def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
     """Resolve collisions when aggregating across multiple inboxes.
 
-    - At most one ``is_main`` survives (locally-provided mains win over FTP
-      mains; among the rest, newest ``uploaded_at`` wins).
-    - Vice-chair sources with the same ``person_name`` collapse to the newest.
-    - Non-main, no-person entries with the same ``folder_name`` collapse to the newest.
+        - At most one ``is_main`` survives (locally-provided mains win over FTP
+            mains; local collisions use filename meeting/version, remote collisions
+            use ``uploaded_at``).
+        - Vice-chair sources with the same ``person_name`` collapse using the same
+            local-priority/remote-timestamp ranking.
+        - Non-main, no-person entries with the same ``folder_name`` collapse using
+            the same ranking.
     """
     from datetime import datetime
 
@@ -1299,9 +1449,15 @@ def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
         v = s.file_info.get("uploaded_at")
         return v if isinstance(v, datetime) else datetime.min
 
-    def main_rank(s: ScheduleSource) -> tuple[int, datetime]:
-        # Locally-provided chairman documents always beat FTP-discovered ones.
-        return (1 if s.local_path is not None else 0, ts(s))
+    def source_rank(s: ScheduleSource) -> tuple:
+        """Rank a source without relying on local filesystem metadata."""
+        if s.local_path is not None:
+            # Locally-provided sources are explicit operator inputs.  Among
+            # them, prefer the highest filename-derived meeting/version so
+            # multiple local candidates do not resolve by insertion order.
+            return (1, _local_doc_preference(s.local_path))
+        name = s.file_info.get("name", "")
+        return (0, ts(s), name.lower(), name)
 
     main: ScheduleSource | None = None
     by_person: dict[str, ScheduleSource] = {}
@@ -1309,7 +1465,7 @@ def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
 
     for s in sources:
         if s.is_main:
-            if main is None or main_rank(s) > main_rank(main):
+            if main is None or source_rank(s) > source_rank(main):
                 if main is not None:
                     main.is_main = False
                     by_folder[main.folder_name] = main
@@ -1317,15 +1473,15 @@ def _dedup_sources(sources: list[ScheduleSource]) -> list[ScheduleSource]:
             else:
                 s.is_main = False
                 key = s.folder_name
-                if key not in by_folder or ts(s) > ts(by_folder[key]):
+                if key not in by_folder or source_rank(s) > source_rank(by_folder[key]):
                     by_folder[key] = s
         elif s.person_name:
             existing = by_person.get(s.person_name)
-            if existing is None or ts(s) > ts(existing):
+            if existing is None or source_rank(s) > source_rank(existing):
                 by_person[s.person_name] = s
         else:
             key = s.folder_name
-            if key not in by_folder or ts(s) > ts(by_folder[key]):
+            if key not in by_folder or source_rank(s) > source_rank(by_folder[key]):
                 by_folder[key] = s
 
     out: list[ScheduleSource] = []
@@ -1349,6 +1505,22 @@ def _current_meeting_from_sources(
     previous meeting's sources rather than switching to an unidentifiable
     one.
     """
+    local_main_ids = {
+        _extract_meeting_id(s.file_info["name"])
+        for s in sources
+        if s.is_main
+        and s.local_path is not None
+        and _meeting_rank(_extract_meeting_id(s.file_info["name"])) is not None
+    }
+    if local_main_ids:
+        # ref_in_manual/ and explicitly configured extra schedule files are
+        # operator-selected inputs.  Their meeting must not be replaced by
+        # an older (or newer-but-unwanted) remote listing.  A later meeting
+        # becomes active when the local reference itself is changed/removed.
+        current_local = max(local_main_ids, key=lambda mid: _meeting_rank(mid))
+        print(f"  Current meeting (from local main source): {current_local}")
+        return current_local
+
     main_files = [s.file_info for s in sources if s.is_main]
     if not main_files:
         return preferred_meeting_id
@@ -1478,16 +1650,7 @@ def find_local_schedule_sources(
     if not ref_dir.is_dir():
         return [], None
 
-    candidates = [
-        f
-        for ext in SUPPORTED_EXTENSIONS
-        for f in ref_dir.glob(f"*{ext}")
-        if f.is_file()
-    ]
-    seen: set[str] = set()
-    candidates = [
-        f for f in candidates if not (f.name in seen or seen.add(f.name))
-    ]
+    candidates = _iter_local_files(ref_dir, SUPPORTED_EXTENSIONS)
 
     if not candidates:
         return [], None
@@ -1496,7 +1659,15 @@ def find_local_schedule_sources(
     print(f"  Local chairman schedule reference: {chosen.name}")
 
     sources: list[ScheduleSource] = []
-    for f in sorted(candidates, key=lambda p: p.name):
+    # Keep the preferred candidate first for stable discovery logs.  All
+    # local candidates are retained for backwards compatibility; deduplication
+    # independently resolves the main source by filename-derived rank.
+    ordered_candidates = sorted(
+        candidates,
+        key=lambda p: _local_doc_preference(p, preferred_meeting_id),
+        reverse=True,
+    )
+    for f in ordered_candidates:
         sources.append(
             ScheduleSource(
                 folder_name=ref_dir.name,
@@ -1531,11 +1702,32 @@ def local_reference_hashes(
     if not ref_dir.is_dir():
         return {}
     out: dict[str, str] = {}
-    for ext in SUPPORTED_EXTENSIONS:
-        for f in sorted(ref_dir.glob(f"*{ext}")):
-            if f.is_file() and f.name not in out:
-                out[f.name] = hashlib.sha256(f.read_bytes()).hexdigest()
+    for f in _iter_local_files(ref_dir, SUPPORTED_EXTENSIONS):
+        out[f.name] = hashlib.sha256(f.read_bytes()).hexdigest()
     return out
+
+
+def local_reference_meeting_id(
+    ref_dir: Path = REF_IN_MANUAL_DIR,
+) -> str | None:
+    """Return the highest regular meeting id found in local ref filenames.
+
+    This is a deterministic *hint*, not a content or filesystem timestamp.
+    A local reference is intentionally authoritative over older remote FTP
+    listings, while a later regular meeting may still be selected after the
+    local reference is removed or replaced.
+
+    Irregular meeting IDs cannot be totally ordered, so they do not produce
+    a hint here; the persisted meeting state remains the fallback for them.
+    """
+    meeting_ids = {
+        _extract_meeting_id(path.name)
+        for path in _iter_local_files(ref_dir, SUPPORTED_EXTENSIONS)
+    }
+    regular_ids = [mid for mid in meeting_ids if _meeting_rank(mid) is not None]
+    if not regular_ids:
+        return None
+    return max(regular_ids, key=lambda mid: _meeting_rank(mid))
 
 
 def discover_schedule_sources(
@@ -1545,6 +1737,7 @@ def discover_schedule_sources(
     extra_folders: list[dict] | None = None,
     local_schedule_sources: list[ScheduleSource] | None = None,
     preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
 ) -> list[ScheduleSource]:
     """Discover schedule sources across one or more inbox URLs and extra folders.
 
@@ -1564,6 +1757,10 @@ def discover_schedule_sources(
     used as the current-meeting hint. Older meetings are ignored when a
     newer regular meeting is present; newer meetings are allowed to advance
     the run automatically.
+
+    ``locked_meeting_id`` is used for an authoritative local reference. When
+    set, all remote discovery is restricted to that exact meeting so a newer
+    FTP meeting cannot displace the local input.
     """
     if urls is None:
         urls = [url] if url is not None else [INBOX_URL]
@@ -1574,6 +1771,7 @@ def discover_schedule_sources(
             _discover_from_inbox(
                 u,
                 preferred_meeting_id=preferred_meeting_id,
+                locked_meeting_id=locked_meeting_id,
             )
         )
 
@@ -1581,6 +1779,7 @@ def discover_schedule_sources(
         src = _source_from_extra_folder(
             folder,
             preferred_meeting_id=preferred_meeting_id,
+            locked_meeting_id=locked_meeting_id,
         )
         if src is not None:
             all_sources.append(src)
@@ -1595,11 +1794,19 @@ def discover_schedule_sources(
     return _dedup_sources(_filter_sources_to_meeting(all_sources, current_meeting_id))
 
 
-def _fallback_chair_only(chair_url: str = BASE_URL) -> list[ScheduleSource]:
+def _fallback_chair_only(
+    chair_url: str = BASE_URL,
+    preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
+) -> list[ScheduleSource]:
     """Fallback: discover only the main Chair_notes schedule."""
     try:
         files = list_remote_files(chair_url)
-        latest = find_latest_schedule(files)
+        latest = find_latest_schedule(
+            files,
+            preferred_meeting_id=preferred_meeting_id,
+            locked_meeting_id=locked_meeting_id,
+        )
         if latest:
             return [
                 ScheduleSource(
@@ -1693,6 +1900,7 @@ def save_schedule_state(
     state_path: Path = Path("docs/.schedule_state.json"),
     *,
     meeting_id: str | None = None,
+    meeting_source: str | None = None,
     timezone: str | None = None,
     agenda: dict | None = None,
     local_refs: dict[str, str] | None = None,
@@ -1702,8 +1910,9 @@ def save_schedule_state(
     Called after a successful build so the next check job can compare
     without re-fetching from FTP.
 
-    Optionally stores ``meeting_id`` (normalised, e.g. "ran1#124bis") and
-    ``timezone`` (IANA, e.g. "Europe/Malta") so that expensive per-meeting
+    Optionally stores ``meeting_id`` (normalised, e.g. "ran1#124bis"),
+    ``meeting_source`` (``"local"`` or ``"remote"``), and ``timezone``
+    (IANA, e.g. "Europe/Malta") so that expensive per-meeting
     operations (like LLM timezone detection) are only performed once.
     ``agenda`` stores the remote/local agenda metadata that fed timezone and
     agenda-item description generation.  ``local_refs`` stores content
@@ -1730,6 +1939,8 @@ def save_schedule_state(
     state: dict = {"files": info}
     if meeting_id is not None:
         state["meeting_id"] = meeting_id
+    if meeting_source in {"local", "remote"}:
+        state["meeting_source"] = meeting_source
     if timezone is not None:
         state["timezone"] = timezone
     if agenda is not None:
@@ -1748,8 +1959,9 @@ def load_schedule_state(
     """Load persisted schedule state.
 
     Returns a dict with optional keys ``files`` (list[dict]), ``meeting_id``
-    (str) and ``timezone`` (str).  Returns an empty dict when the file is
-    missing or unparsable.
+    (str), ``meeting_source`` (``"local"`` or ``"remote"``), and
+    ``timezone`` (str).  Returns an empty dict when the file is missing or
+    unparsable.
 
     Handles migration from the legacy list format (pre-meeting-id) by
     wrapping a bare list in ``{"files": <list>}``.
@@ -1776,6 +1988,7 @@ def load_schedule_state(
 def _collect_info_from_inbox(
     url: str,
     preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
 ) -> list[dict]:
     """Lightweight directory scan of a single inbox for change detection.
 
@@ -1789,7 +2002,11 @@ def _collect_info_from_inbox(
     except Exception as e:
         print(f"Warning: Failed to list inbox subfolders at {url} ({e}), falling back to Chair_notes")
         chair_url = f"{url.rstrip('/')}/Chair_notes"
-        info = get_remote_schedule_info(chair_url)
+        info = get_remote_schedule_info(
+            chair_url,
+            preferred_meeting_id=preferred_meeting_id,
+            locked_meeting_id=locked_meeting_id,
+        )
         return [{"folder": "Chair_notes", **info}] if info else []
 
     for folder in subfolders:
@@ -1800,6 +2017,7 @@ def _collect_info_from_inbox(
             latest = find_latest_schedule(
                 files,
                 preferred_meeting_id=preferred_meeting_id,
+                locked_meeting_id=locked_meeting_id,
             )
             if latest:
                 out.append({
@@ -1823,6 +2041,7 @@ def get_all_remote_schedule_info(
     urls: list[str] | None = None,
     extra_folders: list[dict] | None = None,
     preferred_meeting_id: str | None = None,
+    locked_meeting_id: str | None = None,
 ) -> list[dict]:
     """Return metadata of the schedule sources selected for a build.
 
@@ -1835,6 +2054,9 @@ def get_all_remote_schedule_info(
     across reruns while still allowing a newer regular meeting id to take
     precedence over the cached one.
 
+    ``locked_meeting_id`` restricts selection to an authoritative local
+    reference meeting and must match the build's discovery lock.
+
     This intentionally mirrors ``discover_schedule_sources`` because
     ``save_schedule_state`` persists those selected sources after a successful
     build. Comparing against the same selected/current-meeting set prevents
@@ -1846,6 +2068,7 @@ def get_all_remote_schedule_info(
         urls=urls,
         extra_folders=extra_folders,
         preferred_meeting_id=preferred_meeting_id,
+        locked_meeting_id=locked_meeting_id,
     )
 
     result: list[dict] = []
@@ -2016,13 +2239,14 @@ def download_external_files(
 
     Returns ``(results, state)``: ``results`` is a list of
     ``(entry, path)`` pairs per successful download (``path`` being the
-    unpacked document for ZIPs), and ``state`` maps each successful URL
-    to the sha256 of the downloaded body (same content-hash scheme as
+    unpacked document for ZIPs), and ``state`` maps each successful URL to
+    ``{"sha256": ..., "filename": ...}``.  The filename is the resolved
+    downloaded filename and the hash uses the same content-hash scheme as
     :func:`local_reference_hashes`; ETag/Last-Modified are not reliable on
-    all hosts).  See :func:`save_external_files_state`.
+    all hosts.  Legacy URL-to-string-hash state remains readable.
     """
     results: list[tuple[dict, Path]] = []
-    state: dict[str, str] = {}
+    state: dict[str, str | dict[str, str]] = {}
 
     for index, entry in enumerate(extra_files):
         url = entry["url"]
@@ -2031,7 +2255,13 @@ def download_external_files(
         except Exception as e:
             print(f"Warning: Failed to download extra file {url}: {e}")
             continue
-        state[url] = content_hash
+        # Record the source filename (the ZIP filename when the body is a ZIP,
+        # before any contained document is extracted).  A same-body filename
+        # change is meaningful to local selection and must be observable.
+        state[url] = {
+            "sha256": content_hash,
+            "filename": target.name,
+        }
 
         doc = target
         if target.suffix.lower() == ".zip":
@@ -2047,8 +2277,7 @@ def download_external_files(
 def load_external_files_state(
     state_path: Path = EXTRA_FILES_STATE_PATH,
 ) -> dict:
-    """Load the persisted external-files state, returning ``{"files": {}}``
-    when the file is missing, unparsable, or of unexpected shape."""
+    """Load persisted external-file state, accepting old hash-only entries."""
     import json
 
     if not state_path.exists():
@@ -2059,7 +2288,10 @@ def load_external_files_state(
         return {"files": {}}
 
     if isinstance(raw, dict) and isinstance(raw.get("files"), dict):
-        return {"files": raw["files"]}
+        state = {"files": raw["files"]}
+        if isinstance(raw.get("config"), list):
+            state["config"] = raw["config"]
+        return state
     return {"files": {}}
 
 
@@ -2067,7 +2299,7 @@ def save_external_files_state(
     state: dict,
     state_path: Path = EXTRA_FILES_STATE_PATH,
 ) -> None:
-    """Persist external-files state (sha256 content hash per URL)."""
+    """Persist external-file state (resolved filename and SHA-256 per URL)."""
     import json
 
     state_path.parent.mkdir(parents=True, exist_ok=True)
@@ -2087,14 +2319,54 @@ def _remote_file_sha256(url: str) -> str:
         return _sha256_of_response(resp)
 
 
+def _remote_file_fingerprint(url: str, entry: dict, index: int) -> dict[str, str]:
+    """Fetch an external file and return its resolved filename plus SHA-256."""
+    with httpx.stream("GET", url, follow_redirects=True, timeout=60) as resp:
+        resp.raise_for_status()
+        return {
+            "sha256": _sha256_of_response(resp),
+            "filename": _resolve_external_filename(dict(resp.headers), url, entry, index),
+        }
+
+
+def _external_state_hash(value: object) -> str | None:
+    """Read a hash from either legacy or filename-aware external state."""
+    if isinstance(value, str):
+        return value
+    if isinstance(value, dict) and isinstance(value.get("sha256"), str):
+        return value["sha256"]
+    return None
+
+
+def _external_config_fingerprint(extra_files: list[dict]) -> list[dict]:
+    """Return the routing metadata that affects an external file's use."""
+    fingerprint = []
+    for entry in extra_files:
+        person_name = entry.get("person_name")
+        is_main = entry.get("is_main")
+        if not isinstance(is_main, bool):
+            is_main = person_name is None
+        fingerprint.append(
+            {
+                "url": entry.get("url"),
+                "type": entry.get("type"),
+                "name": entry.get("name") or None,
+                "person_name": person_name,
+                "is_main": is_main,
+            }
+        )
+    return fingerprint
+
+
 def check_external_files(
     extra_files: list[dict],
     state: dict | None = None,
 ) -> tuple[bool, dict]:
-    """Check externally-linked files for changes (content hash compare).
+    """Check externally-linked files for filename or content changes.
 
-    Each configured URL is fetched (streaming GET) and its sha256 is
-    compared against the persisted state.  A URL absent from the previous
+    Each configured URL is fetched (streaming GET), and its resolved filename
+    and body SHA-256 are compared against the persisted state.  A URL absent
+    from the previous
     state counts as changed (first appearance, or a replaced ETSI wa.exe
     URL — the URL is regenerated per message).
 
@@ -2103,8 +2375,9 @@ def check_external_files(
     stale configured URL is dropped from state on the next build and
     removed URLs never block a rebuild.
 
-    Returns ``(changed, {"files": {url: sha256}})`` containing only the
-    successfully checked URLs.
+    Returns ``(changed, {"files": {url: fingerprint}})`` containing only the
+    successfully checked URLs. Legacy string-hash entries are retained in the
+    returned shape until a successful build writes filename-aware state.
     """
     if extra_files == []:
         return False, {"files": {}}
@@ -2115,11 +2388,17 @@ def check_external_files(
         prev_avail = {}
 
     changed = False
-    new_state: dict[str, str] = {}
-    for entry in extra_files:
+    previous_config = state.get("config") if isinstance(state, dict) else None
+    current_config = _external_config_fingerprint(extra_files)
+    if isinstance(previous_config, list) and previous_config != current_config:
+        changed = True
+        print("External file configuration changed")
+
+    new_state: dict[str, str | dict[str, str]] = {}
+    for index, entry in enumerate(extra_files):
         url = entry["url"]
         try:
-            digest = _remote_file_sha256(url)
+            fingerprint = _remote_file_fingerprint(url, entry, index)
         except Exception as e:
             print(
                 f"Warning: Could not check extra file {url}: {e} "
@@ -2127,12 +2406,26 @@ def check_external_files(
             )
             continue
 
-        new_state[url] = digest
+        previous = prev_avail.get(url)
+        previous_hash = _external_state_hash(previous)
+        filename_changed = (
+            isinstance(previous, dict)
+            and previous.get("filename") != fingerprint["filename"]
+        )
+        new_state[url] = (
+            fingerprint["sha256"]
+            if isinstance(previous, str)
+            else fingerprint
+        )
         if url not in prev_avail:
             changed = True
             print(f"Extra file added: {url}")
-        elif prev_avail[url] != digest:
+        elif previous_hash != fingerprint["sha256"] or filename_changed:
             changed = True
-            print(f"Extra file changed: {url}")
+            detail = "filename or content changed" if filename_changed else "content changed"
+            print(f"Extra file changed ({detail}): {url}")
 
-    return changed, {"files": new_state}
+    result: dict = {"files": new_state}
+    if isinstance(previous_config, list):
+        result["config"] = current_config
+    return changed, result

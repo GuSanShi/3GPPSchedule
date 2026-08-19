@@ -46,18 +46,20 @@
 - [x] `load_external_files_state` / `save_external_files_state` (`docs/.extra_files_state.json`)
 - [x] `tests/test_downloader.py` — filename detection (CD, URL fallback, sanitize), pair routing, hash state compare (hash differ → changed, 404 무시, new URL → changed), mock httpx
 
-### 3. W3 — main.py + check_update.py (worktree: orca/w3-extrafiles-main, W1+W2 통합) ✅ DONE (143 tests green, 전체 스위트)
+### 3. W3 — main.py + check_update.py (worktree: orca/w3-extrafiles-main, W1+W2 통합) ✅ DONE (157 tests green, 전체 스위트)
 - [x] main.py: before discover, `download_external_files(cfg["extra_files"])` (not no_download) → `save_external_files_state({"files": state})`; type=schedule은 main이 local ScheduleSource로 만들어 `local_schedule_sources` 합침, type=chair_notes는 `extra_chair_notes_paths`에 저장
 - [x] main.py --no-download: `find_local_schedule_sources(ref_dir=EXTRA_FILES_DIR)` (ref_in_manual 다음) + `find_chair_notes_docx(EXTRA_FILES_DIR)`
-- [x] main.py tz block: `extra_chair_notes_paths` (최신 mtime) FTP download보다 우선
-- [x] check_update.py: `check_external_files` (sha256 compare) 에러 시 changed=true로 합산 (에러 URL 자체는 무시)
+- [x] main.py tz block: `extra_chair_notes_paths` (filename/version/hash-stable) FTP download보다 우선
+- [x] check_update.py: `check_external_files` (sha256 compare) 결과를 FTP 변경 여부와 합산; 일시적인 FTP/URL 오류는 별도로 경고하고 다음 정상 확인을 허용
+- [x] local main meeting은 `preferred` floor와 별도로 exact lock 처리; check/build가 ref_in_manual 및 local extra schedule의 회의를 다르게 선택하지 않도록 `meeting_source`를 state에 저장
+- [x] `extra_files`를 config에서 모두 제거한 경우 stale `.extra_files_state.json`도 변경으로 감지하고, 다음 성공 빌드에서 비움
 - [x] `tests/test_main.py` — 3 wiring tests (schedule merge, tz priority, --no-download scan)
-- [x] all merge + full test suite green (143 passed)
+- [x] all merge + full test suite green (157 passed)
 
 ## Interface (fixed, from W1/W2/W3)
 - `load_config()["extra_files"]` → `[{url, type, name, person_name, is_main}]` (is_main auto-derive)
-- `download_external_files(extra_files, dest_dir=EXTRA_FILES_DIR) -> (list[(entry, Path)], dict{url: sha256})` — 다운로드만, 라우팅 없음
-- `check_external_files(extra_files, state=None) -> (bool, dict{"files": {url: sha256}})`
+- `download_external_files(extra_files, dest_dir=EXTRA_FILES_DIR) -> (list[(entry, Path)], dict{url: {sha256, filename}})` — 다운로드만, 라우팅 없음; legacy hash-only state도 읽음
+- `check_external_files(extra_files, state=None) -> (bool, dict{"files": {url: {sha256, filename}}, "config": [...]})` — filename/hash와 routing metadata 비교
 - `load_external_files_state(state_path=EXTRA_FILES_STATE_PATH) -> {"files": {url: sha256}}` / `save_external_files_state(state, state_path=…)`
 - `EXTRA_FILES_DIR = DOWNLOADS_DIR/"extra_files"`, `EXTRA_FILES_STATE_PATH = Path("docs/.extra_files_state.json")`
 
