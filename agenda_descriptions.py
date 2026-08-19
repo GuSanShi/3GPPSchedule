@@ -17,6 +17,8 @@ import httpx
 import pandas as pd
 from bs4 import BeautifulSoup
 
+from downloader import _local_doc_preference
+
 
 TDOC_LIST_URL = "https://www.3gpp.org/ftp/Meetings_3GPP_SYNC/RAN1/Inbox/Tdoc_list"
 DEFAULT_JSON_PATH = Path("docs/agenda_item_description.json")
@@ -588,21 +590,29 @@ def save_agenda_description_json(
 def find_local_latest_agenda_docx(
     download_dir: Path = DEFAULT_AGENDA_DOWNLOAD_DIR,
 ) -> Path | None:
-    """Return the latest cached Agenda DOCX, if present."""
+    """Return the latest cached Agenda DOCX, if present.
+
+    Selection is deterministic (filename version, then name) — mtime is
+    not stable across CI checkouts.
+    """
     agenda_files = list(download_dir.glob("*.docx"))
     if not agenda_files:
         return None
-    return max(agenda_files, key=lambda path: path.stat().st_mtime)
+    return max(agenda_files, key=_local_doc_preference)
 
 
 def find_local_latest_agenda_file(
     download_dir: Path = DEFAULT_AGENDA_DOWNLOAD_DIR,
 ) -> Path | None:
-    """Return the latest cached Agenda CSV or DOCX, if present."""
+    """Return the latest cached Agenda CSV or DOCX, if present.
+
+    Selection is deterministic (filename version, then name) — mtime is
+    not stable across CI checkouts.
+    """
     agenda_files = list(download_dir.glob("*.csv")) + list(download_dir.glob("*.docx"))
     if not agenda_files:
         return None
-    return max(agenda_files, key=lambda path: path.stat().st_mtime)
+    return max(agenda_files, key=_local_doc_preference)
 
 
 def update_agenda_description_json(

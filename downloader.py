@@ -234,6 +234,35 @@ def _extract_meeting_id(filename: str) -> str | None:
 _REGULAR_MEETING_RE = re.compile(r"^ran(\d+)#(\d+)(bis)?$", re.IGNORECASE)
 
 
+def _local_doc_preference(
+    p: Path, preferred_meeting_id: str | None = None
+) -> tuple:
+    """Deterministic sort key for locally-provided document files.
+
+    Ordered by (preferred-meeting match, filename meeting rank, filename
+    version, name) — never using filesystem metadata.  File mtimes are not
+    stable across CI checkouts (a fresh ``git checkout`` gives every file
+    the checkout time), so any mtime-based selection would pick
+    non-deterministically on CI/CD runners.  Filename-derived data is
+    committed content, so it is identical on every machine.
+
+    A stable final component (``p.name``) ensures the ordering is a total
+    order even when all other keys collide.
+    """
+    mid = _extract_meeting_id(p.name)
+    favored = 1 if (
+        preferred_meeting_id is not None
+        and mid is not None
+        and mid == preferred_meeting_id
+    ) else 0
+    return (
+        favored,
+        _meeting_rank(mid) or (0, 0, 0),
+        _extract_version_parts_from_name(p.name),
+        p.name.lower(),
+    )
+
+
 def _meeting_rank(meeting_id: str | None) -> tuple[int, int, int] | None:
     """Return a sortable rank for a regular plenary meeting id.
 
@@ -631,11 +660,12 @@ def download_latest_schedule(
 def find_local_latest_schedule(
     dest_dir: Path = DOWNLOADS_DIR / "Chair_notes",
 ) -> Path | None:
-    """Find the latest schedule document in the local directory by modification time.
+    """Find the latest schedule document in the local directory.
 
     Searches for .docx, .pptx, and .pdf files containing 'schedule' in the name.
-    Uses file modification time (mtime) to determine the latest file,
-    since filenames may use meeting names instead of version numbers.
+    Selection is by filename (version, then name), not mtime — mtimes are not
+    stable across CI checkouts, so a fresh runner would pick
+    non-deterministically.
     """
     schedule_files = [
         f
@@ -647,8 +677,8 @@ def find_local_latest_schedule(
     if not schedule_files:
         return None
 
-    latest = max(schedule_files, key=lambda f: f.stat().st_mtime)
-    print(f"Latest local schedule (by mtime): {latest.name}")
+    latest = max(schedule_files, key=_local_doc_preference)
+    print(f"Latest local schedule (by filename): {latest.name}")
     return latest
 
 
@@ -964,7 +994,9 @@ def find_local_latest_agenda(
         candidates.extend(dest_dir.glob(f"*{ext}"))
     if not candidates:
         return None
-    return max(candidates, key=lambda f: f.stat().st_mtime)
+    # Deterministic filename selection — mtimes are not stable across
+    # CI checkouts (every fresh checkout shares the checkout time).
+    return max(candidates, key=_local_doc_preference)
 
 
 def _find_extracted_document(
@@ -986,8 +1018,9 @@ def _find_extracted_document(
                 candidates.append(f)
     if not candidates:
         return None
-    # Return the newest document file
-    return max(candidates, key=lambda f: f.stat().st_mtime)
+    # Return the highest-version document file (deterministic across CI
+    # checkouts — mtime varies per runner).
+    return max(candidates, key=_local_doc_preference)
 
 
 # ── Multi-folder discovery & download ──────────────────────────
@@ -1406,10 +1439,13 @@ def _latest_local_schedule(
     """From a set of local schedule document paths, pick the one to use.
 
     Manual references carry no remote version info, so selection is
-    by filename version (treating an unparseable version as 0), then
-    modification time. Filename filtering ("schedule" substring, meeting id)
-    is intentionally NOT applied here — the operator decides what belongs in
-    the folder.
+    purely by filename: preferred-meeting match, meeting rank, version
+    (treating an unparseable version as (-1,)), then name.  No filesystem
+    metadata is used — mtimes are not stable across CI checkouts, so an
+    mtime tiebreaker would select a different file on every fresh runner.
+
+    Filename filtering ("schedule" substring, meeting id) is intentionally
+    NOT applied here — the operator decides what belongs in the folder.
 
     ``preferred_meeting_id`` is only used to order matches: if any candidate
     filename references it, prefer those over files from other meetings.
@@ -1417,16 +1453,7 @@ def _latest_local_schedule(
     if len(paths) == 1:
         return paths[0]
 
-    def _key(p: Path):
-        mid = _extract_meeting_id(p.name)
-        favored = 1 if (preferred_meeting_id is not None and mid == preferred_meeting_id) else 0
-        return (
-            favored,
-            _extract_version_parts_from_name(p.name),
-            datetime.fromtimestamp(p.stat().st_mtime),
-        )
-
-    return max(paths, key=_key)
+    return max(paths, key=lambda p: _local_doc_preference(p, preferred_meeting_id))
 
 
 def find_local_schedule_sources(
@@ -1446,7 +1473,7 @@ def find_local_schedule_sources(
 
     ``preferred_meeting_id`` biases candidate selection toward files that
     reference that meeting in their filename, and falls back to the highest
-    filename version, then newest mtime when none do.
+    filename version, then name, when none do (deterministic — no mtime).
     """
     if not ref_dir.is_dir():
         return [], None
@@ -1478,7 +1505,10 @@ def find_local_schedule_sources(
                 file_info={
                     "name": f.name,
                     "url": None,
-                    "uploaded_at": datetime.fromtimestamp(f.stat().st_mtime),
+                    # Local references have no remote upload timestamp.
+                    # Storing None (rather than mtime) keeps persisted
+                    # state independent of checkout time on CI runners.
+                    "uploaded_at": None,
                 },
                 local_path=f,
             )

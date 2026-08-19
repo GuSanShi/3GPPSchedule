@@ -7,6 +7,7 @@ from pathlib import Path
 
 from docx import Document
 
+from downloader import _local_doc_preference
 from models import TIME_BLOCKS, CellData, DAY_ORDER, RoomInfo, time_to_minutes
 
 _TIME_BLOCK_MINUTES = [
@@ -50,7 +51,8 @@ def find_chair_notes_docx(dest_dir: Path = Path("downloads/Chair_notes")) -> Pat
 
     Looks for files with 'chair note' (case-insensitive) in the name,
     supporting .docx, .pptx, and .pdf extensions.
-    Returns the one with the highest modification time.
+    Returns the highest-version file (deterministic filename selection;
+    mtimes are not stable across CI checkouts).
     """
     supported_extensions = (".docx", ".pptx", ".pdf")
     chair_files = [
@@ -61,7 +63,7 @@ def find_chair_notes_docx(dest_dir: Path = Path("downloads/Chair_notes")) -> Pat
     ]
     if not chair_files:
         return None
-    return max(chair_files, key=lambda f: f.stat().st_mtime)
+    return max(chair_files, key=_local_doc_preference)
 
 
 # Namespace for OpenXML

@@ -57,6 +57,7 @@ from downloader import (
     download_external_files,
     save_external_files_state,
     EXTRA_FILES_DIR,
+    _local_doc_preference,
 )
 from merger import collect_time_slot_data
 from config import load_config
@@ -437,7 +438,7 @@ def main():
             if chair_notes_path is None and extra_chair_notes_paths:
                 chair_notes_path = max(
                     extra_chair_notes_paths,
-                    key=lambda f: f.stat().st_mtime,
+                    key=_local_doc_preference,
                 )
                 print(f"  Using extra files chair notes: {chair_notes_path.name}")
             if chair_notes_path is None and not args.no_download:
