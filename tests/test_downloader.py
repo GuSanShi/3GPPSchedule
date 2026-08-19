@@ -994,7 +994,11 @@ def _run_download_external(entries, resp_factory):
         patch("downloader.httpx.stream", side_effect=make_stream),
         patch("time.sleep"),
     ):
-        result = download_external_files(entries, dest_dir=env.root)
+        result = download_external_files(
+            entries,
+            dest_dir=env.root,
+            state={"files": {}},
+        )
 
     return result, env
 
@@ -1134,6 +1138,56 @@ class _OneshotCtx:
         return self._resp.__exit__(*a)
 
 
+def test_external_download_uses_browser_compatible_user_agent():
+    url = "https://example.com/dir/schedule.docx"
+    calls = []
+
+    def fake_stream(method, request_url, **kwargs):
+        calls.append(kwargs)
+        return _OneshotCtx(FakeStreamResponse(body=b"docx"))
+
+    with _IsolatedDownloadEnv() as env:
+        with patch("downloader.httpx.stream", side_effect=fake_stream):
+            download_external_files(
+                [{"url": url, "type": "schedule"}],
+                dest_dir=env.root,
+            )
+
+    assert calls[0]["headers"]["User-Agent"].startswith("Mozilla/5.0")
+
+
+def test_external_download_reuses_matching_cached_file():
+    import hashlib
+
+    url = "https://example.com/dir/schedule.docx"
+    body = b"cached-docx"
+    filename = "schedule.docx"
+    cached_state = {
+        "files": {
+            url: {
+                "sha256": hashlib.sha256(body).hexdigest(),
+                "filename": filename,
+            }
+        }
+    }
+
+    with _IsolatedDownloadEnv() as env:
+        cached_path = env.root / filename
+        cached_path.write_bytes(body)
+        with patch(
+            "downloader.httpx.stream",
+            side_effect=AssertionError("cache hit must not download"),
+        ):
+            results, state = download_external_files(
+                [{"url": url, "type": "schedule"}],
+                dest_dir=env.root,
+                state=cached_state,
+            )
+
+    assert results[0][1] == cached_path
+    assert state == cached_state["files"]
+
+
 class CheckExternalFilesTests(unittest.TestCase):
     def _patch_stream_bodies(self, bodies: dict[str, bytes], errors: dict[str, Exception] | None = None):
         """Patch httpx.stream: URL → body, or URL → raised exception."""
@@ -1145,6 +1199,78 @@ class CheckExternalFilesTests(unittest.TestCase):
             return _OneshotCtx(FakeStreamResponse(body=bodies[u]))
 
         return patch("downloader.httpx.stream", side_effect=fake_stream), {}
+
+    def test_check_uses_browser_compatible_user_agent(self):
+        url = "https://example.com/schedule.docx"
+        calls = []
+
+        def fake_stream(method, request_url, **kwargs):
+            calls.append(kwargs)
+            return _OneshotCtx(FakeStreamResponse(body=b"docx"))
+
+        with patch("downloader.httpx.stream", side_effect=fake_stream):
+            changed, _ = check_external_files(
+                [{"url": url, "type": "schedule"}],
+                state={"files": {}},
+            )
+
+        self.assertTrue(changed)
+        self.assertTrue(calls[0]["headers"]["User-Agent"].startswith("Mozilla/5.0"))
+
+    def test_check_stages_cache_miss_for_build_transfer(self):
+        url = "https://example.com/schedule.docx"
+        body = b"staged-docx"
+
+        def fake_stream(method, request_url, **kwargs):
+            return _OneshotCtx(
+                FakeStreamResponse(
+                    headers={
+                        "content-disposition": 'attachment; filename="schedule.docx"',
+                    },
+                    body=body,
+                )
+            )
+
+        with _IsolatedDownloadEnv() as env:
+            with patch("downloader.httpx.stream", side_effect=fake_stream):
+                changed, state = check_external_files(
+                    [{"url": url, "type": "schedule"}],
+                    state={"files": {}},
+                    staging_dir=env.root,
+                )
+
+            self.assertTrue(changed)
+            self.assertEqual((env.root / "schedule.docx").read_bytes(), body)
+            self.assertEqual(state["files"][url]["filename"], "schedule.docx")
+
+    def test_check_reuses_matching_cached_file_without_network(self):
+        import hashlib
+
+        url = "https://example.com/schedule.docx"
+        body = b"cached-docx"
+        cached_state = {
+            "files": {
+                url: {
+                    "sha256": hashlib.sha256(body).hexdigest(),
+                    "filename": "schedule.docx",
+                }
+            }
+        }
+
+        with _IsolatedDownloadEnv() as env:
+            (env.root / "schedule.docx").write_bytes(body)
+            with patch(
+                "downloader.httpx.stream",
+                side_effect=AssertionError("cache hit must not download"),
+            ):
+                changed, state = check_external_files(
+                    [{"url": url, "type": "schedule"}],
+                    state=cached_state,
+                    cache_dir=env.root,
+                )
+
+        self.assertFalse(changed)
+        self.assertEqual(state, cached_state)
 
     def test_empty_list_noop(self):
         changed, state = check_external_files([])

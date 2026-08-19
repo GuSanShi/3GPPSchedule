@@ -34,6 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changed: ${{ steps.detect.outputs.changed }}
+      extra_files_artifact: ${{ steps.detect.outputs.extra_files_artifact }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,6 +57,17 @@ jobs:
         id: detect
         run: uv run python check_update.py
 
+      # A cache miss is downloaded once by check and passed to build. The
+      # committed repository cache remains the long-term source of truth.
+      - name: Upload extra-file transfer
+        if: steps.detect.outputs.extra_files_artifact == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: extra-files-${{ github.run_id }}
+          path: downloads/.extra_files_transfer/
+          include-hidden-files: true
+          if-no-files-found: error
+
   # ── Job 2: Full build & deploy ──────────────────────────────
   # Runs when:
   #   - check detected changes (check-build-deploy)
@@ -75,6 +87,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Download extra-file transfer
+        if: needs.check.outputs.extra_files_artifact == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: extra-files-${{ github.run_id }}
+          path: downloads/.extra_files_transfer/
+
+      - name: Apply extra-file transfer
+        if: needs.check.outputs.extra_files_artifact == 'true'
+        shell: bash
+        run: |
+          mkdir -p downloads/extra_files
+          cp downloads/.extra_files_transfer/.extra_files_state.json docs/.extra_files_state.json
+          find downloads/.extra_files_transfer -maxdepth 1 -type f \
+            ! -name '.extra_files_state.json' \
+            -exec cp -f {} downloads/extra_files/ \;
 
       - name: Install uv
         uses: astral-sh/setup-uv@v4
@@ -103,10 +132,14 @@ jobs:
           restore-keys: |
             llm-cache-
 
-      # force-deploy: wipe cached LLM results so everything is re-generated
-      - name: Reset LLM cache (force-deploy)
+      # force-deploy: wipe cached LLM results and the committed external-file
+      # cache so every configured extra file is fetched again.
+      - name: Reset caches (force-deploy)
         if: github.event.inputs.action == 'force-deploy'
-        run: rm -rf .cache/*
+        run: |
+          rm -rf .cache/*
+          rm -rf downloads/extra_files
+          rm -f docs/.extra_files_state.json
 
       - name: Run schedule parser
         env:
@@ -130,6 +163,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add docs/
+          if [ -n "$(find downloads/extra_files -type f -print -quit 2>/dev/null)" ]; then
+            git add downloads/extra_files/
+          fi
           git diff --cached --quiet || git commit -m "Update schedule $(date +%Y-%m-%d_%H:%M) [skip ci]"
           git push
 

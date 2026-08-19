@@ -32,4 +32,6 @@ test_runs/
 
 # VS Code
 .vscode/
-downloads/
+downloads/*
+!downloads/extra_files/
+!downloads/extra_files/**

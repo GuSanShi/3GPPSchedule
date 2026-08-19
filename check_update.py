@@ -3,6 +3,8 @@
 Checks if the selected schedule files on the 3GPP FTP (or the
 manually-provided chairman documents in ``ref_in_manual/``) have changed
 since the last run.  Outputs `changed=true/false` to $GITHUB_OUTPUT.
+When an external-file cache miss is downloaded, also outputs
+`extra_files_artifact=true` and stages the file for the build job.
 
 State is persisted in docs/.schedule_state.json (committed to the repo
 by the build-and-deploy job). The cached ``meeting_id`` is fed back into
@@ -17,16 +19,19 @@ rely on upload timestamps.
 from __future__ import annotations
 
 import os
+import shutil
 import sys
 
 from config import load_config
 from downloader import (
     check_external_files,
+    EXTRA_FILES_TRANSFER_DIR,
     get_all_remote_schedule_info,
     local_reference_hashes,
     local_reference_meeting_id,
     load_external_files_state,
     load_schedule_state,
+    save_external_files_state,
 )
 
 
@@ -44,6 +49,11 @@ def _normalize_for_compare(entries: list[dict]) -> set[tuple]:
 
 
 def main() -> None:
+    # Cache misses are staged here for an optional check-to-build artifact.
+    # The directory is ignored and recreated for every check invocation so a
+    # stale local file can never be mistaken for a fresh transfer.
+    shutil.rmtree(EXTRA_FILES_TRANSFER_DIR, ignore_errors=True)
+
     # 1. Fetch current remote state (lightweight — directory listing only)
     cfg = load_config()
     print(
@@ -179,12 +189,32 @@ def main() -> None:
     extra_files = cfg.get("extra_files") or []
     if extra_files:
         print(f"Checking extra files ({len(extra_files)} URL(s))…")
+        extra_files_artifact_ready = False
         try:
-            ext_changed, _ = check_external_files(extra_files)
+            ext_changed, ext_state = check_external_files(
+                extra_files,
+                staging_dir=EXTRA_FILES_TRANSFER_DIR,
+            )
             if ext_changed:
                 changed = True
+
+            staged_files = [
+                path
+                for path in EXTRA_FILES_TRANSFER_DIR.iterdir()
+                if path.is_file()
+            ] if EXTRA_FILES_TRANSFER_DIR.exists() else []
+            if staged_files:
+                save_external_files_state(
+                    ext_state,
+                    EXTRA_FILES_TRANSFER_DIR / ".extra_files_state.json",
+                )
+                extra_files_artifact_ready = True
         except Exception as e:
             print(f"Extra files check failed: {e}")
+        _set_output(
+            "extra_files_artifact",
+            str(extra_files_artifact_ready).lower(),
+        )
     else:
         # Removing extra_files from config is an intentional input change.
         # Detect stale committed external state so the next build can remove

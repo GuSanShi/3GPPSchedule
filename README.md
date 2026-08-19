@@ -188,9 +188,45 @@ FTP Inbox/
 - `person_name` (선택): 명시 시 부의장(vice-chair) 소스
 - `is_main` (선택): 생략 시 **자동 구성** — `person_name`이 있으면 `false`, 없으면 `true`. 명시한(bool) 값은 항상 우선
 
-빌드 시 `curl -OJL`과 등가 동작(redirect follow + Content-Disposition 기반 파일명)으로 `downloads/extra_files/`에 저장합니다: 파일명은 `Content-Disposition` → URL 경로 마지막 세그먼트 → `name` 필드 → 생성 순서로 결정됩니다. 빌드마다 항상 재다운로드합니다.
+빌드 시 `curl -OJL`과 등가 동작(redirect follow + Content-Disposition 기반 파일명)으로 `downloads/extra_files/`에 저장하고, 해당 파일도 Git에 커밋합니다. 파일명은 `Content-Disposition` → URL 경로 마지막 세그먼트 → `name` 필드 → 생성 순서로 결정됩니다. `docs/.extra_files_state.json`에는 URL별 다운로드 파일명과 SHA-256을 기록합니다.
 
-CI 변경 감지는 각 URL의 **콘텐츠 sha256**을 `docs/.extra_files_state.json`과 비교해 동작합니다(`check_update.py`). 헤더(ETag/Last-Modified) 비교는 ETSI가 해당 헤더를 제공하지 않아 사용하지 않으며, `ref_in_manual`과 동일한 콘텐츠 해시 방식을 따릅니다.
+기록된 URL의 파일명이 존재하고 로컬 파일의 SHA-256이 기록값과 같으면 check와 build 모두 네트워크 다운로드를 생략합니다. 상태가 없거나 파일이 삭제·변조된 경우에만 원격 파일을 다시 받아 캐시를 복구합니다.
+
+CI 변경 감지는 각 URL에 대응하는 커밋된 파일의 **콘텐츠 sha256**을 `docs/.extra_files_state.json`과 비교해 동작합니다(`check_update.py`). 헤더(ETag/Last-Modified) 비교는 ETSI가 해당 헤더를 제공하지 않아 사용하지 않으며, `ref_in_manual`과 동일한 콘텐츠 해시 방식을 따릅니다.
+
+CI에서 외부 파일 요청은 다음과 같이 동작합니다.
+
+- `check` job은 먼저 커밋된 `downloads/extra_files/`의 파일을 기록된 SHA-256과 비교합니다. 일치하면 원격 URL을 요청하지 않습니다.
+- URL이 새로 추가되었거나 캐시 파일이 없거나 해시가 다르면 `check` job이 원격 파일을 다운로드해 변경 여부를 확인하고 build를 트리거합니다.
+- 변경이 감지되면 `check` job과 별도의 새 runner에서 `build` job이 실행됩니다. check에서 새로 받은 파일은 workflow artifact로 build job에 전달되므로 build에서 다시 다운로드하지 않으며, 성공한 build는 `docs/`와 `downloads/extra_files/`를 함께 커밋합니다.
+- 이후 workflow의 check/build는 커밋된 파일과 해시가 일치하는 동안 외부 파일을 다시 다운로드하지 않습니다.
+- 동일 URL의 원격 본문이 URL 변경 없이 바뀌는 경우에는 로컬 캐시만으로 알 수 없습니다. ETSI `wa.exe` URL은 메시지마다 새로 생성되므로 새 URL이 이 변경을 감지하는 기준입니다. 원격 재확인이 필요하면 해당 캐시 파일 또는 상태 항목을 삭제하고 build를 실행합니다.
+- build 실패 시 새 상태와 캐시 파일은 커밋되지 않아 다음 실행에서 이전 상태를 기준으로 다시 확인합니다.
+
+### 캐시의 종류와 저장 위치
+
+이 프로젝트에서 `cache`라는 표현은 서로 다른 세 가지를 가리킬 수 있습니다.
+
+1. **GitHub Actions 서비스 캐시 — LLM 결과**
+     - [deploy.yml](.github/workflows/deploy.yml)의 `actions/cache@v4`가 `.cache/` 디렉터리를 GitHub Actions 캐시 서비스에 저장합니다.
+     - `session_parser.py`의 Gemini/LLM 결과 재사용을 위한 캐시이며, `extra_files` 원문 파일과는 관계가 없습니다.
+     - `check` job에서는 사용하지 않고 `build-and-deploy` job에서만 복원합니다.
+     - 캐시 키는 실행별 `llm-cache-${{ github.run_id }}`이고, `llm-cache-` prefix로 이전 실행의 최근 캐시를 복원합니다. 새 실행이 끝나면 post-job 단계에서 새 키로 저장됩니다.
+     - `force-deploy`는 복원 직후 `.cache/`를 삭제하므로 LLM 결과를 재생성합니다.
+
+2. **Git 저장소에 커밋되는 캐시 — `extra_files` 원문**
+     - `downloads/extra_files/`의 실제 다운로드 파일과 `docs/.extra_files_state.json`의 URL·파일명·SHA-256 기록이 여기에 해당합니다.
+     - [deploy.yml](.github/workflows/deploy.yml)의 새 runner는 `actions/cache`에서 이 파일을 복원하는 것이 아니라 `actions/checkout`으로 Git 커밋에서 가져옵니다.
+     - 캐시 miss가 발생한 현재 workflow 안에서는 check job이 받은 파일과 상태를 `actions/upload-artifact`로 build job에 한 번 전달합니다. 이 artifact는 job 간 전달용이며 장기 보관용 캐시는 아닙니다.
+     - Python 코드가 checkout된 파일의 SHA-256을 상태 기록과 비교합니다. 일치하면 네트워크 요청 없이 check/build 모두 파일을 재사용합니다.
+     - 이 캐시는 Git commit history에 포함되므로 runner가 바뀌거나 Actions 캐시가 만료되어도 유지됩니다. 대신 DOCX 파일이 Git 저장소 용량을 차지합니다.
+     - `force-deploy`는 이 디렉터리와 상태 파일도 삭제한 뒤 build하므로 원격 `extra_files`를 다시 다운로드합니다.
+
+3. **GitHub Actions 서비스 캐시 — Python/uv 패키지**
+     - `setup-uv`의 `enable-cache: true`가 의존성 다운로드 캐시를 관리합니다.
+     - 애플리케이션 입력 파일이나 LLM 결과가 아니며, 외부 파일 재사용 여부에도 영향을 주지 않습니다.
+
+즉, `extra_files` 재사용에 사용되는 것은 **GitHub Actions의 cache 서비스가 아니라 Git 저장소에 커밋된 파일과 SHA-256 상태 기록**입니다. GitHub Actions cache 서비스는 LLM 결과와 Python 패키지 다운로드에만 사용됩니다.
 
 환경 변수 `SCHEDULE_EXTRA_FILES`로 JSON 배열을 지정하면 config.json 값을 대체합니다.
 
@@ -217,7 +253,7 @@ CI 변경 감지는 각 URL의 **콘텐츠 sha256**을 `docs/.extra_files_state.
 - **자동 실행**: 평일 5분마다 FTP 변경 감지 → 변경 시 재빌드 및 배포
 - **수동 실행**: GitHub Actions 탭에서 `workflow_dispatch`로 트리거 가능
   - `check-and-deploy`: 변경 감지 후 변경 시에만 빌드/배포 (기본값)
-  - `force-deploy`: 변경 여부 무시, 강제 빌드/배포
+     - `force-deploy`: 변경 여부 무시, LLM 및 외부 파일 캐시를 초기화한 뒤 강제 빌드/배포
   - `deploy-only`: 빌드 없이 현재 `docs/` 그대로 배포
 - **변경 감지**: `check_update.py`가 모든 스케줄 폴더의 파일 메타데이터를 비교하며, 정규 미팅은 meeting rank를 우선하고 비정규 미팅은 업로드 시각을 사용
 - **배포 방식**: `docs/index.html` 생성 → 상태 저장 → 자동 커밋 & 푸시 → GitHub Pages 배포

@@ -289,7 +289,7 @@ def main():
         # timezone block below.
         ext_results: list[tuple[dict, Path]] = []
         if cfg.get("extra_files"):
-            print(f"Downloading extra files ({len(cfg['extra_files'])} URL(s))…")
+            print(f"Resolving extra files ({len(cfg['extra_files'])} URL(s))…")
             try:
                 ext_results, ext_file_state = download_external_files(
                     cfg["extra_files"]

@@ -40,6 +40,9 @@ SUPPORTED_EXTENSIONS = DOCUMENT_EXTENSIONS + (".zip",)
 # and the committed state file used by check_update.py change detection.
 EXTRA_FILES_DIR = DOWNLOADS_DIR / "extra_files"
 EXTRA_FILES_STATE_PATH = Path("docs/.extra_files_state.json")
+# Ephemeral check-to-build transfer directory. It is uploaded as a workflow
+# artifact only when check had to fetch an external file.
+EXTRA_FILES_TRANSFER_DIR = DOWNLOADS_DIR / ".extra_files_transfer"
 
 # Agenda folders can expose a plain agenda.csv instead of a TDoc archive.
 # Preference is intentionally different from schedules: use CSV first,
@@ -50,6 +53,12 @@ AGENDA_EXTRACT_EXTENSIONS = (".csv", ".docx")
 # Retry configuration for transient server errors
 _MAX_RETRIES = 3
 _RETRY_BACKOFF_BASE = 5  # seconds
+
+# ETSI's list server may disconnect requests that use httpx/requests' default
+# Python User-Agent without sending an HTTP response.  A browser-compatible
+# User-Agent is accepted by the endpoint and is also appropriate for the
+# curl -OJL-compatible external-file download path.
+_EXTERNAL_FILE_HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 # Patterns that indicate the server returned an error page instead of real content
 _SERVICE_ERROR_PATTERNS = (
@@ -2164,6 +2173,15 @@ def _sha256_of_response(resp: httpx.Response) -> str:
     return h.hexdigest()
 
 
+def _sha256_of_file(path: Path) -> str:
+    """Compute the sha256 of a local file without loading it all at once."""
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(65536), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def _download_external_one(
     url: str, entry: dict | None, index: int, dest_dir: Path
 ) -> tuple[Path, str]:
@@ -2179,7 +2197,13 @@ def _download_external_one(
     for attempt in range(1, _MAX_RETRIES + 1):
         tmp_path: Path | None = None
         try:
-            with httpx.stream("GET", url, follow_redirects=True, timeout=300) as resp:
+            with httpx.stream(
+                "GET",
+                url,
+                follow_redirects=True,
+                timeout=300,
+                headers=_EXTERNAL_FILE_HEADERS,
+            ) as resp:
                 resp.raise_for_status()
                 headers = dict(resp.headers)
                 filename = _resolve_external_filename(headers, url, entry or {}, index)
@@ -2227,9 +2251,13 @@ def _download_external_one(
 def download_external_files(
     extra_files: list[dict],
     dest_dir: Path = EXTRA_FILES_DIR,
+    state: dict | None = None,
 ) -> tuple[list[tuple[dict, Path]], dict]:
-    """Download externally-linked files (config.json ``extra_files``) into
-    ``dest_dir``.  Nothing more than a download.
+    """Resolve externally-linked files (config.json ``extra_files``).
+
+    A committed state entry is reused when its recorded filename exists in
+    ``dest_dir`` and its local sha256 still matches.  Otherwise the URL is
+    downloaded into ``dest_dir``.
 
     Filenames follow the ``curl -OJ`` convention (Content-Disposition →
     URL path → entry ``name``); ``.zip`` bodies are unpacked to the
@@ -2237,28 +2265,49 @@ def download_external_files(
     here on the files are just files on disk, handled like
     ``ref_in_manual/`` documents.
 
+    ``state`` can be supplied by callers that already loaded the persisted
+    state; when omitted, ``docs/.extra_files_state.json`` is loaded.
+
     Returns ``(results, state)``: ``results`` is a list of
     ``(entry, path)`` pairs per successful download (``path`` being the
-    unpacked document for ZIPs), and ``state`` maps each successful URL to
+    cached or unpacked document for ZIPs), and ``state`` maps each successful URL to
     ``{"sha256": ..., "filename": ...}``.  The filename is the resolved
     downloaded filename and the hash uses the same content-hash scheme as
     :func:`local_reference_hashes`; ETag/Last-Modified are not reliable on
     all hosts.  Legacy URL-to-string-hash state remains readable.
     """
     results: list[tuple[dict, Path]] = []
-    state: dict[str, str | dict[str, str]] = {}
+    persisted_state = state if state is not None else load_external_files_state()
+    previous_files = (
+        persisted_state.get("files")
+        if isinstance(persisted_state, dict)
+        else None
+    )
+    if not isinstance(previous_files, dict):
+        previous_files = {}
+    new_state: dict[str, str | dict[str, str]] = {}
 
     for index, entry in enumerate(extra_files):
         url = entry["url"]
-        try:
-            target, content_hash = _download_external_one(url, entry, index, dest_dir)
-        except Exception as e:
-            print(f"Warning: Failed to download extra file {url}: {e}")
-            continue
+        cached = _cached_external_file(previous_files.get(url), dest_dir)
+        if cached is not None:
+            target, content_hash = cached
+            print(f"Using cached extra file: {target}")
+        else:
+            try:
+                target, content_hash = _download_external_one(
+                    url,
+                    entry,
+                    index,
+                    dest_dir,
+                )
+            except Exception as e:
+                print(f"Warning: Failed to download extra file {url}: {e}")
+                continue
         # Record the source filename (the ZIP filename when the body is a ZIP,
         # before any contained document is extracted).  A same-body filename
         # change is meaningful to local selection and must be observable.
-        state[url] = {
+        new_state[url] = {
             "sha256": content_hash,
             "filename": target.name,
         }
@@ -2271,7 +2320,7 @@ def download_external_files(
                 doc = extracted
         results.append((entry, doc))
 
-    return results, state
+    return results, new_state
 
 
 def load_external_files_state(
@@ -2314,14 +2363,26 @@ def _remote_file_sha256(url: str) -> str:
     are a few hundred KB at most, so this stays lightweight).  Raises on
     4xx/5xx and transport failures.
     """
-    with httpx.stream("GET", url, follow_redirects=True, timeout=60) as resp:
+    with httpx.stream(
+        "GET",
+        url,
+        follow_redirects=True,
+        timeout=60,
+        headers=_EXTERNAL_FILE_HEADERS,
+    ) as resp:
         resp.raise_for_status()
         return _sha256_of_response(resp)
 
 
 def _remote_file_fingerprint(url: str, entry: dict, index: int) -> dict[str, str]:
     """Fetch an external file and return its resolved filename plus SHA-256."""
-    with httpx.stream("GET", url, follow_redirects=True, timeout=60) as resp:
+    with httpx.stream(
+        "GET",
+        url,
+        follow_redirects=True,
+        timeout=60,
+        headers=_EXTERNAL_FILE_HEADERS,
+    ) as resp:
         resp.raise_for_status()
         return {
             "sha256": _sha256_of_response(resp),
@@ -2336,6 +2397,32 @@ def _external_state_hash(value: object) -> str | None:
     if isinstance(value, dict) and isinstance(value.get("sha256"), str):
         return value["sha256"]
     return None
+
+
+def _cached_external_file(value: object, dest_dir: Path) -> tuple[Path, str] | None:
+    """Return a committed external file when its recorded hash still matches."""
+    if not isinstance(value, dict):
+        return None
+
+    expected_hash = value.get("sha256")
+    filename = value.get("filename")
+    if not isinstance(expected_hash, str) or not isinstance(filename, str):
+        return None
+    if not filename or filename in {".", ".."}:
+        return None
+    if "/" in filename or "\\" in filename or Path(filename).name != filename:
+        return None
+
+    target = dest_dir / filename
+    if not target.is_file():
+        return None
+    try:
+        actual_hash = _sha256_of_file(target)
+    except OSError:
+        return None
+    if actual_hash != expected_hash:
+        return None
+    return target, actual_hash
 
 
 def _external_config_fingerprint(extra_files: list[dict]) -> list[dict]:
@@ -2361,14 +2448,18 @@ def _external_config_fingerprint(extra_files: list[dict]) -> list[dict]:
 def check_external_files(
     extra_files: list[dict],
     state: dict | None = None,
+    cache_dir: Path = EXTRA_FILES_DIR,
+    staging_dir: Path | None = None,
 ) -> tuple[bool, dict]:
-    """Check externally-linked files for filename or content changes.
+    """Check externally-linked files for configuration or cache changes.
 
-    Each configured URL is fetched (streaming GET), and its resolved filename
-    and body SHA-256 are compared against the persisted state.  A URL absent
-    from the previous
-    state counts as changed (first appearance, or a replaced ETSI wa.exe
-    URL — the URL is regenerated per message).
+    A committed file whose recorded filename and local SHA-256 match is reused
+    without a network download.  Cache misses are fetched (streaming GET), and
+    the resolved filename and body SHA-256 are compared against the persisted
+    state.  A URL absent from the previous state counts as changed (first
+    appearance, or a replaced ETSI wa.exe URL — the URL is regenerated per
+    message).  When ``staging_dir`` is supplied, cache misses are downloaded
+    there so a CI job can pass the files to a following build job.
 
     A URL that fails (404 / deleted / transport error) is **ignored**:
     it neither sets ``changed`` nor appears in the returned state, so a
@@ -2397,25 +2488,55 @@ def check_external_files(
     new_state: dict[str, str | dict[str, str]] = {}
     for index, entry in enumerate(extra_files):
         url = entry["url"]
-        try:
-            fingerprint = _remote_file_fingerprint(url, entry, index)
-        except Exception as e:
-            print(
-                f"Warning: Could not check extra file {url}: {e} "
-                f"— skipping (no effect on changed/state)"
-            )
-            continue
-
         previous = prev_avail.get(url)
+        cached = _cached_external_file(previous, cache_dir)
+        cache_mismatch = (
+            isinstance(previous, dict)
+            and isinstance(previous.get("sha256"), str)
+            and isinstance(previous.get("filename"), str)
+            and cached is None
+        )
+        if cached is not None:
+            target, cached_hash = cached
+            fingerprint = {
+                "sha256": cached_hash,
+                "filename": target.name,
+            }
+            print(f"Using cached extra file for check: {target}")
+        else:
+            try:
+                if staging_dir is None:
+                    fingerprint = _remote_file_fingerprint(url, entry, index)
+                else:
+                    target, content_hash = _download_external_one(
+                        url,
+                        entry,
+                        index,
+                        staging_dir,
+                    )
+                    fingerprint = {
+                        "sha256": content_hash,
+                        "filename": target.name,
+                    }
+            except Exception as e:
+                print(
+                    f"Warning: Could not check extra file {url}: {e} "
+                    f"— skipping (no effect on changed/state)"
+                )
+                continue
+            if cache_mismatch:
+                changed = True
+                print(f"Cached extra file missing or hash-mismatched: {url}")
+
         previous_hash = _external_state_hash(previous)
         filename_changed = (
             isinstance(previous, dict)
             and previous.get("filename") != fingerprint["filename"]
         )
         new_state[url] = (
-            fingerprint["sha256"]
-            if isinstance(previous, str)
-            else fingerprint
+            fingerprint
+            if staging_dir is not None or not isinstance(previous, str)
+            else fingerprint["sha256"]
         )
         if url not in prev_avail:
             changed = True

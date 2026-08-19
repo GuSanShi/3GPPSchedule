@@ -85,7 +85,10 @@ def test_extra_file_change_is_checked_when_ftp_returns_no_files():
         extra_changed=True,
     )
 
-    assert outputs == [("changed", "true")]
+    assert outputs == [
+        ("extra_files_artifact", "false"),
+        ("changed", "true"),
+    ]
 
 
 def test_local_meeting_hint_is_preferred_over_cached_meeting():
@@ -139,3 +142,46 @@ def test_removed_extra_files_are_detected_from_stale_state():
     )
 
     assert outputs == [("changed", "true")]
+
+
+def test_external_cache_miss_exposes_transfer_artifact(tmp_path):
+    outputs: list[tuple[str, str]] = []
+    url = "https://example.org/schedule.docx"
+    cfg = {
+        "inbox_urls": [],
+        "extra_folders": [],
+        "extra_files": [{"url": url, "type": "schedule"}],
+    }
+
+    def fake_external_check(*args, **kwargs):
+        tmp_path.mkdir(parents=True, exist_ok=True)
+        (tmp_path / "schedule.docx").write_bytes(b"staged")
+        return True, {
+            "files": {
+                url: {
+                    "sha256": "staged-hash",
+                    "filename": "schedule.docx",
+                }
+            }
+        }
+
+    with (
+        patch("check_update.load_config", return_value=cfg),
+        patch("check_update.load_schedule_state", return_value={"files": []}),
+        patch("check_update.local_reference_hashes", return_value={}),
+        patch("check_update.local_reference_meeting_id", return_value=None),
+        patch("check_update.get_all_remote_schedule_info", return_value=[]),
+        patch("check_update.EXTRA_FILES_TRANSFER_DIR", tmp_path),
+        patch("check_update.check_external_files", side_effect=fake_external_check),
+        patch(
+            "check_update._set_output",
+            side_effect=lambda name, value: outputs.append((name, value)),
+        ),
+    ):
+        check_update.main()
+
+    assert outputs == [
+        ("extra_files_artifact", "true"),
+        ("changed", "true"),
+    ]
+    assert (tmp_path / ".extra_files_state.json").exists()
