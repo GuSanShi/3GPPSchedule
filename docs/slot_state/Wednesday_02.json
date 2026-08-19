@@ -2,7 +2,9 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "b08a7c64d75286d2"
+    "Main Schedule": "00c7f3724271c5b4",
+    "Hiroki's schedule": "f0175845ee133ee3",
+    "Sorour's schedule": "8704f19bfc50961f"
   },
   "merged_sessions": [
     {
@@ -153,39 +155,100 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "AI 7/8.2",
-      "duration_minutes": 120,
+      "name": "10.8.2",
+      "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
-      "group_header": "",
-      "agenda_item": null,
-      "description": "Pre-Rel-19 NR Maintenance",
+      "chair": "Hiroki",
+      "group_header": "6G ISAC",
+      "agenda_item": "10.8.2",
+      "description": "Aspects of integration with communication",
       "agenda_descriptions": [
         {
-          "agenda_item": "7",
-          "matched_agenda_item": "7",
-          "description": "Pre-Rel-19 NR Maintenance",
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
           "hierarchy": [
             {
-              "agenda_item": "7",
-              "description": "Pre-Rel-19 NR Maintenance",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "8.2",
-          "matched_agenda_item": "8.2",
-          "description": "Maintenance on others",
-          "hierarchy": [
-            {
-              "agenda_item": "8",
-              "description": "Maintenance on Rel-19 NR and E-UTRA",
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
               "has_description": true
             },
             {
-              "agenda_item": "8.2",
-              "description": "Maintenance on others",
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "10.8.1",
+      "duration_minutes": 50,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6G ISAC",
+      "agenda_item": "10.8.1",
+      "description": "Evaluations",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "Coverage",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "R20 Coverage",
+      "agenda_item": "9.4.1",
+      "description": "NR-NTN GNSS resilience",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.4.1",
+          "matched_agenda_item": "9.4.1",
+          "description": "NR-NTN GNSS resilience",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.4",
+              "description": "GNSS resilient NR-NTN operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.4.1",
+              "description": "NR-NTN GNSS resilience",
               "has_description": true
             }
           ]
@@ -194,18 +257,18 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.3.x",
-      "duration_minutes": 90,
+      "name": "10.3.1",
+      "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Channel coding and modulation for 6GR interface",
+      "agenda_item": "10.3.1",
+      "description": "Channel coding",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.3.x",
-          "matched_agenda_item": "10.3",
-          "description": "Channel coding and modulation for 6GR interface",
+          "agenda_item": "10.3.1",
+          "matched_agenda_item": "10.3.1",
+          "description": "Channel coding",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -215,6 +278,45 @@
             {
               "agenda_item": "10.3",
               "description": "Channel coding and modulation for 6GR interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3.1",
+              "description": "Channel coding",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_off1",
+      "name": "10.3.2",
+      "duration_minutes": 45,
+      "specified_start_time": null,
+      "chair": "Sorour",
+      "group_header": "6GR",
+      "agenda_item": "10.3.2",
+      "description": "Modulation, Joint channel coding and modulation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.3.2",
+          "matched_agenda_item": "10.3.2",
+          "description": "Modulation, Joint channel coding and modulation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3",
+              "description": "Channel coding and modulation for 6GR interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3.2",
+              "description": "Modulation, Joint channel coding and modulation",
               "has_description": true
             }
           ]
@@ -265,7 +367,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-19T02:16:32.926662+00:00",
+  "merged_at": "2026-08-19T02:32:23.749262+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

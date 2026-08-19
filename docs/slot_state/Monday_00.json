@@ -2,12 +2,14 @@
   "day": "Monday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "619756c558efd86f"
+    "Main Schedule": "619756c558efd86f",
+    "Hiroki's schedule": "e2969545e6eb3982",
+    "Sorour's schedule": "5d35f70f5c0d3c43"
   },
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "RAN1#126 commences at 09:00 on Monday",
+      "name": "RAN1#124b commences at 09:00 on Monday",
       "duration_minutes": 60,
       "specified_start_time": "09:00",
       "chair": null,
@@ -79,18 +81,18 @@
     },
     {
       "room_name": "ALL_ONLINE",
-      "name": "10.5.1.1",
+      "name": "10.5.0",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Synchronization acquisition and beam measurement",
+      "description": "Multi-antenna system",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.1.1",
-          "matched_agenda_item": "10.5.1.1",
-          "description": "Synchronization acquisition and beam measurement",
+          "agenda_item": "10.5.0",
+          "matched_agenda_item": "10.5",
+          "description": "Multi-antenna system",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -101,23 +103,13 @@
               "agenda_item": "10.5",
               "description": "Multi-antenna system",
               "has_description": true
-            },
-            {
-              "agenda_item": "10.5.1",
-              "description": "Initial access and mobility",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.1.1",
-              "description": "Synchronization acquisition and beam measurement",
-              "has_description": true
             }
           ]
         }
       ]
     }
   ],
-  "merged_at": "2026-08-19T02:16:32.919270+00:00",
+  "merged_at": "2026-08-19T02:31:30.131770+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
