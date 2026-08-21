@@ -195,7 +195,7 @@
       "name": "10.8 Sensing",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "ISAC",
@@ -370,7 +370,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-19T07:02:25.095484+00:00",
+  "merged_at": "2026-08-21T07:08:11.127171+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

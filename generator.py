@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
+import zoneinfo
 
 from models import (
     BREAKS,
@@ -214,6 +216,7 @@ def _generate_css(num_rooms_max: int) -> str:
 :root {
     --slot-height: 8px;
     --time-col-width: 54px;
+    --bj-time-col-width: 54px;
     --header-height: 36px;
     --break-bg: #F3F4F6;
     --grid-line: #E5E7EB;
@@ -409,6 +412,12 @@ header .meta {
     color: var(--text-muted);
 }
 
+/* Beijing time column header */
+.room-header.time-col.bj {
+    background: #FFF7ED;
+    color: #C2410C;
+}
+
 /* Time labels */
 .time-label {
     grid-column: 1;
@@ -422,6 +431,16 @@ header .meta {
     border-right: 1px solid var(--grid-line);
     background: #FAFAFA;
     z-index: 5;
+}
+
+/* Beijing time labels */
+.time-label.bj {
+    grid-column: 2;
+    border-right: none;
+    border-left: 1px solid var(--grid-line);
+    background: #FFF7ED;
+    color: #C2410C;
+    font-weight: 700;
 }
 
 /* 30-minute grid lines */
@@ -662,7 +681,7 @@ header .meta {
     .tabs { flex-wrap: nowrap; overflow-x: auto; }
     .tab { padding: 6px 14px; font-size: 13px; }
     .now-toggle { height: 26px; margin-bottom: 3px; padding: 0 9px; }
-    :root { --slot-height: 7px; --time-col-width: 44px; }
+    :root { --slot-height: 7px; --time-col-width: 44px; --bj-time-col-width: 44px; }
     .session-name { font-size: 10px; }
     .room-header { font-size: 9px; padding: 3px 3px; }
 }
@@ -713,6 +732,46 @@ header .meta {
 .filter-toggle:hover {
     background: #F3F4F6;
     color: #374151;
+}
+
+.edit-btn, .export-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: #FFF;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text);
+    white-space: nowrap;
+}
+.edit-btn:hover, .export-btn:hover {
+    background: #EFF6FF;
+    border-color: #3B82F6;
+}
+body.edit-mode .session-name {
+    background: #FEFCE8;
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+
+.edit-btn, .export-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: #FFF;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text);
+    white-space: nowrap;
+}
+.edit-btn:hover, .export-btn:hover {
+    background: #EFF6FF;
+    border-color: #3B82F6;
+}
+body.edit-mode .session-name {
+    background: #FEFCE8;
+    padding: 1px 3px;
+    border-radius: 2px;
 }
 
 .filter-header {
@@ -1487,8 +1546,64 @@ document.addEventListener('DOMContentLoaded', function() {{
             location.reload();
         }}, AUTO_REFRESH_MS);
     }}
+
+    // --- Edit Mode ---
+    let editMode = false;
+    const editBtn = document.getElementById('edit-btn');
+    if (editBtn) {{
+        editBtn.addEventListener('click', function() {{
+            editMode = !editMode;
+            document.body.classList.toggle('edit-mode', editMode);
+            editBtn.textContent = editMode ? '[Done]' : '[Edit]';
+            document.querySelectorAll('.session-name').forEach(function(el) {{
+                el.contentEditable = editMode;
+                el.style.outline = editMode ? '1px dashed #3B82F6' : 'none';
+                el.style.cursor = editMode ? 'text' : 'default';
+            }});
+            if (!editMode) {{
+                const exportBtn = document.getElementById('export-btn');
+                if (exportBtn) exportBtn.style.display = 'inline-block';
+            }}
+        }});
+    }}
+    const exportBtn = document.getElementById('export-btn');
+    if (exportBtn) {{
+        exportBtn.addEventListener('click', function() {{
+            const blocks = document.querySelectorAll('.session-block');
+            const edits = [];
+            blocks.forEach(function(b) {{
+                const nameEl = b.querySelector('.session-name');
+                if (nameEl && nameEl.textContent.trim()) {{
+                    edits.push({{
+                        room: b.getAttribute('data-room') || '',
+                        name: nameEl.textContent.trim(),
+                        ai: b.getAttribute('data-ai') || '',
+                        group: b.getAttribute('data-group') || '',
+                    }});
+                }}
+            }});
+            const blob = new Blob([JSON.stringify(edits, null, 2)], {{type: 'application/json'}});
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'schedule_edits.json';
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }});
+    }}
 }});
 """
+
+
+def _get_beijing_offset(meeting_tz_str: str) -> int:
+    try:
+        beijing_tz = zoneinfo.ZoneInfo("Asia/Shanghai")
+        meeting_tz = zoneinfo.ZoneInfo(meeting_tz_str)
+        ref = datetime(2026, 8, 17, tzinfo=timezone.utc)
+        bj_off = int(beijing_tz.utcoffset(ref).total_seconds() // 3600)
+        mt_off = int(meeting_tz.utcoffset(ref).total_seconds() // 3600)
+        return bj_off - mt_off
+    except Exception:
+        return 0
 
 
 def generate_html(schedule: Schedule) -> str:
@@ -1545,12 +1660,20 @@ def generate_html(schedule: Schedule) -> str:
             f'            <button class="tab" data-day="{day_lower}">{day_short}</button>\n'
         )
     html_parts.append("        </div>\n")
+    html_parts.append("        </div>\n")
     html_parts.append(
         '        <button class="now-toggle" id="now-toggle" type="button" '
         'aria-pressed="true" title="Hide NOW line">NOW</button>\n'
     )
+    html_parts.append(
+        '        <button class="edit-btn" id="edit-btn" type="button" '
+        'title="Edit session names">[Edit]</button>\n'
+    )
+    html_parts.append(
+        '        <button class="export-btn" id="export-btn" type="button" '
+        'style="display:none" title="Download edited data as JSON">[Export JSON]</button>\n'
+    )
     html_parts.append("    </div>\n")
-
     # Day panels
     for day_schedule in schedule.days:
         day_lower = day_schedule.day_name.lower()
@@ -1559,7 +1682,7 @@ def generate_html(schedule: Schedule) -> str:
             continue
 
         # Grid template columns
-        col_template = f"var(--time-col-width) repeat({num_rooms}, 1fr)"
+        col_template = f"var(--time-col-width) var(--bj-time-col-width) repeat({num_rooms}, 1fr)"
 
         html_parts.append(
             f'    <div class="day-panel" id="{day_lower}">\n'
@@ -1573,24 +1696,43 @@ def generate_html(schedule: Schedule) -> str:
             '                <div class="room-header time-col" '
             'style="grid-column:1;grid-row:1">Time</div>\n'
         )
+        html_parts.append(
+            '                <div class="room-header time-col bj" '
+            'style="grid-column:2;grid-row:1">Beijing</div>\n'
+        )
         for ri, room in enumerate(day_schedule.rooms):
-            col = ri + 2
+            col = ri + 3
             html_parts.append(
                 f'                <div class="room-header" '
                 f'style="grid-column:{col};grid-row:1">{_esc(room.name)}</div>\n'
             )
 
-        # Time labels at 30-minute intervals
+        # Time labels at 30-minute intervals (local time + Beijing time)
+        bj_offset = _get_beijing_offset(schedule.timezone)
         time_min = time_to_minutes("08:30")
         end_min = time_to_minutes("19:45")
         while time_min <= end_min:
             row = (time_min - time_to_minutes("08:30")) // 5 + 2
             t_str = f"{time_min // 60:02d}:{time_min % 60:02d}"
+            # Calculate Beijing time
+            bj_min = time_min + bj_offset * 60
+            bj_day_shift = ""
+            if bj_min < 0:
+                bj_min += 24 * 60
+                bj_day_shift = " -1d"
+            elif bj_min >= 24 * 60:
+                bj_min -= 24 * 60
+                bj_day_shift = " +1d"
+            bj_str = f"{bj_min // 60:02d}:{bj_min % 60:02d}{bj_day_shift}"
             # Only show labels at 30-min intervals
             if time_min % 30 == 0:
                 html_parts.append(
                     f'                <div class="time-label" '
                     f'style="grid-row:{row}/{row + 6}">{t_str}</div>\n'
+                )
+                html_parts.append(
+                    f'                <div class="time-label bj" '
+                    f'style="grid-row:{row}/{row + 6}">{bj_str}</div>\n'
                 )
             time_min += 30
 
@@ -1632,12 +1774,12 @@ def generate_html(schedule: Schedule) -> str:
             # but we need to ensure they fit within this day's room count.
             col_start = session.room_col_start
             col_end = session.room_col_end
-            # Clamp to valid range
-            col_end = min(col_end, num_rooms + 2)
-            col_start = max(col_start, 2)
+            # Clamp to valid range (rooms start at col 3)
+            col_end = min(col_end, num_rooms + 3)
+            col_start = max(col_start, 3)
             if col_start >= col_end:
-                col_start = 2
-                col_end = 3
+                col_start = 3
+                col_end = 4
 
             style = (
                 f"grid-row:{row_start}/{row_end};"
@@ -1689,7 +1831,7 @@ def generate_html(schedule: Schedule) -> str:
                 f"Time: {session.start_time} - {session.end_time} ({session.duration_minutes} min)"
             )
             room_names_in_span = []
-            for ri in range(col_start - 2, min(col_end - 2, num_rooms)):
+            for ri in range(col_start - 3, min(col_end - 3, num_rooms)):
                 if ri < len(day_schedule.rooms):
                     room_names_in_span.append(day_schedule.rooms[ri].name)
             if room_names_in_span:

@@ -7,41 +7,12 @@
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
-      "name": "10.5.0",
-      "duration_minutes": 75,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "6GR",
-      "agenda_item": "10.5.0",
-      "description": "Multi-antenna system",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.0",
-          "matched_agenda_item": "10.5",
-          "description": "Multi-antenna system",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_main",
       "name": "10.5.1.1",
-      "duration_minutes": 45,
+      "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -74,23 +45,77 @@
       ]
     },
     {
-      "room_name": "RAN1_brk1",
-      "name": "NTN-NR",
-      "duration_minutes": 60,
+      "room_name": "RAN1_main",
+      "name": "10.5.1.2",
+      "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
+          "agenda_item": "10.5.1.2",
+          "matched_agenda_item": "10.5.1.2",
+          "description": "PRACH and RACH procedure",
           "hierarchy": [
             {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.2",
+              "description": "PRACH and RACH procedure",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_main",
+      "name": "10.5.1.3",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Bandwidth operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.1.3",
+          "matched_agenda_item": "10.5.1.3",
+          "description": "Bandwidth operation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.3",
+              "description": "Bandwidth operation",
               "has_description": true
             }
           ]
@@ -99,12 +124,21 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.7.1 NTN",
-      "duration_minutes": 60,
+      "name": "NTN-NR",
+      "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
+      "group_header": "R20",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_brk1",
+      "name": "10.7.1 NTN",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -132,125 +166,28 @@
       ]
     },
     {
-      "room_name": "RAN1_brk2",
-      "name": "8.2 R19 FR3/ISAC CM",
-      "duration_minutes": 15,
+      "room_name": "RAN1_brk1",
+      "name": "MIMO",
+      "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "Maintenance/TEI20",
-      "agenda_item": "8.2",
-      "description": "Maintenance on others",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "8.2",
-          "matched_agenda_item": "8.2",
-          "description": "Maintenance on others",
-          "hierarchy": [
-            {
-              "agenda_item": "8",
-              "description": "Maintenance on Rel-19 NR and E-UTRA",
-              "has_description": true
-            },
-            {
-              "agenda_item": "8.2",
-              "description": "Maintenance on others",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": null,
+      "group_header": "R20",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "8.2 R19 Mobility",
-      "duration_minutes": 15,
+      "name": "10.5.4",
+      "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "Maintenance/TEI20",
-      "agenda_item": "8.2",
-      "description": "Maintenance on others",
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Downlink control channel, scheduling and HARQ operation",
       "agenda_descriptions": [
         {
-          "agenda_item": "8.2",
-          "matched_agenda_item": "8.2",
-          "description": "Maintenance on others",
-          "hierarchy": [
-            {
-              "agenda_item": "8",
-              "description": "Maintenance on Rel-19 NR and E-UTRA",
-              "has_description": true
-            },
-            {
-              "agenda_item": "8.2",
-              "description": "Maintenance on others",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "11 TEI20",
-      "duration_minutes": 15,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "Maintenance/TEI20",
-      "agenda_item": "11",
-      "description": "TEI",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "11",
-          "matched_agenda_item": "11",
-          "description": "TEI",
-          "hierarchy": [
-            {
-              "agenda_item": "11",
-              "description": "TEI",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "5 R20 LBCA",
-      "duration_minutes": 15,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "Maintenance/TEI20",
-      "agenda_item": "5",
-      "description": "Incoming Liaison Statements",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "5",
-          "matched_agenda_item": "5",
-          "description": "Incoming Liaison Statements",
-          "hierarchy": [
-            {
-              "agenda_item": "5",
-              "description": "Incoming Liaison Statements",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.2.1",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6G waveform",
-      "agenda_item": "10.2.1",
-      "description": "Waveform",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.2.1",
-          "matched_agenda_item": "10.2.1",
-          "description": "Waveform",
+          "agenda_item": "10.5.4",
+          "matched_agenda_item": "10.5.4",
+          "description": "Downlink control channel, scheduling and HARQ operation",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -258,13 +195,13 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.2",
-              "description": "Waveform for 6GR air interface",
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
               "has_description": true
             },
             {
-              "agenda_item": "10.2.1",
-              "description": "Waveform",
+              "agenda_item": "10.5.4",
+              "description": "Downlink control channel, scheduling and HARQ operation",
               "has_description": true
             }
           ]
@@ -273,32 +210,12 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.6.x",
-      "duration_minutes": 90,
+      "name": "AI/ML",
+      "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Xiaodong",
-      "group_header": "6GR",
-      "agenda_item": "10.6.x",
-      "description": "WUS and operation",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.6.x",
-          "matched_agenda_item": "10.6",
-          "description": "WUS and operation",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.6",
-              "description": "WUS and operation",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": "Sorour",
+      "group_header": "R20",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -307,7 +224,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.5",
+      "agenda_item": null,
       "description": "Other physical layer signals, channels and procedure",
       "agenda_descriptions": [
         {
@@ -335,13 +252,52 @@
       ]
     },
     {
+      "room_name": "RAN1_off1",
+      "name": "10.6.1.1",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": "Xiaodong",
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Design of WUS with OFDM based sequence",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.6.1.1",
+          "matched_agenda_item": "10.6.1.1",
+          "description": "Design of WUS with OFDM based sequence",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.6",
+              "description": "WUS and operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.6.1",
+              "description": "Downlink WUS and operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.6.1.1",
+              "description": "Design of WUS with OFDM based sequence",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
       "room_name": "RAN1_off2",
       "name": "10.2.1 Waveform",
-      "duration_minutes": 40,
-      "specified_start_time": "08:30",
+      "duration_minutes": 30,
+      "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
+      "agenda_item": null,
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -371,17 +327,17 @@
     {
       "room_name": "RAN1_off2",
       "name": "10.8.x Sensing",
-      "duration_minutes": 80,
-      "specified_start_time": "09:10",
+      "duration_minutes": 90,
+      "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.1, 10.8.3",
-      "description": "Evaluations",
+      "agenda_item": null,
+      "description": "ISAC",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.1",
-          "matched_agenda_item": "10.8.1",
-          "description": "Evaluations",
+          "agenda_item": "10.8.x",
+          "matched_agenda_item": "10.8",
+          "description": "ISAC",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -391,33 +347,6 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.1",
-              "description": "Evaluations",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "10.8.3",
-          "matched_agenda_item": "10.8.3",
-          "description": "Waveform and frame structure",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.3",
-              "description": "Waveform and frame structure",
               "has_description": true
             }
           ]
@@ -425,7 +354,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-19T07:01:35.796408+00:00",
+  "merged_at": "2026-08-21T07:08:11.055065+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

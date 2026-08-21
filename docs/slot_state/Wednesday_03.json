@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "f8ca9bc0d3b55594"
+    "Main Schedule": "690efa5b621bfd0a"
   },
   "merged_sessions": [
     {
@@ -166,9 +166,9 @@
       "name": "10.3.1 Channel coding",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -200,9 +200,9 @@
       "name": "10.3.2 Modulation",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.3.2",
+      "agenda_item": null,
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
@@ -273,7 +273,7 @@
       "name": "A-IoT Phase2",
       "duration_minutes": 150,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": null
     },
@@ -508,7 +508,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -546,18 +546,18 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.5.4.x",
+      "name": "10.5.3.1",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": "Xiaodong",
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Downlink control channel, scheduling and HARQ operation",
+      "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.4.x",
-          "matched_agenda_item": "10.5.4",
-          "description": "Downlink control channel, scheduling and HARQ operation",
+          "agenda_item": "10.5.3.1",
+          "matched_agenda_item": "10.5.3.1",
+          "description": "Aspects of downlink-based CSI acquisition",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -570,8 +570,13 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5.4",
-              "description": "Downlink control channel, scheduling and HARQ operation",
+              "agenda_item": "10.5.3",
+              "description": "CSI acquisition and report",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3.1",
+              "description": "Aspects of downlink-based CSI acquisition",
               "has_description": true
             }
           ]
@@ -579,7 +584,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-19T07:02:10.715672+00:00",
+  "merged_at": "2026-08-21T07:08:11.105161+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

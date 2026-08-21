@@ -7,7 +7,7 @@
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "RAN1#124b commences at 09:00 on Monday",
+      "name": "RAN1#126 commences at 09:00 on Monday",
       "duration_minutes": 60,
       "specified_start_time": "09:00",
       "chair": null,
@@ -79,18 +79,18 @@
     },
     {
       "room_name": "ALL_ONLINE",
-      "name": "10.5.0",
+      "name": "10.5.1.1",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Multi-antenna system",
+      "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.0",
-          "matched_agenda_item": "10.5",
-          "description": "Multi-antenna system",
+          "agenda_item": "10.5.1.1",
+          "matched_agenda_item": "10.5.1.1",
+          "description": "Synchronization acquisition and beam measurement",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -101,13 +101,23 @@
               "agenda_item": "10.5",
               "description": "Multi-antenna system",
               "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.1",
+              "description": "Synchronization acquisition and beam measurement",
+              "has_description": true
             }
           ]
         }
       ]
     }
   ],
-  "merged_at": "2026-08-19T07:01:13.674039+00:00",
+  "merged_at": "2026-08-21T07:08:11.021943+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

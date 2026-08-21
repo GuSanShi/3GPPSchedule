@@ -7,10 +7,19 @@
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "Any other open issues. Session reports. etc (including surprise event)",
-      "duration_minutes": 150,
-      "specified_start_time": "14:30",
-      "chair": "Sorour",
+      "name": "Any other open issues Session reports",
+      "duration_minutes": 120,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
+    },
+    {
+      "room_name": "ALL_ONLINE",
+      "name": "RAN1#126 expected to close at 17:00",
+      "duration_minutes": 120,
+      "specified_start_time": null,
+      "chair": null,
       "group_header": "",
       "agenda_item": null
     },
@@ -33,7 +42,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-19T07:02:38.607903+00:00",
+  "merged_at": "2026-08-21T07:08:11.161431+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

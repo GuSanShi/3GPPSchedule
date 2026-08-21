@@ -7,39 +7,10 @@
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
-      "name": "10.5.0",
-      "duration_minutes": 80,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Multi-antenna system",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.0",
-          "matched_agenda_item": "10.5",
-          "description": "Multi-antenna system",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_main",
       "name": "10.5.1.1",
-      "duration_minutes": 40,
+      "duration_minutes": 70,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
@@ -74,23 +45,28 @@
       ]
     },
     {
-      "room_name": "RAN1_brk1",
-      "name": "AI 9.5 IoT-NTN",
-      "duration_minutes": 30,
+      "room_name": "RAN1_main",
+      "name": "10.4.x",
+      "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Multiple carrier operation",
       "agenda_descriptions": [
         {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
+          "agenda_item": "10.4.x",
+          "matched_agenda_item": "10.4",
+          "description": "Multiple carrier operation",
           "hierarchy": [
             {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.4",
+              "description": "Multiple carrier operation",
               "has_description": true
             }
           ]
@@ -99,27 +75,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 9.5 NR-NTN",
-      "duration_minutes": 30,
+      "name": "R20 AI/ML",
+      "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "Release 20 NR",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
@@ -132,81 +93,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT",
+      "name": "R20 A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "",
-      "agenda_item": "9.3.3, 9.3.2, 9.3.1",
-      "description": "Other procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.3",
-          "matched_agenda_item": "9.3.3",
-          "description": "Other procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.3",
-              "description": "Other procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.1",
-          "matched_agenda_item": "9.3.1",
-          "description": "R2D signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.1",
-              "description": "R2D signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -279,7 +171,7 @@
     {
       "room_name": "RAN1_off1",
       "name": "On demand",
-      "duration_minutes": 60,
+      "duration_minutes": 0,
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
@@ -315,7 +207,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-19T07:02:33.725823+00:00",
+  "merged_at": "2026-08-21T07:08:11.143435+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

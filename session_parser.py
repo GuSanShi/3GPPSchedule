@@ -1,4 +1,4 @@
-"""Parse session text using Gemini API."""
+"""Parse session text using LLM (DeepSeek / OpenAI-compatible API)."""
 
 from __future__ import annotations
 
@@ -14,6 +14,8 @@ from agenda_descriptions import (
     strip_derived_description_fields,
 )
 from models import RoomInfo, Session, time_to_minutes, minutes_to_time
+
+from deepseek_llm import llm_json
 
 
 CACHE_DIR = Path(".cache")
@@ -144,10 +146,7 @@ def get_timezone_from_location(location_text: str) -> str | None:
     Returns:
         IANA timezone string (e.g. "Europe/Stockholm") or None on failure.
     """
-    from google import genai
-    from google.genai import types
-
-    api_key = os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if not api_key:
         print("Warning: GEMINI_API_KEY not set, cannot determine timezone")
         return None
@@ -161,11 +160,6 @@ def get_timezone_from_location(location_text: str) -> str | None:
             print(f"Using cached timezone: {tz}")
             return tz
 
-    client = genai.Client(
-        api_key=api_key,
-        http_options={"timeout": 30_000},
-    )
-
     prompt = f"""Given this 3GPP meeting location line, return the IANA timezone identifier for the city.
 
 Location: "{location_text}"
@@ -173,17 +167,16 @@ Location: "{location_text}"
 Return ONLY valid JSON: {{"timezone": "IANA/Timezone", "city": "CityName", "country": "CountryName"}}"""
 
     try:
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.0,
-                response_mime_type="application/json",
-                response_json_schema=TIMEZONE_SCHEMA,
-                thinking_config=types.ThinkingConfig(thinking_level="minimal"),
-            ),
+        result = llm_json(
+            prompt=prompt,
+            api_key=api_key,
+            temperature=0.0,
+            timeout_ms=30_000,
+            json_schema=TIMEZONE_SCHEMA,
         )
-        result = json.loads(response.text.strip())
+        if result is None:
+            print("Warning: Failed to determine timezone from location (LLM returned None)")
+            return None
         tz = result.get("timezone")
         city = result.get("city", "")
         country = result.get("country", "")
@@ -228,7 +221,7 @@ def detect_room_from_context(
     if not context_text.strip():
         return None
 
-    api_key = os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if not api_key:
         return None
 
@@ -270,14 +263,6 @@ def detect_room_from_context(
         print(f"  Room detection (heuristic): {heuristic_names}")
         return heuristic_names
 
-    from google import genai
-    from google.genai import types
-
-    client = genai.Client(
-        api_key=api_key,
-        http_options={"timeout": 30_000},
-    )
-
     prompt = _build_room_detect_prompt(
         context_text=context_text,
         available_rooms=available_rooms,
@@ -286,16 +271,15 @@ def detect_room_from_context(
     )
 
     try:
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.2,
-                response_mime_type="application/json",
-                response_json_schema=ROOM_DETECT_SCHEMA,
-            ),
+        result = llm_json(
+            prompt=prompt,
+            api_key=api_key,
+            temperature=0.2,
+            timeout_ms=30_000,
+            json_schema=ROOM_DETECT_SCHEMA,
         )
-        result = json.loads(response.text.strip())
+        if result is None:
+            return None
         names = result.get("room_names", [])
 
         # Validate: only accept names that are in available_rooms
@@ -1037,17 +1021,10 @@ def parse_time_slots(
         List of Session objects with calculated start/end times.
     """
     import time as _time
-    from google import genai
-    from google.genai import types
 
-    api_key = os.environ.get("GEMINI_API_KEY")
+    api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        raise ValueError("GEMINI_API_KEY environment variable is not set")
-
-    client = genai.Client(
-        api_key=api_key,
-        http_options={"timeout": 120_000},
-    )
+        raise ValueError("DEEPSEEK_API_KEY environment variable is not set")
 
     from datetime import datetime, timezone
     from slot_state import SlotState, save_slot_state
@@ -1074,8 +1051,8 @@ def parse_time_slots(
             f"{label}={status}" for label, status in sorted(freshness.items())
         ) or "(no sources)"
 
-        # ── Short-circuit: every source unchanged → reuse last merge.
-        if slot.all_stale and slot.previous_merge is not None:
+        # ── Short-circuit: use cached data when available (skip LLM).
+        if slot.previous_merge is not None:
             parsed_result = {
                 "sessions": annotate_sessions_with_agenda_descriptions(
                     slot.previous_merge,
@@ -1136,18 +1113,14 @@ def parse_time_slots(
         parsed_result = None
         for attempt in range(MAX_RETRIES):
             try:
-                response = client.models.generate_content(
-                    model="gemini-3-flash-preview",
-                    contents=user_prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=system_instruction,
-                        temperature=0.1,
-                        response_mime_type="application/json",
-                        response_json_schema=MULTI_SOURCE_SESSION_SCHEMA,
-                        thinking_config=types.ThinkingConfig(thinking_level="minimal"),
-                    ),
+                parsed_result = llm_json(
+                    prompt=user_prompt,
+                    system_instruction=system_instruction,
+                    api_key=api_key,
+                    temperature=0.1,
+                    timeout_ms=120_000,
+                    json_schema=MULTI_SOURCE_SESSION_SCHEMA,
                 )
-                parsed_result = json.loads(response.text.strip())
                 break
             except Exception as e:
                 if attempt < MAX_RETRIES - 1:
@@ -1162,6 +1135,8 @@ def parse_time_slots(
 
         if parsed_result is None:
             parsed_result = {"sessions": []}
+
+
 
         parsed_result["sessions"] = annotate_sessions_with_agenda_descriptions(
             parsed_result.get("sessions", []),
@@ -1307,8 +1282,6 @@ def normalize_group_headers(sessions: list[Session]) -> list[Session]:
         The same list with group_header values replaced.
     """
     import time as _time
-    from google import genai
-    from google.genai import types
 
     unique_headers = sorted(set(s.group_header for s in sessions if s.group_header))
 
@@ -1332,15 +1305,10 @@ def normalize_group_headers(sessions: list[Session]) -> list[Session]:
             mapping[entry["original"]] = entry["simplified"]
         print(f"  Loaded mapping from cache ({len(mapping)} entries)")
     else:
-        api_key = os.environ.get("GEMINI_API_KEY")
+        api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
         if not api_key:
             print("  Warning: GEMINI_API_KEY not set, skipping normalization")
             return sessions
-
-        client = genai.Client(
-            api_key=api_key,
-            http_options={"timeout": 120_000},
-        )
 
         user_prompt = (
             "Here are all unique group_header labels from the schedule:\n\n"
@@ -1348,32 +1316,17 @@ def normalize_group_headers(sessions: list[Session]) -> list[Session]:
             + "\n\nProduce the simplification mapping."
         )
 
-        MAX_RETRIES = 3
-        result = None
-        for attempt in range(MAX_RETRIES):
-            try:
-                response = client.models.generate_content(
-                    model="gemini-3-flash-preview",
-                    contents=user_prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=GROUP_SIMPLIFY_SYSTEM_INSTRUCTION,
-                        temperature=0.0,
-                        response_mime_type="application/json",
-                        response_json_schema=GROUP_SIMPLIFY_SCHEMA,
-                    ),
-                )
-                result = json.loads(response.text.strip())
-                break
-            except Exception as e:
-                if attempt < MAX_RETRIES - 1:
-                    wait = 5 * (attempt + 1)
-                    print(f"  retry({attempt+1}, wait {wait}s)...", flush=True)
-                    _time.sleep(wait)
-                else:
-                    print(f"  Group normalization failed: {e}")
-                    return sessions
+        result = llm_json(
+            prompt=user_prompt,
+            system_instruction=GROUP_SIMPLIFY_SYSTEM_INSTRUCTION,
+            api_key=api_key,
+            temperature=0.0,
+            timeout_ms=120_000,
+            json_schema=GROUP_SIMPLIFY_SCHEMA,
+        )
 
         if result is None:
+            print("  Group normalization failed")
             return sessions
 
         _save_cache(cache_key, result)
@@ -1487,17 +1440,17 @@ def _find_room_columns(
     # Exact match
     for idx, ri in enumerate(day_rooms):
         if ri.name == room_name:
-            return (idx + 2, idx + 3)  # +2: col 1 = time label
+            return (idx + 3, idx + 4)  # +3: col 1=time, col 2=beijing
 
     # Fuzzy match: check if room_name is contained in or contains the room info name
     room_lower = room_name.lower()
     for idx, ri in enumerate(day_rooms):
         ri_lower = ri.name.lower()
         if room_lower in ri_lower or ri_lower in room_lower:
-            return (idx + 2, idx + 3)
+            return (idx + 3, idx + 4)
 
     # Fallback
-    return (2, 3)
+    return (3, 4)
 
 
 def _find_multi_room_columns(
@@ -1527,5 +1480,5 @@ def _find_multi_room_columns(
                 break
 
     if all_indices:
-        return (min(all_indices) + 2, max(all_indices) + 3)
-    return (2, 3)
+        return (min(all_indices) + 3, max(all_indices) + 4)
+    return (3, 4)

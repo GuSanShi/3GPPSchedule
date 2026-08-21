@@ -10,6 +10,7 @@ Usage:
 
 Environment variables:
     GEMINI_API_KEY  — Google Gemini API key (required unless --no-llm)
+    DEEPSEEK_API_KEY — DeepSeek API key (alternative to GEMINI_API_KEY)
     SCHEDULE_CONTACT_NAME  — Contact name displayed in generated HTML
     SCHEDULE_CONTACT_EMAIL — Contact email displayed in generated HTML
     SCHEDULE_INBOX_URLS    — JSON array or comma-separated list of inbox URLs

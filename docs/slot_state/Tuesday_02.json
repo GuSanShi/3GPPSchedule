@@ -39,7 +39,7 @@
       "name": "10.5.2.1",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
@@ -78,7 +78,7 @@
       "name": "10.5.2.2",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
@@ -117,7 +117,7 @@
       "name": "10.5.2.3",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
@@ -203,59 +203,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "A-IoT Phase2",
+      "name": "R20 A-IoT Phase2",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20",
-      "agenda_item": "9.3.1, 9.3.2",
-      "description": "R2D signals, channels, waveform and procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.1",
-          "matched_agenda_item": "9.3.1",
-          "description": "R2D signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.1",
-              "description": "R2D signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -452,7 +405,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-19T07:01:46.170948+00:00",
+  "merged_at": "2026-08-21T07:08:11.072633+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
