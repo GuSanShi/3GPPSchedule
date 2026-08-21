@@ -172,6 +172,15 @@
     },
     {
       "room_name": "RAN1_off1",
+      "name": "6GR",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": "Xiaodong",
+      "group_header": "",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_off1",
       "name": "10.4.1",
       "duration_minutes": 30,
       "specified_start_time": null,
@@ -239,15 +248,6 @@
       ]
     },
     {
-      "room_name": "RAN1_off1",
-      "name": "On demand",
-      "duration_minutes": 0,
-      "specified_start_time": null,
-      "chair": "Xiaodong",
-      "group_header": "6GR",
-      "agenda_item": null
-    },
-    {
       "room_name": "RAN1_off2",
       "name": "10.3.x",
       "duration_minutes": 120,
@@ -277,7 +277,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:11:59.125269+00:00",
+  "merged_at": "2026-08-21T08:52:30.061315+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

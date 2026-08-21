@@ -349,7 +349,7 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.4.x",
+      "name": "6G 10.5.4.x",
       "duration_minutes": 40,
       "specified_start_time": "15:50",
       "chair": "Hiroki",
@@ -531,7 +531,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:11:16.419704+00:00",
+  "merged_at": "2026-08-21T08:51:44.779475+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

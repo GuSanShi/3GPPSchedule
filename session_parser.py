@@ -14,7 +14,6 @@ from agenda_descriptions import (
     strip_derived_description_fields,
 )
 from models import RoomInfo, Session, time_to_minutes, minutes_to_time
-
 from deepseek_llm import llm_json
 
 
@@ -118,7 +117,7 @@ Return ONLY valid JSON."""
 
 
 def _load_cache(key: str) -> list[dict] | None:
-    """Load cached Gemini results."""
+    """Load cached LLM results."""
     cache_file = CACHE_DIR / f"{key}.json"
     if cache_file.exists():
         try:
@@ -130,7 +129,7 @@ def _load_cache(key: str) -> list[dict] | None:
 
 
 def _save_cache(key: str, data: list[dict]):
-    """Save Gemini results to cache."""
+    """Save LLM results to cache."""
     CACHE_DIR.mkdir(exist_ok=True)
     cache_file = CACHE_DIR / f"{key}.json"
     with open(cache_file, "w") as f:
@@ -138,7 +137,7 @@ def _save_cache(key: str, data: list[dict]):
 
 
 def get_timezone_from_location(location_text: str) -> str | None:
-    """Use Gemini to determine the IANA timezone from a meeting location string.
+    """Use LLM to determine the IANA timezone from a meeting location string.
 
     Args:
         location_text: e.g. "Gothenburg, SE, Feb. 9th ~ 13th, 2026"
@@ -146,6 +145,7 @@ def get_timezone_from_location(location_text: str) -> str | None:
     Returns:
         IANA timezone string (e.g. "Europe/Stockholm") or None on failure.
     """
+
     api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if not api_key:
         print("Warning: GEMINI_API_KEY not set, cannot determine timezone")
@@ -159,6 +159,7 @@ def get_timezone_from_location(location_text: str) -> str | None:
         if tz:
             print(f"Using cached timezone: {tz}")
             return tz
+
 
     prompt = f"""Given this 3GPP meeting location line, return the IANA timezone identifier for the city.
 
@@ -196,7 +197,7 @@ def detect_room_from_context(
     num_rooms_needed: int = 1,
     room_hints: dict | None = None,
 ) -> list[str] | None:
-    """Use Gemini to determine which room(s) a schedule table belongs to.
+    """Use LLM to determine which room(s) a schedule table belongs to.
 
     Analyses the paragraph text preceding a table in the DOCX to determine
     which room(s) from the available set this table represents.
@@ -263,6 +264,8 @@ def detect_room_from_context(
         print(f"  Room detection (heuristic): {heuristic_names}")
         return heuristic_names
 
+
+
     prompt = _build_room_detect_prompt(
         context_text=context_text,
         available_rooms=available_rooms,
@@ -273,12 +276,13 @@ def detect_room_from_context(
     try:
         result = llm_json(
             prompt=prompt,
-            api_key=api_key,
-            temperature=0.2,
-            timeout_ms=30_000,
-            json_schema=ROOM_DETECT_SCHEMA,
-        )
+                api_key=api_key,
+                temperature=0.0,
+                timeout_ms=30_000,
+                json_schema=ROOM_DETECT_SCHEMA,
+            )
         if result is None:
+            print("Warning: Failed to detect rooms (LLM returned None)")
             return None
         names = result.get("room_names", [])
 
@@ -1009,7 +1013,7 @@ def parse_time_slots(
     day_rooms_map: dict[str, list[RoomInfo]],
     meeting_id: str | None = None,
 ) -> list[Session]:
-    """Parse all time slots into Session objects using multi-source Gemini calls.
+    """Parse all time slots into Session objects using multi-source LLM calls.
 
     One Gemini call per time slot with all source data combined.
 
@@ -1024,7 +1028,9 @@ def parse_time_slots(
 
     api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        raise ValueError("DEEPSEEK_API_KEY environment variable is not set")
+        raise ValueError("DEEPSEEK_API_KEY or GEMINI_API_KEY environment variable is not set")
+
+    client = None  # Gemini client disabled
 
     from datetime import datetime, timezone
     from slot_state import SlotState, save_slot_state
@@ -1051,8 +1057,8 @@ def parse_time_slots(
             f"{label}={status}" for label, status in sorted(freshness.items())
         ) or "(no sources)"
 
-        # ── Short-circuit: use cached data when available (skip LLM).
-        if slot.previous_merge is not None:
+        # ── Short-circuit: every source unchanged → reuse last merge.
+        if slot.all_stale and slot.previous_merge is not None:
             parsed_result = {
                 "sessions": annotate_sessions_with_agenda_descriptions(
                     slot.previous_merge,
@@ -1111,6 +1117,7 @@ def parse_time_slots(
             _time.sleep(1.0)
 
         parsed_result = None
+        api_calls += 1
         for attempt in range(MAX_RETRIES):
             try:
                 parsed_result = llm_json(
@@ -1121,7 +1128,8 @@ def parse_time_slots(
                     timeout_ms=120_000,
                     json_schema=MULTI_SOURCE_SESSION_SCHEMA,
                 )
-                break
+                if parsed_result is not None:
+                    break
             except Exception as e:
                 if attempt < MAX_RETRIES - 1:
                     wait = 5 * (attempt + 1)
@@ -1135,8 +1143,6 @@ def parse_time_slots(
 
         if parsed_result is None:
             parsed_result = {"sessions": []}
-
-
 
         parsed_result["sessions"] = annotate_sessions_with_agenda_descriptions(
             parsed_result.get("sessions", []),
@@ -1310,23 +1316,38 @@ def normalize_group_headers(sessions: list[Session]) -> list[Session]:
             print("  Warning: GEMINI_API_KEY not set, skipping normalization")
             return sessions
 
+        client = None  # Gemini client disabled
+
         user_prompt = (
             "Here are all unique group_header labels from the schedule:\n\n"
             + json.dumps(unique_headers, indent=2, ensure_ascii=False)
             + "\n\nProduce the simplification mapping."
         )
 
-        result = llm_json(
-            prompt=user_prompt,
-            system_instruction=GROUP_SIMPLIFY_SYSTEM_INSTRUCTION,
-            api_key=api_key,
-            temperature=0.0,
-            timeout_ms=120_000,
-            json_schema=GROUP_SIMPLIFY_SCHEMA,
-        )
+        MAX_RETRIES = 3
+        result = None
+        for attempt in range(MAX_RETRIES):
+            try:
+                result = llm_json(
+                    prompt=user_prompt,
+                    system_instruction=GROUP_SIMPLIFY_SYSTEM_INSTRUCTION,
+                    api_key=api_key,
+                    temperature=0.0,
+                    timeout_ms=30_000,
+                    json_schema=GROUP_SIMPLIFY_SCHEMA,
+                )
+                if result is not None:
+                    break
+            except Exception as e:
+                if attempt < MAX_RETRIES - 1:
+                    wait = 5 * (attempt + 1)
+                    print(f"  retry({attempt+1}, wait {wait}s)...", flush=True)
+                    _time.sleep(wait)
+                else:
+                    print(f"  Group normalization failed: {e}")
+                    return sessions
 
         if result is None:
-            print("  Group normalization failed")
             return sessions
 
         _save_cache(cache_key, result)
@@ -1480,5 +1501,5 @@ def _find_multi_room_columns(
                 break
 
     if all_indices:
-        return (min(all_indices) + 3, max(all_indices) + 4)
+        return (min(all_indices) + 2, max(all_indices) + 3)
     return (3, 4)

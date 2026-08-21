@@ -127,7 +127,7 @@
       "room_name": "RAN1_off1",
       "name": "R20 A-IoT",
       "duration_minutes": 60,
-      "specified_start_time": null,
+      "specified_start_time": "11:00",
       "chair": "Hiroki",
       "group_header": "R20",
       "agenda_item": "9.3.1",
@@ -161,7 +161,7 @@
       "room_name": "RAN1_off1",
       "name": "6G ISAC",
       "duration_minutes": 60,
-      "specified_start_time": null,
+      "specified_start_time": "12:00",
       "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.8.2",
@@ -193,7 +193,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 MIMO",
+      "name": "MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -230,7 +230,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:03:37.630647+00:00",
+  "merged_at": "2026-08-21T08:44:17.809087+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

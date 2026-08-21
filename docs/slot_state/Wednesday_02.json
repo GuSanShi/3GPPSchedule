@@ -8,32 +8,12 @@
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
-      "name": "10.6.x",
+      "name": "Sweep 6GR",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "WUS and operation",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.6.x",
-          "matched_agenda_item": "10.6",
-          "description": "WUS and operation",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.6",
-              "description": "WUS and operation",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
@@ -178,7 +158,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "8.2 R19 Duplex, R20 LBCA",
+      "name": "AI 7/8.2",
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -359,7 +339,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:08:56.558729+00:00",
+  "merged_at": "2026-08-21T08:49:40.825902+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

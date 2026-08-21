@@ -239,7 +239,7 @@
       "name": "10.2.1 Waveform",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.2.1",
       "description": "Waveform",
@@ -419,7 +419,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-21T08:10:25.612269+00:00",
+  "merged_at": "2026-08-21T08:50:54.331431+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
