@@ -2,7 +2,8 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "b08a7c64d75286d2"
+    "Main Schedule": "b08a7c64d75286d2",
+    "Hiroki's schedule": "090f9abfa5d632d9"
   },
   "merged_sessions": [
     {
@@ -153,21 +154,36 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "TEI",
-      "duration_minutes": 120,
+      "name": "TEI20",
+      "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "TEI",
-      "agenda_item": null
+      "agenda_item": "11",
+      "description": "TEI",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "11",
+          "matched_agenda_item": "11",
+          "description": "TEI",
+          "hierarchy": [
+            {
+              "agenda_item": "11",
+              "description": "TEI",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "AI 7/8.2",
-      "duration_minutes": 120,
+      "name": "8.2 R19 Duplex, R20 LBCA",
+      "duration_minutes": 90,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "AI 7/8.2",
-      "agenda_item": null,
+      "agenda_item": "7 x6217-6220, x6348/6349, x5548/5549, x5668, x5799/5800, 8.2 R19 Duplex, R20 LBCA",
       "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
         {
@@ -266,15 +282,84 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
-      "specified_start_time": null,
+      "specified_start_time": "14:30",
       "chair": "Hiroki",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.3.1, 9.3.2, 9.3.3",
+      "description": "R2D signals, channels, waveform and procedures",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.3.1",
+          "matched_agenda_item": "9.3.1",
+          "description": "R2D signals, channels, waveform and procedures",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3",
+              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3.1",
+              "description": "R2D signals, channels, waveform and procedures",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "9.3.2",
+          "matched_agenda_item": "9.3.2",
+          "description": "D2R signals, channels, waveform and procedures",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3",
+              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3.2",
+              "description": "D2R signals, channels, waveform and procedures",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "9.3.3",
+          "matched_agenda_item": "9.3.3",
+          "description": "Other procedures",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3",
+              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3.3",
+              "description": "Other procedures",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-08-21T07:08:11.100162+00:00",
+  "merged_at": "2026-08-21T08:08:56.558729+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

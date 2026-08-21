@@ -2,7 +2,8 @@
   "day": "Monday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "14529f997e67b2c2"
+    "Main Schedule": "14529f997e67b2c2",
+    "Hiroki's schedule": "66f75dfec416d907"
   },
   "merged_sessions": [
     {
@@ -124,27 +125,52 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.3.1",
+      "description": "R2D signals, channels, waveform and procedures",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.3.1",
+          "matched_agenda_item": "9.3.1",
+          "description": "R2D signals, channels, waveform and procedures",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3",
+              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3.1",
+              "description": "R2D signals, channels, waveform and procedures",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.8.x Sensing",
+      "name": "6G ISAC",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "ISAC",
+      "agenda_item": "10.8.2",
+      "description": "Aspects of integration with communication",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.x",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -155,6 +181,11 @@
               "agenda_item": "10.8",
               "description": "ISAC",
               "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
             }
           ]
         }
@@ -162,7 +193,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "MIMO",
+      "name": "R20 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -199,7 +230,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T07:08:11.027943+00:00",
+  "merged_at": "2026-08-21T08:03:37.630647+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

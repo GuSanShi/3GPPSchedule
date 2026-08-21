@@ -2,7 +2,8 @@
   "day": "Tuesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "a0973030e7e10203"
+    "Main Schedule": "a0973030e7e10203",
+    "Hiroki's schedule": "ce7d43222fd80486"
   },
   "merged_sessions": [
     {
@@ -149,28 +150,19 @@
       ]
     },
     {
-      "room_name": "RAN1_brk1",
-      "name": "R20 AI/ML",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "R20 / AI/ML",
-      "agenda_item": null
-    },
-    {
       "room_name": "RAN1_brk2",
       "name": "10.8 Sensing",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "ISAC",
+      "agenda_item": "10.8.3, 10.8.1",
+      "description": "Waveform and frame structure",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -180,6 +172,33 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
               "has_description": true
             }
           ]
@@ -191,9 +210,9 @@
       "name": "10.2.1 Waveform",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.2.1",
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -329,12 +348,37 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 30,
-      "specified_start_time": null,
+      "specified_start_time": "12:30",
       "chair": "Hiroki",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.3.2",
+      "description": "D2R signals, channels, waveform and procedures",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.3.2",
+          "matched_agenda_item": "9.3.2",
+          "description": "D2R signals, channels, waveform and procedures",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3",
+              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3.2",
+              "description": "D2R signals, channels, waveform and procedures",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off2",
@@ -454,7 +498,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T07:08:11.063633+00:00",
+  "merged_at": "2026-08-21T08:06:09.318222+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
