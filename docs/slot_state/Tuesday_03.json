@@ -168,7 +168,7 @@
       "name": "10.3.1 Channel coding",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Channel coding",
@@ -202,7 +202,7 @@
       "name": "10.3.2 Modulation",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Modulation, Joint channel coding and modulation",
@@ -236,7 +236,7 @@
       "name": "10.5.2.2",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
@@ -709,7 +709,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-22T17:53:07.990501+00:00",
+  "merged_at": "2026-08-22T17:59:03.721930+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

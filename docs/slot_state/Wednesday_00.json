@@ -129,7 +129,7 @@
       "name": "AI 9.4 NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
       "agenda_item": "9.4",
       "description": "GNSS resilient NR-NTN operation",
@@ -158,7 +158,7 @@
       "name": "AI 10.7.1 NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": "10.7.1",
       "description": "NTN specific requirements and design",
@@ -192,7 +192,7 @@
       "name": "AI 9.2 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
       "agenda_item": "9.2",
       "description": "NR MIMO Phase 6",
@@ -223,7 +223,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.4.4",
       "description": "Handling of potential multiple uplink transmissions",
       "agenda_descriptions": [
         {
@@ -262,7 +262,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.4.1",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
@@ -301,7 +301,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.4.2",
       "description": "Downlink and uplink transmission without downlink control channel",
       "agenda_descriptions": [
         {
@@ -490,7 +490,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-22T17:53:14.105504+00:00",
+  "merged_at": "2026-08-22T17:59:10.244374+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

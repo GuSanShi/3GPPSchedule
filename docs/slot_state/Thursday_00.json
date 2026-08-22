@@ -218,11 +218,11 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Maintenance",
+      "name": "8.2 R19 LP-WUS, Mobility, TBD",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "Maintenance",
       "agenda_item": "8.2 R19 LP-WUS, Mobility, TBD, 7 TBD",
       "description": "Maintenance on others",
       "agenda_descriptions": [
@@ -264,7 +264,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
+      "agenda_item": null,
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -447,7 +447,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-22T17:53:39.620154+00:00",
+  "merged_at": "2026-08-22T17:59:35.102269+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
