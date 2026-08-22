@@ -150,6 +150,7 @@ jobs:
           rm -rf .cache/*
           rm -rf downloads/extra_files
           rm -f docs/.extra_files_state.json
+          rm -rf docs/slot_state
 
       - name: Run schedule parser
         env:
