@@ -194,7 +194,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "MIMO",
+      "name": "R20 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -270,7 +270,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T12:30:06.446461+00:00",
+  "merged_at": "2026-08-22T17:52:28.741176+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

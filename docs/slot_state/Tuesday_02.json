@@ -155,12 +155,27 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "11 TEI20",
+      "name": "TEI20",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "TEI",
-      "agenda_item": null
+      "group_header": "",
+      "agenda_item": "11",
+      "description": "TEI",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "11",
+          "matched_agenda_item": "11",
+          "description": "TEI",
+          "hierarchy": [
+            {
+              "agenda_item": "11",
+              "description": "TEI",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
@@ -168,8 +183,8 @@
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "AI 7/8.2",
-      "agenda_item": "7 x5550/5551, x5794-5796, x5797/5798, x5667, x6450-6452, 8.2 R19 FR3/ISAC CM, A-IoT",
+      "group_header": "",
+      "agenda_item": "7, 8.2",
       "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
         {
@@ -496,7 +511,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T12:30:06.462168+00:00",
+  "merged_at": "2026-08-22T17:53:01.227000+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

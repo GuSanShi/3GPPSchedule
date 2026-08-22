@@ -156,7 +156,7 @@
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -165,7 +165,7 @@
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": "9.3.2, 9.3.3, 9.3.1",
       "description": "D2R signals, channels, waveform and procedures",
       "agenda_descriptions": [
@@ -442,7 +442,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T12:30:06.470756+00:00",
+  "merged_at": "2026-08-22T17:53:45.674820+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

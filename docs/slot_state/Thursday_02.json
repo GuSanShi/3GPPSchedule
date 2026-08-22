@@ -80,7 +80,7 @@
       "name": "AI 10.5.2.3 PUxCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
@@ -119,7 +119,7 @@
       "name": "AI 10.5.2.2 PDSCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
@@ -158,7 +158,7 @@
       "name": "AI 10.5.2.1 PDCCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
@@ -194,7 +194,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
+      "name": "6G ISAC",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -544,7 +544,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T12:30:06.471897+00:00",
+  "merged_at": "2026-08-22T17:53:51.282766+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

@@ -159,7 +159,7 @@
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "TEI",
+      "group_header": "",
       "agenda_item": "11",
       "description": "TEI",
       "agenda_descriptions": [
@@ -184,7 +184,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -218,7 +218,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.2",
+      "agenda_item": null,
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
@@ -252,7 +252,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.5",
+      "agenda_item": null,
       "description": "Other physical layer signals, channels and procedure",
       "agenda_descriptions": [
         {
@@ -283,7 +283,7 @@
       "room_name": "RAN1_off2",
       "name": "R20 A-IoT",
       "duration_minutes": 120,
-      "specified_start_time": null,
+      "specified_start_time": "14:30",
       "chair": "Hiroki",
       "group_header": "R20",
       "agenda_item": "9.3.1, 9.3.2, 9.3.3",
@@ -358,7 +358,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T12:30:06.467131+00:00",
+  "merged_at": "2026-08-22T17:53:24.691519+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
