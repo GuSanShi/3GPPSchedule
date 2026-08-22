@@ -331,6 +331,41 @@ def main():
                         local_path=path,
                     )
                 )
+        # ── Draft vs official rule ──────────────────────────────────────
+        # The chair publishes draft schedules (ETSI extra_files) before the
+        # official one. Once a NON-draft main schedule exists in
+        # Chair_notes/ on FTP (discovered below), drafts are obsolete and
+        # must NOT be used as the main source. Rule:
+        #   - official main on FTP exists  → drop all extra_files drafts
+        #   - no official main on FTP      → keep drafts as main source
+        extra_drafts = [
+            s for s in local_ref_sources
+            if s.is_main and "draft" in s.file_info.get("name", "").lower()
+        ]
+        if extra_drafts:
+            try:
+                ftp_sources = discover_schedule_sources(
+                    urls=cfg["inbox_urls"],
+                    extra_folders=cfg["extra_folders"],
+                    local_schedule_sources=[],
+                    preferred_meeting_id=preferred_meeting_id,
+                    locked_meeting_id=locked_meeting_id,
+                )
+                ftp_official_main = any(
+                    s.is_main and "draft" not in s.file_info.get("name", "").lower()
+                    for s in ftp_sources
+                )
+                if ftp_official_main:
+                    local_ref_sources = [
+                        s for s in local_ref_sources
+                        if not (s.is_main and "draft" in s.file_info.get("name", "").lower())
+                    ]
+                    print(
+                        f"✓ 检测到 Chair_notes 正式版主排期, 已忽略 {len(extra_drafts)} 个 Draft "
+                        f"({', '.join(s.file_info.get('name', '?') for s in extra_drafts)})"
+                    )
+            except Exception as e:
+                print(f"(draft-vs-official check skipped: {e})")
         local_main_ids = {
             _extract_meeting_id(source.file_info["name"])
             for source in local_ref_sources
