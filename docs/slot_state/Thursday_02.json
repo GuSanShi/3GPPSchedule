@@ -3,7 +3,8 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "2b398e2b2ba0d54d",
-    "Hiroki's schedule": "3c0449ed9a0df290"
+    "Hiroki's schedule": "d3b8db70b4830777",
+    "Sorour's schedule": "ac828afe61a35cef"
   },
   "merged_sessions": [
     {
@@ -76,12 +77,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.3",
+      "name": "10.5.2.3 PUxCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.3",
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -115,12 +116,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.2",
+      "name": "10.5.2.2 PDSCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -154,12 +155,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.1",
+      "name": "10.5.2.1 PDCCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.1",
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -354,36 +355,9 @@
       "specified_start_time": "15:50",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.5.4.1, 10.5.4.3, 10.5.4.2, 10.5.4.4",
-      "description": "Downlink control channel, scheduling for downlink and uplink transmission",
+      "agenda_item": "10.5.4.3, 10.5.4.2, 10.5.4.4",
+      "description": "HARQ related Aspects",
       "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.4.1",
-          "matched_agenda_item": "10.5.4.1",
-          "description": "Downlink control channel, scheduling for downlink and uplink transmission",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.4",
-              "description": "Downlink control channel, scheduling and HARQ operation",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.4.1",
-              "description": "Downlink control channel, scheduling for downlink and uplink transmission",
-              "has_description": true
-            }
-          ]
-        },
         {
           "agenda_item": "10.5.4.3",
           "matched_agenda_item": "10.5.4.3",
@@ -469,18 +443,18 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.3.x",
-      "duration_minutes": 90,
+      "name": "10.3.1",
+      "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Channel coding and modulation for 6GR interface",
+      "agenda_item": "10.3.1",
+      "description": "Channel coding",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.3.x",
-          "matched_agenda_item": "10.3",
-          "description": "Channel coding and modulation for 6GR interface",
+          "agenda_item": "10.3.1",
+          "matched_agenda_item": "10.3.1",
+          "description": "Channel coding",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -490,6 +464,45 @@
             {
               "agenda_item": "10.3",
               "description": "Channel coding and modulation for 6GR interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3.1",
+              "description": "Channel coding",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.3.2",
+      "duration_minutes": 45,
+      "specified_start_time": null,
+      "chair": "Sorour",
+      "group_header": "6GR",
+      "agenda_item": "10.3.2",
+      "description": "Modulation, Joint channel coding and modulation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.3.2",
+          "matched_agenda_item": "10.3.2",
+          "description": "Modulation, Joint channel coding and modulation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3",
+              "description": "Channel coding and modulation for 6GR interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3.2",
+              "description": "Modulation, Joint channel coding and modulation",
               "has_description": true
             }
           ]
@@ -531,7 +544,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:51:44.779475+00:00",
+  "merged_at": "2026-08-22T03:36:07.172361+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

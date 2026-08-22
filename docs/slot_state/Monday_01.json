@@ -3,9 +3,49 @@
   "time_block_index": 1,
   "source_hashes": {
     "Main Schedule": "14529f997e67b2c2",
-    "Hiroki's schedule": "66f75dfec416d907"
+    "Hiroki's schedule": "66f75dfec416d907",
+    "Sorour's schedule": "e0f3e3e59fe57f76"
   },
   "merged_sessions": [
+    {
+      "room_name": "ALL_ONLINE",
+      "name": "10.5.1.3",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Bandwidth operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.1.3",
+          "matched_agenda_item": "10.5.1.3",
+          "description": "Bandwidth operation",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.3",
+              "description": "Bandwidth operation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
     {
       "room_name": "ALL_ONLINE",
       "name": "10.5.1.1",
@@ -78,45 +118,6 @@
             {
               "agenda_item": "10.5.1.2",
               "description": "PRACH and RACH procedure",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "ALL_ONLINE",
-      "name": "10.5.1.3",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Bandwidth operation",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.1.3",
-          "matched_agenda_item": "10.5.1.3",
-          "description": "Bandwidth operation",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.1",
-              "description": "Initial access and mobility",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.1.3",
-              "description": "Bandwidth operation",
               "has_description": true
             }
           ]
@@ -202,18 +203,18 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.3.x",
-      "duration_minutes": 80,
+      "name": "10.3.2",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Channel coding and modulation for 6GR interface",
+      "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.3.x",
-          "matched_agenda_item": "10.3",
-          "description": "Channel coding and modulation for 6GR interface",
+          "agenda_item": "10.3.2",
+          "matched_agenda_item": "10.3.2",
+          "description": "Modulation, Joint channel coding and modulation",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -224,13 +225,52 @@
               "agenda_item": "10.3",
               "description": "Channel coding and modulation for 6GR interface",
               "has_description": true
+            },
+            {
+              "agenda_item": "10.3.2",
+              "description": "Modulation, Joint channel coding and modulation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.3.1",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Sorour",
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Channel coding",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.3.1",
+          "matched_agenda_item": "10.3.1",
+          "description": "Channel coding",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3",
+              "description": "Channel coding and modulation for 6GR interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3.1",
+              "description": "Channel coding",
+              "has_description": true
             }
           ]
         }
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:44:17.809087+00:00",
+  "merged_at": "2026-08-22T03:34:49.516722+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

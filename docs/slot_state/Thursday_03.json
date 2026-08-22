@@ -3,7 +3,8 @@
   "time_block_index": 3,
   "source_hashes": {
     "Main Schedule": "80973872fdc44c0f",
-    "Hiroki's schedule": "a5113892f97bbdd6"
+    "Hiroki's schedule": "a5113892f97bbdd6",
+    "Sorour's schedule": "d5b57f526cc98c8c"
   },
   "merged_sessions": [
     {
@@ -125,12 +126,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.1 Channel coding",
+      "name": "AI 10.3.1 Coding",
       "duration_minutes": 50,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.1",
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -159,12 +160,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.2 Modulation",
+      "name": "AI 10.3.2 Modulation",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.2",
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
@@ -438,7 +439,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:52:08.909737+00:00",
+  "merged_at": "2026-08-22T03:36:12.053940+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

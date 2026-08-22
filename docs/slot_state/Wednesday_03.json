@@ -2,8 +2,9 @@
   "day": "Wednesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "690efa5b621bfd0a",
-    "Hiroki's schedule": "88c4164081c93c7f"
+    "Main Schedule": "f8ca9bc0d3b55594",
+    "Hiroki's schedule": "88c4164081c93c7f",
+    "Sorour's schedule": "8a12aae4534c0215"
   },
   "merged_sessions": [
     {
@@ -271,105 +272,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "9.3.1",
-      "duration_minutes": 50,
+      "name": "A-IoT Phase2",
+      "duration_minutes": 150,
       "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20 A-IoT",
-      "agenda_item": "9.3.1",
-      "description": "R2D signals, channels, waveform and procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.1",
-          "matched_agenda_item": "9.3.1",
-          "description": "R2D signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.1",
-              "description": "R2D signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "9.3.2",
-      "duration_minutes": 50,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20 A-IoT",
-      "agenda_item": "9.3.2",
-      "description": "D2R signals, channels, waveform and procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "9.3.3",
-      "duration_minutes": 50,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20 A-IoT",
-      "agenda_item": "9.3.3",
-      "description": "Other procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.3",
-          "matched_agenda_item": "9.3.3",
-          "description": "Other procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.3",
-              "description": "Other procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": null,
+      "group_header": "R20",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -640,18 +548,18 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.5.3.1",
+      "name": "10.5.4.x",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Xiaodong",
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Aspects of downlink-based CSI acquisition",
+      "description": "Downlink control channel, scheduling and HARQ operation",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.3.1",
-          "matched_agenda_item": "10.5.3.1",
-          "description": "Aspects of downlink-based CSI acquisition",
+          "agenda_item": "10.5.4.x",
+          "matched_agenda_item": "10.5.4",
+          "description": "Downlink control channel, scheduling and HARQ operation",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -664,13 +572,8 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5.3",
-              "description": "CSI acquisition and report",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.3.1",
-              "description": "Aspects of downlink-based CSI acquisition",
+              "agenda_item": "10.5.4",
+              "description": "Downlink control channel, scheduling and HARQ operation",
               "has_description": true
             }
           ]
@@ -678,7 +581,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-21T08:50:19.183635+00:00",
+  "merged_at": "2026-08-22T03:35:50.620617+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
