@@ -310,7 +310,7 @@ def collect_time_slot_data(
                     continue  # Skip duplicate content
                 room_label = _room_label_for_cell(cell, vc_day_rooms)
                 # Prefix VC room labels that match a main target room name
-                # to prevent Gemini from blindly assigning sessions by label.
+                # to prevent the LLM from blindly assigning sessions by label.
                 # Content-based matching in the LLM handles correct placement.
                 if room_label in main_room_names:
                     room_label = f"{person}: {room_label}"

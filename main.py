@@ -9,8 +9,9 @@ Usage:
     python main.py --no-download             # Use latest local file, skip download
 
 Environment variables:
-    GEMINI_API_KEY  — Google Gemini API key (required unless --no-llm)
-    DEEPSEEK_API_KEY — DeepSeek API key (alternative to GEMINI_API_KEY)
+    DEEPSEEK_API_KEY — DeepSeek API key (primary; any OpenAI-compatible
+                       endpoint via LLM_API_KEY/LLM_BASE_URL/LLM_MODEL)
+    GEMINI_API_KEY  — Google Gemini API key (fallback if DEEPSEEK_API_KEY unset)
     SCHEDULE_CONTACT_NAME  — Contact name displayed in generated HTML
     SCHEDULE_CONTACT_EMAIL — Contact email displayed in generated HTML
     SCHEDULE_INBOX_URLS    — JSON array or comma-separated list of inbox URLs
@@ -446,7 +447,7 @@ def main():
     elif DEFAULT_JSON_PATH.exists():
         print(f"\nUsing agenda item descriptions: {DEFAULT_JSON_PATH}")
 
-    print("\nParsing time slots (Gemini API)...")
+    print("\nParsing time slots (DeepSeek API)...")
     sessions = parse_time_slots(time_slots, day_rooms_map, meeting_id=current_meeting_id)
     print(f"Parsed {len(sessions)} sessions")
 

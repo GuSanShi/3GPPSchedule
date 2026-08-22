@@ -1,6 +1,12 @@
 name: Build and Deploy Schedule
 
 on:
+  # Built-in schedule: every 10 minutes, every day (incl. weekends).
+  # (cron-job.org external dispatcher is no longer required; if it is still
+  #  enabled it just triggers the same change-detection check more often.)
+  schedule:
+    - cron: '*/10 * * * *'
+
   repository_dispatch:
     types: [cronjob_trigger] # cron-job.org에서 보낼 이벤트 이름
 
@@ -30,6 +36,7 @@ jobs:
   check:
     if: >-
       github.event_name == 'repository_dispatch' ||
+      github.event_name == 'schedule' ||
       github.event.inputs.action == 'check-build-deploy'
     runs-on: ubuntu-latest
     outputs:
@@ -143,6 +150,9 @@ jobs:
 
       - name: Run schedule parser
         env:
+          # Code prefers DEEPSEEK_API_KEY; falls back to GEMINI_API_KEY.
+          # Add DEEPSEEK_API_KEY to repo secrets to switch providers.
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SCHEDULE_CONTACT_NAME: Duckhyun Bae
           SCHEDULE_CONTACT_EMAIL: duckhyun.bae@lge.com

@@ -1015,7 +1015,7 @@ def parse_time_slots(
 ) -> list[Session]:
     """Parse all time slots into Session objects using multi-source LLM calls.
 
-    One Gemini call per time slot with all source data combined.
+    One DeepSeek (OpenAI-compatible) call per time slot with all source data combined.
 
     Args:
         time_slots: list of TimeSlotData from merger.collect_time_slot_data()
@@ -1138,8 +1138,6 @@ def parse_time_slots(
                 else:
                     print(f"FAILED: {e}")
                     parsed_result = {"sessions": []}
-
-        api_calls += 1
 
         if parsed_result is None:
             parsed_result = {"sessions": []}

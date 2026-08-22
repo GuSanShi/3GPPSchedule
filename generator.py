@@ -21,7 +21,23 @@ from models import (
 _DEFAULT_COLOR = {"bg": "#F3F4F6", "border": "#9CA3AF", "text": "#374151"}
 
 # Auto-refresh interval in minutes (0 to disable)
-AUTO_REFRESH_MINUTES = 5
+AUTO_REFRESH_MINUTES = 10
+
+# Display suffixes for room headers (role annotations shown in the UI only;
+# internal parsing / LLM prompts keep the raw room names).
+ROOM_DISPLAY_SUFFIX = {
+    "Expo Foyer": "（main）",
+    "Praetorium": "（brk1）",
+    "1.1 Himalaya": "（brk2）",
+    "0.6/0.7 Madrid/Lisbon": "（off2）",
+    "0.4 Brussels": "（off2）",
+}
+
+
+def _room_display_name(name: str) -> str:
+    """Return the UI room label with its role suffix appended."""
+    suffix = ROOM_DISPLAY_SUFFIX.get(name)
+    return f"{name}{suffix}" if suffix else name
 
 
 def _assign_group_colors(sessions: list) -> dict[str, dict]:
@@ -1704,7 +1720,7 @@ def generate_html(schedule: Schedule) -> str:
             col = ri + 3
             html_parts.append(
                 f'                <div class="room-header" '
-                f'style="grid-column:{col};grid-row:1">{_esc(room.name)}</div>\n'
+                f'style="grid-column:{col};grid-row:1">{_esc(_room_display_name(room.name))}</div>\n'
             )
 
         # Time labels at 30-minute intervals (local time + Beijing time)
@@ -1835,7 +1851,9 @@ def generate_html(schedule: Schedule) -> str:
                 if ri < len(day_schedule.rooms):
                     room_names_in_span.append(day_schedule.rooms[ri].name)
             if room_names_in_span:
-                popup_lines.append(f"Room: {', '.join(room_names_in_span)}")
+                popup_lines.append(
+                    f"Room: {', '.join(_room_display_name(n) for n in room_names_in_span)}"
+                )
             popup_html = "<br>".join(popup_lines)
 
             # Escape popup_html for use in data attribute
