@@ -1,11 +1,14 @@
 name: Build and Deploy Schedule
 
 on:
-  # Built-in schedule: every 10 minutes, every day (incl. weekends).
+  # Fixed schedule: 3x daily (Europe/Amsterdam GMT+2) = 05:00/12:00/19:00 UTC.
+  # 07:00, 14:00, 21:00 Amsterdam local time.
   # (cron-job.org external dispatcher is no longer required; if it is still
   #  enabled it just triggers the same change-detection check more often.)
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: '0 5 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 19 * * *'
 
   repository_dispatch:
     types: [cronjob_trigger] # cron-job.org에서 보낼 이벤트 이름
