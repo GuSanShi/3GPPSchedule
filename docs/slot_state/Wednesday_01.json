@@ -114,36 +114,16 @@
       "name": "R20 AI/ML",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": "AI 9.1 AIML",
-      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.1",
-          "matched_agenda_item": "9.1",
-          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.1",
-              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
       "name": "AI 6/8.1",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "",
       "agenda_item": "AI 6, AI 8.1 NTN, AI 8.1 AIML, AI 8.1 NES",
       "description": "Pre-Rel-19 E-UTRA Maintenance",
@@ -425,7 +405,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-22T18:05:15.817172+00:00",
+  "merged_at": "2026-08-22T18:08:20.307601+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

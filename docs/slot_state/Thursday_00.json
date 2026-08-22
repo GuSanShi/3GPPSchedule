@@ -218,31 +218,14 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Maintenance",
+      "name": "8.2 R19 LP-WUS, Mobility, TBD",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
-      "agenda_item": "8.2 R19 LP-WUS, Mobility, TBD, 7 TBD",
-      "description": "Maintenance on others",
+      "group_header": "Maintenance",
+      "agenda_item": "7",
+      "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
-        {
-          "agenda_item": "8.2",
-          "matched_agenda_item": "8.2",
-          "description": "Maintenance on others",
-          "hierarchy": [
-            {
-              "agenda_item": "8",
-              "description": "Maintenance on Rel-19 NR and E-UTRA",
-              "has_description": true
-            },
-            {
-              "agenda_item": "8.2",
-              "description": "Maintenance on others",
-              "has_description": true
-            }
-          ]
-        },
         {
           "agenda_item": "7",
           "matched_agenda_item": "7",
@@ -259,12 +242,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.2.1 Waveform",
+      "name": "10.2.1",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
-      "group_header": "6GR",
-      "agenda_item": "10.2.1",
+      "chair": "Hiroki",
+      "group_header": "6G waveform",
+      "agenda_item": null,
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -293,12 +276,12 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.4.x",
+      "name": "10.5.4.1",
       "duration_minutes": 20,
       "specified_start_time": "08:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.5.4.1",
+      "agenda_item": null,
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
@@ -447,7 +430,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T18:05:34.444884+00:00",
+  "merged_at": "2026-08-22T18:08:37.404309+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

@@ -43,7 +43,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.1",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -82,7 +82,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.2",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -121,7 +121,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.3",
+      "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -511,7 +511,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T18:04:56.046706+00:00",
+  "merged_at": "2026-08-22T18:08:02.393179+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

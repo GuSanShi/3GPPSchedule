@@ -165,7 +165,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.1 Channel coding",
+      "name": "AI 10.3.1 Coding",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -199,7 +199,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.2 Modulation",
+      "name": "AI 10.3.2 Modulation",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -233,7 +233,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.3",
+      "name": "AI 10.5.2.3 PUxCH",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -272,7 +272,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 150,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -709,7 +709,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T18:05:28.478313+00:00",
+  "merged_at": "2026-08-22T18:08:31.992308+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
