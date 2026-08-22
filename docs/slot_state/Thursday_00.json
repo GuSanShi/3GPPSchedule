@@ -126,12 +126,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "NTN-NR",
+      "name": "AI 9.4 NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.4",
+      "agenda_item": null,
       "description": "GNSS resilient NR-NTN operation",
       "agenda_descriptions": [
         {
@@ -155,12 +155,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.7.1 NTN",
+      "name": "AI 10.7.1 NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -189,12 +189,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
+      "name": "AI 9.2 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.2",
+      "agenda_item": null,
       "description": "NR MIMO Phase 6",
       "agenda_descriptions": [
         {
@@ -222,7 +222,7 @@
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "AI 7/8.2",
+      "group_header": "",
       "agenda_item": "8.2 R19 LP-WUS, Mobility, TBD, 7 TBD",
       "description": "Maintenance on others",
       "agenda_descriptions": [
@@ -411,7 +411,7 @@
     {
       "room_name": "RAN1_off2",
       "name": "10.6.x",
-      "duration_minutes": 60,
+      "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
@@ -440,14 +440,14 @@
     {
       "room_name": "RAN1_off2",
       "name": "AI/ML",
-      "duration_minutes": 60,
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.741493+00:00",
+  "merged_at": "2026-08-22T08:51:54.623712+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

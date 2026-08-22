@@ -41,9 +41,9 @@
       "name": "10.5.2.1 PDCCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.1",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -80,9 +80,9 @@
       "name": "10.5.2.2 PDSCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.2",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -119,9 +119,9 @@
       "name": "10.5.2.3 PUxCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.3",
+      "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -155,36 +155,21 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "TEI20",
+      "name": "11 TEI20",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "TEI",
-      "agenda_item": "11",
-      "description": "TEI",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "11",
-          "matched_agenda_item": "11",
-          "description": "TEI",
-          "hierarchy": [
-            {
-              "agenda_item": "11",
-              "description": "TEI",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Maintenance / 7 x5550/5551, x5794-5796, x5797/5798, x5667, x6450-6452 / 8.2 R19 FR3/ISIS CM, A-IoT",
+      "name": "Maintenance",
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "AI 7/8.2",
-      "agenda_item": "7, 8.2",
+      "agenda_item": "7 x5550/5551, x5794-5796, x5797/5798, x5667, x6450-6452, 8.2 R19 FR3/ISAC CM, A-IoT",
       "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
         {
@@ -254,7 +239,7 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "A-IoT",
+      "name": "R20 A-IoT",
       "duration_minutes": 30,
       "specified_start_time": "14:30",
       "chair": "Hiroki",
@@ -511,7 +496,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.734220+00:00",
+  "merged_at": "2026-08-22T08:51:19.122730+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

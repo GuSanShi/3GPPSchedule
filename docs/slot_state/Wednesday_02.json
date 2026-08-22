@@ -9,27 +9,18 @@
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
-      "name": "Sweep 6GR",
+      "name": "10.6.x",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "10.5.2.3 PUxCH",
-      "duration_minutes": 45,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "6GR",
       "agenda_item": null,
-      "description": "Uplink transmission scheme(s) for uplink channels",
+      "description": "WUS and operation",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.2.3",
-          "matched_agenda_item": "10.5.2.3",
-          "description": "Uplink transmission scheme(s) for uplink channels",
+          "agenda_item": "10.6.x",
+          "matched_agenda_item": "10.6",
+          "description": "WUS and operation",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -37,18 +28,8 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.2",
-              "description": "MIMO operation",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.2.3",
-              "description": "Uplink transmission scheme(s) for uplink channels",
+              "agenda_item": "10.6",
+              "description": "WUS and operation",
               "has_description": true
             }
           ]
@@ -60,9 +41,9 @@
       "name": "10.5.2.1 PDCCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.1",
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -99,9 +80,9 @@
       "name": "10.5.2.2 PDSCH",
       "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -134,9 +115,48 @@
       ]
     },
     {
+      "room_name": "RAN1_brk1",
+      "name": "10.5.2.3 PUxCH",
+      "duration_minutes": 45,
+      "specified_start_time": null,
+      "chair": "Sorour",
+      "group_header": "6GR",
+      "agenda_item": "10.5.2.3",
+      "description": "Uplink transmission scheme(s) for uplink channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.3",
+          "matched_agenda_item": "10.5.2.3",
+          "description": "Uplink transmission scheme(s) for uplink channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.3",
+              "description": "Uplink transmission scheme(s) for uplink channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
       "room_name": "RAN1_brk2",
       "name": "TEI20",
-      "duration_minutes": 30,
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "TEI",
@@ -158,54 +178,13 @@
       ]
     },
     {
-      "room_name": "RAN1_brk2",
-      "name": "AI 7/8.2",
-      "duration_minutes": 90,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "AI 7/8.2",
-      "agenda_item": "7 x6217-6220, x6348/6349, x5548/5549, x5668, x5799/5800, 8.2 R19 Duplex, R20 LBCA",
-      "description": "Pre-Rel-19 NR Maintenance",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "7",
-          "matched_agenda_item": "7",
-          "description": "Pre-Rel-19 NR Maintenance",
-          "hierarchy": [
-            {
-              "agenda_item": "7",
-              "description": "Pre-Rel-19 NR Maintenance",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "8.2",
-          "matched_agenda_item": "8.2",
-          "description": "Maintenance on others",
-          "hierarchy": [
-            {
-              "agenda_item": "8",
-              "description": "Maintenance on Rel-19 NR and E-UTRA",
-              "has_description": true
-            },
-            {
-              "agenda_item": "8.2",
-              "description": "Maintenance on others",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
       "room_name": "RAN1_off1",
       "name": "10.3.1",
       "duration_minutes": 45,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.1",
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -239,7 +218,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.2",
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
@@ -273,7 +252,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.5",
       "description": "Other physical layer signals, channels and procedure",
       "agenda_descriptions": [
         {
@@ -304,7 +283,7 @@
       "room_name": "RAN1_off2",
       "name": "R20 A-IoT",
       "duration_minutes": 120,
-      "specified_start_time": "14:30",
+      "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "R20",
       "agenda_item": "9.3.1, 9.3.2, 9.3.3",
@@ -379,7 +358,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.739173+00:00",
+  "merged_at": "2026-08-22T08:51:42.081252+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

@@ -9,6 +9,40 @@
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
+      "name": "10.5.5",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Other physical layer signals, channels and procedure",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.5",
+          "matched_agenda_item": "10.5.5",
+          "description": "Other physical layer signals, channels and procedure",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.5",
+              "description": "Other physical layer signals, channels and procedure",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_main",
       "name": "10.4.1",
       "duration_minutes": 40,
       "specified_start_time": null,
@@ -76,38 +110,13 @@
       ]
     },
     {
-      "room_name": "RAN1_main",
-      "name": "10.5.5",
-      "duration_minutes": 40,
+      "room_name": "RAN1_brk1",
+      "name": "R20 AI/ML",
+      "duration_minutes": 80,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Other physical layer signals, channels and procedure",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.5",
-          "matched_agenda_item": "10.5.5",
-          "description": "Other physical layer signals, channels and procedure",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.5",
-              "description": "Other physical layer signals, channels and procedure",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
@@ -115,7 +124,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20 / AI/ML",
+      "group_header": "",
       "agenda_item": "AI 6, AI 8.1 NTN, AI 8.1 AIML, AI 8.1 NES",
       "description": "Pre-Rel-19 E-UTRA Maintenance",
       "agenda_descriptions": [
@@ -322,16 +331,16 @@
       "room_name": "RAN1_off1",
       "name": "10.5.4",
       "duration_minutes": 30,
-      "specified_start_time": null,
+      "specified_start_time": "12:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Downlink control channel, scheduling and HARQ operation",
+      "agenda_item": "10.5.4.1",
+      "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.4",
-          "matched_agenda_item": "10.5.4",
-          "description": "Downlink control channel, scheduling and HARQ operation",
+          "agenda_item": "10.5.4.1",
+          "matched_agenda_item": "10.5.4.1",
+          "description": "Downlink control channel, scheduling for downlink and uplink transmission",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -346,6 +355,11 @@
             {
               "agenda_item": "10.5.4",
               "description": "Downlink control channel, scheduling and HARQ operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.4.1",
+              "description": "Downlink control channel, scheduling for downlink and uplink transmission",
               "has_description": true
             }
           ]
@@ -391,7 +405,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.738187+00:00",
+  "merged_at": "2026-08-22T08:51:37.472225+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

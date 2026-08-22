@@ -9,18 +9,18 @@
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
-      "name": "10.5.1.3",
-      "duration_minutes": 30,
+      "name": "10.5.1.1",
+      "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Bandwidth operation",
+      "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.1.3",
-          "matched_agenda_item": "10.5.1.3",
-          "description": "Bandwidth operation",
+          "agenda_item": "10.5.1.1",
+          "matched_agenda_item": "10.5.1.1",
+          "description": "Synchronization acquisition and beam measurement",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -38,8 +38,8 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5.1.3",
-              "description": "Bandwidth operation",
+              "agenda_item": "10.5.1.1",
+              "description": "Synchronization acquisition and beam measurement",
               "has_description": true
             }
           ]
@@ -87,18 +87,18 @@
     },
     {
       "room_name": "RAN1_main",
-      "name": "10.5.1.1",
-      "duration_minutes": 60,
+      "name": "10.5.1.3",
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Synchronization acquisition and beam measurement",
+      "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.1.1",
-          "matched_agenda_item": "10.5.1.1",
-          "description": "Synchronization acquisition and beam measurement",
+          "agenda_item": "10.5.1.3",
+          "matched_agenda_item": "10.5.1.3",
+          "description": "Bandwidth operation",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -116,8 +116,8 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5.1.1",
-              "description": "Synchronization acquisition and beam measurement",
+              "agenda_item": "10.5.1.3",
+              "description": "Bandwidth operation",
               "has_description": true
             }
           ]
@@ -130,7 +130,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20 NR",
+      "group_header": "R20",
       "agenda_item": null,
       "description": "GNSS resilient NR-NTN operation",
       "agenda_descriptions": [
@@ -193,7 +193,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20 NR",
+      "group_header": "R20",
       "agenda_item": null,
       "description": "NR MIMO Phase 6",
       "agenda_descriptions": [
@@ -222,7 +222,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G 10.5.4.x",
+      "group_header": "6GR",
       "agenda_item": null,
       "description": "Downlink and uplink transmission without downlink control channel",
       "agenda_descriptions": [
@@ -261,7 +261,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G 10.5.4.x",
+      "group_header": "6GR",
       "agenda_item": null,
       "description": "Handling of potential multiple uplink transmissions",
       "agenda_descriptions": [
@@ -300,7 +300,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6G 10.5.4.x",
+      "group_header": "6GR",
       "agenda_item": null,
       "description": "HARQ related Aspects",
       "agenda_descriptions": [
@@ -417,18 +417,18 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.8.x Sensing",
+      "name": "10.8.3, 10.8.1",
       "duration_minutes": 90,
       "specified_start_time": "08:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "ISAC",
+      "agenda_item": "10.8.3, 10.8.1",
+      "description": "Waveform and frame structure",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.x",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -438,6 +438,33 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
               "has_description": true
             }
           ]
@@ -479,7 +506,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.722169+00:00",
+  "merged_at": "2026-08-22T08:51:07.235625+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

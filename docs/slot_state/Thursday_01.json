@@ -115,10 +115,22 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20 / AI/ML",
-      "agenda_item": "AI 8.1 MIMO, AI 8.1 NTN, AI 6",
-      "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+      "group_header": "",
+      "agenda_item": null,
+      "description": "Pre-Rel-19 E-UTRA Maintenance",
       "agenda_descriptions": [
+        {
+          "agenda_item": "6",
+          "matched_agenda_item": "6",
+          "description": "Pre-Rel-19 E-UTRA Maintenance",
+          "hierarchy": [
+            {
+              "agenda_item": "6",
+              "description": "Pre-Rel-19 E-UTRA Maintenance",
+              "has_description": true
+            }
+          ]
+        },
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
@@ -135,49 +147,17 @@
               "has_description": true
             }
           ]
-        },
-        {
-          "agenda_item": "6",
-          "matched_agenda_item": "6",
-          "description": "Pre-Rel-19 E-UTRA Maintenance",
-          "hierarchy": [
-            {
-              "agenda_item": "6",
-              "description": "Pre-Rel-19 E-UTRA Maintenance",
-              "has_description": true
-            }
-          ]
         }
       ]
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 9.1 AIML",
+      "name": "R20 AI/ML",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20 / AI/ML",
-      "agenda_item": null,
-      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.1",
-          "matched_agenda_item": "9.1",
-          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.1",
-              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk2",
@@ -185,7 +165,7 @@
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "R20 / A-IoT Phase2",
+      "group_header": "",
       "agenda_item": "9.3.2, 9.3.3, 9.3.1",
       "description": "D2R signals, channels, waveform and procedures",
       "agenda_descriptions": [
@@ -376,47 +356,27 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.6.x",
+      "name": "AI/ML",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Xiaodong",
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "WUS and operation",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.6.x",
-          "matched_agenda_item": "10.6",
-          "description": "WUS and operation",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.6",
-              "description": "WUS and operation",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": "Sorour",
+      "group_header": "R20",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off2",
       "name": "10.8.x Sensing",
       "duration_minutes": 90,
-      "specified_start_time": null,
+      "specified_start_time": "11:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "ISAC",
+      "agenda_item": "10.8.1, 10.8.2, 10.8.3",
+      "description": "Evaluations",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.x",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -427,13 +387,62 @@
               "agenda_item": "10.8",
               "description": "ISAC",
               "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
+              "has_description": true
             }
           ]
         }
       ]
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.742576+00:00",
+  "merged_at": "2026-08-22T08:51:59.495279+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

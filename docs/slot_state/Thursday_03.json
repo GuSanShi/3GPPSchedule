@@ -131,7 +131,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -165,7 +165,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.2",
+      "agenda_item": null,
       "description": "Modulation, Joint channel coding and modulation",
       "agenda_descriptions": [
         {
@@ -194,12 +194,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "6G 10.5.4.x",
+      "name": "10.5.4.1, 10.5.4.3, [10.5.4.2, 10.5.4.4]",
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
-      "agenda_item": "10.5.4.1, 10.5.4.3, 10.5.4.2, 10.5.4.4",
+      "group_header": "6G",
+      "agenda_item": "10.5.4.1, 10.5.4.3, [10.5.4.2, 10.5.4.4]",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
@@ -439,7 +439,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.744828+00:00",
+  "merged_at": "2026-08-22T08:52:09.830000+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }

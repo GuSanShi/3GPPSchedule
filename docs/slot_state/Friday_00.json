@@ -77,39 +77,19 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 9.1 AIML",
+      "name": "R20 AI/ML",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": null,
-      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.1",
-          "matched_agenda_item": "9.1",
-          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.1",
-              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
       "name": "Sweep 6GR",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": null
     },
@@ -193,15 +173,6 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "6GR",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": "Xiaodong",
-      "group_header": "",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_off1",
       "name": "10.4.1",
       "duration_minutes": 30,
       "specified_start_time": null,
@@ -269,6 +240,15 @@
       ]
     },
     {
+      "room_name": "RAN1_off1",
+      "name": "On demand",
+      "duration_minutes": 0,
+      "specified_start_time": null,
+      "chair": "Xiaodong",
+      "group_header": "6GR",
+      "agenda_item": null
+    },
+    {
       "room_name": "RAN1_off2",
       "name": "10.3.x",
       "duration_minutes": 120,
@@ -298,7 +278,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-22T08:46:04.745885+00:00",
+  "merged_at": "2026-08-22T08:52:14.115547+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
