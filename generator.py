@@ -29,7 +29,7 @@ ROOM_DISPLAY_SUFFIX = {
     "Expo Foyer": "（main）",
     "Praetorium": "（brk1）",
     "1.1 Himalaya": "（brk2）",
-    "0.6/0.7 Madrid/Lisbon": "（off2）",
+    "0.6/0.7 Madrid/Lisbon": "（off1）",
     "0.4 Brussels": "（off2）",
 }
 
