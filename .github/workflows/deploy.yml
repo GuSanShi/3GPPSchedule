@@ -154,8 +154,8 @@ jobs:
           # Add DEEPSEEK_API_KEY to repo secrets to switch providers.
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          SCHEDULE_CONTACT_NAME: Duckhyun Bae
-          SCHEDULE_CONTACT_EMAIL: duckhyun.bae@lge.com
+          SCHEDULE_CONTACT_NAME: 846371094
+          SCHEDULE_CONTACT_EMAIL: 846371094@qq.com
         run: uv run python main.py
 
       - name: Check for output
