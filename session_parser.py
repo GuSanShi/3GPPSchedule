@@ -613,6 +613,15 @@ for each target room.
   any explicitly-timed sessions). Join the labels with a space to form the
   session name (e.g. "Sweep / 6GR" → name "Sweep 6GR").
 - Person names (Xiaodong, Sorour, Hiroki) as group headers → session chair.
+- CONCATENATED group+name on ONE line with repeated duration markers, e.g.
+  "R20 (80)AI/ML (80)": the "(N)" repeats the same value for adjacent
+  labels. Treat it as ONE session — name = labels joined with a space
+  exactly as written ("R20 AI/ML"), duration = the shared value (80).
+  Do NOT split it into two sessions, drop labels, abbreviate, or prepend
+  agenda-item numbers to the name.
+- Session names MUST reproduce the source labels verbatim (joined by
+  spaces). Never rename, abbreviate, reorder, or prepend agenda-item
+  numbers (like "9.1") to a session name.
 - Text wrapped in ~~…~~ (e.g. ~~.10.5.1.2 (30)~~) is STRIKETHROUGH — it means
   the item has been CANCELLED or REMOVED from the schedule.
   → Do NOT include strikethrough items in the output session list.
