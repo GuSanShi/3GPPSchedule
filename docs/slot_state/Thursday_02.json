@@ -3,7 +3,7 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "2b398e2b2ba0d54d",
-    "Hiroki's schedule": "d3b8db70b4830777",
+    "Hiroki's schedule": "a55d35f3ba5d3cba",
     "Sorour's schedule": "ac828afe61a35cef"
   },
   "merged_sessions": [
@@ -199,7 +199,7 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.1, 10.8.2, 10.8.3",
+      "agenda_item": "10.8.1, 10.8.3, 10.8.2",
       "description": "Evaluations",
       "agenda_descriptions": [
         {
@@ -225,28 +225,6 @@
           ]
         },
         {
-          "agenda_item": "10.8.2",
-          "matched_agenda_item": "10.8.2",
-          "description": "Aspects of integration with communication",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.2",
-              "description": "Aspects of integration with communication",
-              "has_description": true
-            }
-          ]
-        },
-        {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
           "description": "Waveform and frame structure",
@@ -264,6 +242,28 @@
             {
               "agenda_item": "10.8.3",
               "description": "Waveform and frame structure",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
               "has_description": true
             }
           ]
@@ -544,7 +544,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-26T12:42:46.527176+00:00",
+  "merged_at": "2026-08-26T21:43:02.582910+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
