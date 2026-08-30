@@ -3,7 +3,7 @@
   "time_block_index": 0,
   "source_hashes": {
     "Main Schedule": "cc7e8462a06e27dc",
-    "Hiroki's schedule": "4d6797af30b645b1",
+    "Hiroki's schedule": "b7ad64deb80df7d2",
     "Sorour's schedule": "cfbce43350b0d4f1"
   },
   "merged_sessions": [
@@ -218,7 +218,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "8.2 R19 LP-WUS, Mobility, FR3/ISAC CM",
+      "name": "8.2 R19 LP-WUS, Mobility, TBD",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -430,7 +430,7 @@
       ]
     }
   ],
-  "merged_at": "2026-08-29T21:33:36.311062+00:00",
+  "merged_at": "2026-08-30T10:12:03.350693+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
