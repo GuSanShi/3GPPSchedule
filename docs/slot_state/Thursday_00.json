@@ -3,8 +3,8 @@
   "time_block_index": 0,
   "source_hashes": {
     "Main Schedule": "cc7e8462a06e27dc",
-    "Hiroki's schedule": "4d6797af30b645b1",
-    "Sorour's schedule": "cfbce43350b0d4f1"
+    "Sorour's schedule": "cfbce43350b0d4f1",
+    "Hiroki's schedule": "b7ad64deb80df7d2"
   },
   "merged_sessions": [
     {
@@ -218,12 +218,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "8.2 R19 LP-WUS, Mobility, FR3/ISAC CM",
+      "name": "8.2 R19 LP-WUS, Mobility, TBD",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "Maintenance",
-      "agenda_item": "7 x5667, x5548/5549, x5668",
+      "agenda_item": "7",
       "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
         {
@@ -430,7 +430,7 @@
       ]
     }
   ],
-  "merged_at": "2026-09-05T08:43:07.100230+00:00",
+  "merged_at": "2026-09-05T14:28:40.323308+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
