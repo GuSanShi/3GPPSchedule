@@ -1,5 +1,11 @@
 {
-  "files": [],
+  "files": [
+    {
+      "folder": "Hiroki_notes",
+      "name": "RAN1#126 schedule for Hiroki Adhoc2 sessions_v07_1.docx",
+      "uploaded_at": "2026-08-21T09:51:00"
+    }
+  ],
   "meeting_id": "ran1#126",
   "meeting_source": "local",
   "timezone": "Europe/Amsterdam",
@@ -7,9 +13,7 @@
     "name": "agenda.csv",
     "uploaded_at": "2026-09-15T05:42:00",
     "url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_126/Agenda/agenda.csv",
-    "source_url": "https://www.3gpp.org/ftp/tsg_ran/WG1_RL1/TSGR1_126/Agenda/",
     "document_file": "agenda.csv",
-    "local_path": "downloads/Agenda/agenda.csv",
     "description_json": "docs/agenda_item_description.json",
     "description_generated_at": "2026-09-15T09:42:45.945873+00:00",
     "description_source_type": "agenda_csv",
