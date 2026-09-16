@@ -2,7 +2,9 @@
   "day": "Thursday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "1748ca52accae174"
+    "Main Schedule": "1748ca52accae174",
+    "Hiroki's schedule": "93cd1458ab76ae9c",
+    "Sorour's schedule": "c7c15329fd54cc89"
   },
   "merged_sessions": [
     {
@@ -150,7 +152,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 AI/ML",
+      "name": "R20 NR",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -480,7 +482,7 @@
       ]
     }
   ],
-  "merged_at": "2026-09-15T16:17:05.384470+00:00",
+  "merged_at": "2026-09-16T09:37:23.715637+00:00",
   "meeting_id": "ran1#126",
   "schema_version": 1
 }
