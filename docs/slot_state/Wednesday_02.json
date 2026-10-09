@@ -159,9 +159,21 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "",
-      "agenda_item": "8.2, 7, 8.3",
-      "description": "Maintenance on others",
+      "agenda_item": "7, 8.2, 8.3",
+      "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
+        {
+          "agenda_item": "7",
+          "matched_agenda_item": "7",
+          "description": "Pre-Rel-19 NR Maintenance",
+          "hierarchy": [
+            {
+              "agenda_item": "7",
+              "description": "Pre-Rel-19 NR Maintenance",
+              "has_description": true
+            }
+          ]
+        },
         {
           "agenda_item": "8.2",
           "matched_agenda_item": "8.2",
@@ -175,18 +187,6 @@
             {
               "agenda_item": "8.2",
               "description": "Maintenance on others",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "7",
-          "matched_agenda_item": "7",
-          "description": "Pre-Rel-19 NR Maintenance",
-          "hierarchy": [
-            {
-              "agenda_item": "7",
-              "description": "Pre-Rel-19 NR Maintenance",
               "has_description": true
             }
           ]
@@ -223,7 +223,7 @@
       "room_name": "RAN1_off1",
       "name": "10.5.4.x",
       "duration_minutes": 60,
-      "specified_start_time": null,
+      "specified_start_time": "14:30",
       "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.2, 10.5.4.3, 10.5.4.4",
@@ -493,7 +493,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:34:59.493750+00:00",
+  "merged_at": "2026-10-09T06:42:26.166999+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -13,7 +13,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.6.x",
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -42,7 +42,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.3.1",
       "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -81,7 +81,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.1",
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -120,7 +120,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -159,7 +159,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.3",
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -193,12 +193,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8.1",
-      "duration_minutes": 40,
+      "name": "10.8 Sensing",
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.8 Sensing",
-      "agenda_item": "10.8.1",
+      "group_header": "6GR",
+      "agenda_item": "10.8.1, 10.8.2, 10.8.3",
       "description": "Evaluations",
       "agenda_descriptions": [
         {
@@ -222,19 +222,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.2",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR / 10.8 Sensing",
-      "agenda_item": "10.8.2",
-      "description": "Aspects of integration with communication",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.2",
           "matched_agenda_item": "10.8.2",
@@ -256,19 +244,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.3",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR / 10.8 Sensing",
-      "agenda_item": "10.8.3",
-      "description": "Waveform and frame structure",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -300,7 +276,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.3.2",
       "description": "Aspects of uplink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -339,7 +315,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.3.3",
       "description": "Other aspects",
       "agenda_descriptions": [
         {
@@ -378,7 +354,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.1",
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -412,7 +388,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.2",
       "description": "Modulation",
       "agenda_descriptions": [
         {
@@ -443,7 +419,7 @@
       "room_name": "RAN1_off2",
       "name": "10.5.4.x",
       "duration_minutes": 120,
-      "specified_start_time": null,
+      "specified_start_time": "14:30",
       "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.4, 10.5.4.3, 10.5.4.2, 10.5.4.1",
@@ -560,7 +536,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:35:17.754480+00:00",
+  "merged_at": "2026-10-09T06:42:44.598529+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -157,7 +157,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -468,7 +468,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:35:13.524462+00:00",
+  "merged_at": "2026-10-09T06:42:40.849316+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

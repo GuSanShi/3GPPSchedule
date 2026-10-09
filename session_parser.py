@@ -655,6 +655,19 @@ for each target room.
     (keep their short labels for the description if useful)
   This applies ONLY when the parent line has its own "(N)"; a bare group prefix
   like "R20" (no duration) follows the rule above instead.
+- AI FIELD = UNION ACROSS SOURCES. The same session is often described by more
+  than one document in a slot (e.g. the Main Schedule writes
+  "TEI, AI 7/8.2 (80)" while the vice-chair's file lists its
+  "Maintenance (70)" block with sub-items "8.2 R19 Duplex..." and
+  "8.3 UE features (25)"). Populate the AI field with EVERY agenda-item number
+  mentioned by ANY source for that session — here "7, 8.2, 8.3", not just the
+  numbers written in the name.
+  → Never leave the AI field empty when the source lines carry agenda numbers,
+    whether they appear inside the session name (like "AI 7/8.2") or as the
+    leading number of a sub-item line.
+  → The session NAME must still reproduce the main source label verbatim
+    (e.g. "TEI, AI 7/8.2"); do not append the extra numbers to the name —
+    they belong in the AI field.
 - Session names MUST reproduce the source labels verbatim (joined by
   spaces). Never rename, abbreviate, reorder, or prepend agenda-item
   numbers (like "9.1") to a session name.

@@ -141,7 +141,7 @@
       "name": "R20 A-IoT",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": "9.3.1",
       "description": "R2D signals, channels, waveform and procedures",
@@ -175,7 +175,7 @@
       "name": "6G ISAC",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.8.2",
       "description": "Aspects of integration with communication",
@@ -488,7 +488,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:34:26.466258+00:00",
+  "merged_at": "2026-10-09T06:41:50.888788+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
