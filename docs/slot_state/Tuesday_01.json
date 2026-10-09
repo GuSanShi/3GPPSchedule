@@ -2,9 +2,8 @@
   "day": "Tuesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "ed8f5a755fae8003",
-    "Hiroki's schedule": "ce7d43222fd80486",
-    "Sorour's schedule": "923e74d689879fdf"
+    "Main Schedule": "b5f6288cdc2684b6",
+    "Hiroki's schedule": "f3c31aeb40c97aee"
   },
   "merged_sessions": [
     {
@@ -111,41 +110,30 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 NR",
-      "duration_minutes": 80,
+      "name": "R20 AI/ML",
+      "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.1",
-      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.1",
-          "matched_agenda_item": "9.1",
-          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.1",
-              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 6/8.1",
+      "name": "MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "",
-      "agenda_item": "8.1",
+      "chair": null,
+      "group_header": "R20",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_brk1",
+      "name": "AI 8.1",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "R20",
+      "agenda_item": null,
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
       "agenda_descriptions": [
         {
@@ -161,40 +149,6 @@
             {
               "agenda_item": "8.1",
               "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "6G waveform",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR",
-      "agenda_item": "10.2.1",
-      "description": "Waveform",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.2.1",
-          "matched_agenda_item": "10.2.1",
-          "description": "Waveform",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2",
-              "description": "Waveform for 6GR air interface",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2.1",
-              "description": "Waveform",
               "has_description": true
             }
           ]
@@ -251,6 +205,40 @@
             {
               "agenda_item": "10.8.1",
               "description": "Evaluations",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "R20 A-IoT",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "R20",
+      "agenda_item": "9.3.2",
+      "description": "D2R signals, channels, waveform and procedures",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.3.2",
+          "matched_agenda_item": "9.3.2",
+          "description": "D2R signals, channels, waveform and procedures",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3",
+              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.3.2",
+              "description": "D2R signals, channels, waveform and procedures",
               "has_description": true
             }
           ]
@@ -333,7 +321,7 @@
     {
       "room_name": "RAN1_off1",
       "name": "10.6.3",
-      "duration_minutes": 30,
+      "duration_minutes": 20,
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
@@ -366,52 +354,18 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "R20 A-IoT",
-      "duration_minutes": 30,
-      "specified_start_time": "12:30",
-      "chair": "Hiroki",
-      "group_header": "R20",
-      "agenda_item": "9.3.2",
-      "description": "D2R signals, channels, waveform and procedures",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.3.2",
-          "matched_agenda_item": "9.3.2",
-          "description": "D2R signals, channels, waveform and procedures",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3",
-              "description": "Solutions for Ambient IoT (Internet of Things) in NR Phase 2",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.3.2",
-              "description": "D2R signals, channels, waveform and procedures",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_off2",
-      "name": "10.5.2.2",
-      "duration_minutes": 45,
+      "name": "10.5.1.2",
+      "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": "Xiaodong",
       "group_header": "6GR",
       "agenda_item": null,
-      "description": "Downlink transmission scheme(s) for downlink shared channels",
+      "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.2.2",
-          "matched_agenda_item": "10.5.2.2",
-          "description": "Downlink transmission scheme(s) for downlink shared channels",
+          "agenda_item": "10.5.1.2",
+          "matched_agenda_item": "10.5.1.2",
+          "description": "PRACH and RACH procedure",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -424,52 +378,13 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5.2",
-              "description": "MIMO operation",
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
               "has_description": true
             },
             {
-              "agenda_item": "10.5.2.2",
-              "description": "Downlink transmission scheme(s) for downlink shared channels",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_off2",
-      "name": "10.5.2.1",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Downlink transmission scheme(s) for downlink control channels",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.2.1",
-          "matched_agenda_item": "10.5.2.1",
-          "description": "Downlink transmission scheme(s) for downlink control channels",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.2",
-              "description": "MIMO operation",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.2.1",
-              "description": "Downlink transmission scheme(s) for downlink control channels",
+              "agenda_item": "10.5.1.2",
+              "description": "PRACH and RACH procedure",
               "has_description": true
             }
           ]
@@ -479,7 +394,7 @@
     {
       "room_name": "RAN1_off2",
       "name": "10.5.2.3",
-      "duration_minutes": 45,
+      "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
@@ -514,9 +429,48 @@
           ]
         }
       ]
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.5.2.2",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": "Sorour",
+      "group_header": "6GR",
+      "agenda_item": null,
+      "description": "Downlink transmission scheme(s) for downlink shared channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.2",
+          "matched_agenda_item": "10.5.2.2",
+          "description": "Downlink transmission scheme(s) for downlink shared channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.2",
+              "description": "Downlink transmission scheme(s) for downlink shared channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-10-06T22:56:34.375256+00:00",
-  "meeting_id": "ran1#126",
+  "merged_at": "2026-10-09T06:08:35.875537+00:00",
+  "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -172,8 +172,9 @@ def _extract_version_parts_from_name(filename: str) -> tuple[int, ...]:
 
 
 # Known meeting suffixes (case-insensitive).
-# Only bis, e, and adhoc have been observed in practice.
-_MEETING_SUFFIXES = r"(?:bis|e|adhoc)"
+# Only bis, e, and adhoc have been observed in practice; ``b`` is 3GPP's
+# short form of ``bis`` (seen in e.g. "RAN1#126b ... schedules" file names).
+_MEETING_SUFFIXES = r"(?:bis|b|e|adhoc)"
 
 # Pattern to extract meeting identifiers like RAN1#124, RAN1#124bis,
 # RAN1#124-bis, RAN1#124 bis, etc.  The suffix part is optional and may
@@ -225,6 +226,8 @@ def _extract_meeting_id(filename: str) -> str | None:
     if m:
         base = m.group(1).lower()
         suffix = (m.group(2) or "").lower()
+        if suffix == "b":
+            suffix = "bis"
         return f"{base}{suffix}"
 
     m = _TSGR_ID_PATTERN.search(filename)
