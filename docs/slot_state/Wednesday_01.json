@@ -139,7 +139,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "",
-      "agenda_item": null,
+      "agenda_item": "8.1",
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
       "agenda_descriptions": [
         {
@@ -311,7 +311,7 @@
       "room_name": "RAN1_off1",
       "name": "10.5.4.x",
       "duration_minutes": 30,
-      "specified_start_time": null,
+      "specified_start_time": "12:30",
       "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.1",
@@ -434,7 +434,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-09T06:19:23.657865+00:00",
+  "merged_at": "2026-10-09T06:34:55.601664+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

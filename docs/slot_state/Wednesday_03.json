@@ -699,7 +699,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "NTN-NR",
+      "name": "R20 NTN-NR",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -707,7 +707,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-09T06:19:32.564970+00:00",
+  "merged_at": "2026-10-09T06:35:04.921992+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

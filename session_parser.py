@@ -639,6 +639,22 @@ for each target room.
   under a group prefix — always join the prefix to the item with a space.
   (A group line that already carries a duration, e.g. "6GR (120)", keeps the
   one-line/across-lines rule above.)
+- PARENT SESSION WITH AGENDA-ITEM SUB-ITEMS ("maintenance" blocks). A session
+  line that carries its OWN duration may be followed by lines starting with an
+  agenda-item number that describe its sub-items, e.g.
+    "Maintenance (70)" / "8.2 R19 Duplex, R19 ISAC CM, R19 XR (25)" /
+    "8.3 UE features (25)" / "8.2 R19 LP-WUS (20)"
+  or in the chair table: "Maintenance (80)" / "8.2/8.3 TBD" / "7 TBD".
+  These sub-item lines are PART OF the parent session:
+  → emit ONE session whose name is the parent label ("Maintenance") and whose
+    duration is the PARENT's own value (70) — never the sum
+  → do NOT emit the sub-items as separate sessions: that double-counts the
+    duration and overflows the time block (real symptom: a 120-min block
+    showed 140 min of sessions, spilling past its end time)
+  → record their agenda-item numbers in the session's AI field, e.g. "8.2, 8.3"
+    (keep their short labels for the description if useful)
+  This applies ONLY when the parent line has its own "(N)"; a bare group prefix
+  like "R20" (no duration) follows the rule above instead.
 - Session names MUST reproduce the source labels verbatim (joined by
   spaces). Never rename, abbreviate, reorder, or prepend agenda-item
   numbers (like "9.1") to a session name.

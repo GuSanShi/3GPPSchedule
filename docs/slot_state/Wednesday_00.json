@@ -177,11 +177,11 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": "9.3.2, 9.3.3, 9.3.1",
       "description": "D2R signals, channels, waveform and procedures",
       "agenda_descriptions": [
@@ -356,7 +356,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -365,7 +365,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -408,7 +408,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:19:20.077763+00:00",
+  "merged_at": "2026-10-09T06:34:51.720325+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

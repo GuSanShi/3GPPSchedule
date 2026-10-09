@@ -133,7 +133,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "",
-      "agenda_item": null,
+      "agenda_item": "8.1",
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
       "agenda_descriptions": [
         {
@@ -157,7 +157,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
+      "name": "6G ISAC",
       "duration_minutes": 80,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -213,7 +213,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT Phase2",
+      "name": "R20 A-IoT",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -470,7 +470,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:19:07.069742+00:00",
+  "merged_at": "2026-10-09T06:34:39.228812+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
