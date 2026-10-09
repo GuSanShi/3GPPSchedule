@@ -619,6 +619,26 @@ for each target room.
   exactly as written ("R20 AI/ML"), duration = the shared value (80).
   Do NOT split it into two sessions, drop labels, abbreviate, or prepend
   agenda-item numbers to the name.
+- CONCATENATED group+name ACROSS LINES (same room cell, different lines),
+  e.g. a cell containing "R20 (60)" on one line and "AI/ML (60)" on the
+  next, or "AI 8.1 (30)" / "R20 (90)" / "AI/ML (50)" / "MIMO (40)" as
+  separate lines. The "R20" marker is a GROUP PREFIX for the adjacent
+  "AI/ML" item — they are ONE session, exactly like the one-line form.
+  → name = "R20 AI/ML" (R20 first, joined by a space)
+  → duration = the value inside the "AI/ML (N)" marker
+  Do NOT split them into separate sessions, and NEVER drop the "R20"
+  label. Other labels in the same cell (e.g. "AI 8.1 (30)", "MIMO (40)")
+  remain their own sessions.
+- GROUP PREFIX WITHOUT ITS OWN DURATION (offline tables). An offline cell is
+  laid out as presenter / group / item lines, e.g.
+  "Sorour (120)" / "R20" / "MIMO (40)" / "AI/ML (40)" / "6GR" / ".10.5.2.1(40)".
+  Here "R20" is a GROUP PREFIX with no "(N)" of its own: every item line that
+  follows it (until the next group line such as "6GR") inherits it →
+  emit "R20 MIMO" (40 min) and "R20 AI/ML" (40 min) as two sessions.
+  NEVER emit a bare "R20" and NEVER emit a bare "AI/ML"/"MIMO" that belongs
+  under a group prefix — always join the prefix to the item with a space.
+  (A group line that already carries a duration, e.g. "6GR (120)", keeps the
+  one-line/across-lines rule above.)
 - Session names MUST reproduce the source labels verbatim (joined by
   spaces). Never rename, abbreviate, reorder, or prepend agenda-item
   numbers (like "9.1") to a session name.

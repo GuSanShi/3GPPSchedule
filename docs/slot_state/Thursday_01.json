@@ -139,7 +139,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI/ML",
+      "name": "R20 AI/ML",
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
@@ -148,7 +148,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
+      "name": "R20 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
@@ -157,7 +157,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT",
+      "name": "R20 A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -240,13 +240,13 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "ISAC",
+      "agenda_item": "10.8.1, 10.8.2, 10.8.3",
+      "description": "Evaluations",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.x",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -256,6 +256,55 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
               "has_description": true
             }
           ]
@@ -419,7 +468,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:09:11.006067+00:00",
+  "merged_at": "2026-10-09T06:19:40.449840+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

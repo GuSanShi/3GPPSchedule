@@ -294,7 +294,7 @@
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4",
+      "group_header": "6GR",
       "agenda_item": "10.5.4.1",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
@@ -333,7 +333,7 @@
       "duration_minutes": 20,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4",
+      "group_header": "6GR",
       "agenda_item": "10.5.4.2",
       "description": "Downlink and uplink transmission without dynamic scheduling",
       "agenda_descriptions": [
@@ -372,7 +372,7 @@
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4",
+      "group_header": "6GR",
       "agenda_item": "10.5.4.4",
       "description": "Handling of potential multiple uplink transmissions",
       "agenda_descriptions": [
@@ -411,7 +411,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.5.4",
+      "group_header": "6GR",
       "agenda_item": "10.5.4.3",
       "description": "HARQ related Aspects",
       "agenda_descriptions": [
@@ -670,12 +670,12 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "9.5 NTN",
+      "name": "R20 9.5 NTN",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": null,
+      "agenda_item": "9.5",
       "description": "NR NTN in systems using downlink compensation",
       "agenda_descriptions": [
         {
@@ -707,7 +707,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-09T06:09:03.626079+00:00",
+  "merged_at": "2026-10-09T06:19:32.564970+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

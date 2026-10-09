@@ -13,7 +13,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.1",
+      "agenda_item": null,
       "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -52,7 +52,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.2",
+      "agenda_item": null,
       "description": "Aspects of uplink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -91,7 +91,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.3",
+      "agenda_item": null,
       "description": "Other aspects",
       "agenda_descriptions": [
         {
@@ -125,20 +125,11 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20",
+      "name": "R20 AI/ML",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "AI/ML",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -148,7 +139,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "",
-      "agenda_item": "8.1",
+      "agenda_item": null,
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
       "agenda_descriptions": [
         {
@@ -177,7 +168,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.2.2",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -211,12 +202,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8.2",
-      "duration_minutes": 40,
+      "name": "6G ISAC",
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 6G ISAC",
-      "agenda_item": "10.8.2",
+      "group_header": "6GR",
+      "agenda_item": "10.8.2, 10.8.3, 10.8.1",
       "description": "Aspects of integration with communication",
       "agenda_descriptions": [
         {
@@ -240,19 +231,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.3",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR / 6G ISAC",
-      "agenda_item": "10.8.3",
-      "description": "Waveform and frame structure",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -274,19 +253,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.1",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR / 6G ISAC",
-      "agenda_item": "10.8.1",
-      "description": "Evaluations",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.1",
           "matched_agenda_item": "10.8.1",
@@ -318,7 +285,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.x",
+      "agenda_item": null,
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -347,13 +314,13 @@
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.5.4.x",
-      "description": "Downlink control channel, scheduling and HARQ operation",
+      "agenda_item": "10.5.4.1",
+      "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.4.x",
-          "matched_agenda_item": "10.5.4",
-          "description": "Downlink control channel, scheduling and HARQ operation",
+          "agenda_item": "10.5.4.1",
+          "matched_agenda_item": "10.5.4.1",
+          "description": "Downlink control channel, scheduling for downlink and uplink transmission",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -369,6 +336,11 @@
               "agenda_item": "10.5.4",
               "description": "Downlink control channel, scheduling and HARQ operation",
               "has_description": true
+            },
+            {
+              "agenda_item": "10.5.4.1",
+              "description": "Downlink control channel, scheduling for downlink and uplink transmission",
+              "has_description": true
             }
           ]
         }
@@ -381,7 +353,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.1",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -420,7 +392,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.3",
+      "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -454,7 +426,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "MIMO",
+      "name": "R20 MIMO",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -462,7 +434,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-09T06:08:52.668062+00:00",
+  "merged_at": "2026-10-09T06:19:23.657865+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

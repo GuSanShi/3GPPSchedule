@@ -387,7 +387,7 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "AI/ML",
+      "name": "R20 AI/ML",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -485,7 +485,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:08:31.800799+00:00",
+  "merged_at": "2026-10-09T06:19:02.873901+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

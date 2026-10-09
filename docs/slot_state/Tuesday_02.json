@@ -193,10 +193,86 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "TEI AI 7/8.2",
-      "duration_minutes": 80,
+      "name": "11 TEI20",
+      "duration_minutes": 10,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
+      "group_header": "",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "Maintenance",
+      "duration_minutes": 70,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "",
+      "agenda_item": null
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "8.2 R19 Duplex, R19 ISAC CM, R19 XR",
+      "duration_minutes": 25,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "",
+      "agenda_item": null,
+      "description": "Maintenance on others",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "8.2",
+          "matched_agenda_item": "8.2",
+          "description": "Maintenance on others",
+          "hierarchy": [
+            {
+              "agenda_item": "8",
+              "description": "Maintenance on Rel-19 NR and E-UTRA",
+              "has_description": true
+            },
+            {
+              "agenda_item": "8.2",
+              "description": "Maintenance on others",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "8.3 UE features",
+      "duration_minutes": 25,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "",
+      "agenda_item": null,
+      "description": "Maintenance on UE features",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "8.3",
+          "matched_agenda_item": "8.3",
+          "description": "Maintenance on UE features",
+          "hierarchy": [
+            {
+              "agenda_item": "8",
+              "description": "Maintenance on Rel-19 NR and E-UTRA",
+              "has_description": true
+            },
+            {
+              "agenda_item": "8.3",
+              "description": "Maintenance on UE features",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "8.2 R19 LP-WUS",
+      "duration_minutes": 20,
+      "specified_start_time": null,
+      "chair": "Hiroki",
       "group_header": "",
       "agenda_item": null,
       "description": "Maintenance on others",
@@ -225,9 +301,9 @@
       "name": "10.2.1 Waveform",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
+      "agenda_item": null,
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -414,7 +490,7 @@
       "room_name": "RAN1_off2",
       "name": "R20 A-IoT",
       "duration_minutes": 90,
-      "specified_start_time": null,
+      "specified_start_time": "14:30",
       "chair": "Hiroki",
       "group_header": "R20",
       "agenda_item": "9.3.3, 9.3.1",
@@ -501,7 +577,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:08:39.971205+00:00",
+  "merged_at": "2026-10-09T06:19:11.881294+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

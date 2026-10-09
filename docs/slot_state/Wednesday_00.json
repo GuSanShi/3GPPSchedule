@@ -177,12 +177,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "9.3.2",
-      "duration_minutes": 40,
+      "name": "R20 A-IoT Phase2",
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "R20 A-IoT",
-      "agenda_item": "9.3.2",
+      "group_header": "",
+      "agenda_item": "9.3.2, 9.3.3, 9.3.1",
       "description": "D2R signals, channels, waveform and procedures",
       "agenda_descriptions": [
         {
@@ -206,19 +206,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "9.3.3",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20 A-IoT",
-      "agenda_item": "9.3.3",
-      "description": "Other procedures",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "9.3.3",
           "matched_agenda_item": "9.3.3",
@@ -240,19 +228,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "9.3.1",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "R20 A-IoT",
-      "agenda_item": "9.3.1",
-      "description": "R2D signals, channels, waveform and procedures",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "9.3.1",
           "matched_agenda_item": "9.3.1",
@@ -376,20 +352,20 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "MIMO",
+      "name": "R20 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_off2",
-      "name": "AI/ML",
+      "name": "R20 AI/ML",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": null
     },
     {
@@ -432,7 +408,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:08:47.648589+00:00",
+  "merged_at": "2026-10-09T06:19:20.077763+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
