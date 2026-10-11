@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.3.1",
       "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.3.2",
       "description": "Aspects of uplink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.3.3",
       "description": "Other aspects",
       "agenda_descriptions": [
         {
@@ -223,14 +223,36 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8.2",
-      "duration_minutes": 40,
+      "name": "6G ISAC",
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR / 10.8 Sensing",
-      "agenda_item": "10.8.2",
-      "description": "Aspects of integration with communication",
+      "group_header": "6GR",
+      "agenda_item": "10.8.1, 10.8.2, 10.8.3",
+      "description": "Evaluations",
       "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
+              "has_description": true
+            }
+          ]
+        },
         {
           "agenda_item": "10.8.2",
           "matched_agenda_item": "10.8.2",
@@ -252,19 +274,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.3",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR / 10.8 Sensing",
-      "agenda_item": "10.8.3",
-      "description": "Waveform and frame structure",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -290,47 +300,13 @@
       ]
     },
     {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.1",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR / 10.8 Sensing",
-      "agenda_item": "10.8.1",
-      "description": "Evaluations",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.8.1",
-          "matched_agenda_item": "10.8.1",
-          "description": "Evaluations",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.1",
-              "description": "Evaluations",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
       "room_name": "RAN1_off1",
       "name": "10.6.x",
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.6.x",
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -398,7 +374,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.1",
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -437,7 +413,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.3",
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -479,7 +455,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-11T00:15:59.996803+00:00",
+  "merged_at": "2026-10-11T00:26:39.728100+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

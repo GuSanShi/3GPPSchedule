@@ -72,16 +72,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "AI 9.4 NTN-NR",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": "9.4",
+      "agenda_item": "9.4, 9.5",
       "description": "GNSS resilient NR-NTN operation",
       "agenda_descriptions": [
         {
@@ -100,19 +91,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "AI 9.5 NTN",
-      "duration_minutes": 20,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": "9.5",
-      "description": "NR NTN in systems using downlink compensation",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "9.5",
           "matched_agenda_item": "9.5",
@@ -518,7 +497,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:15:31.151955+00:00",
+  "merged_at": "2026-10-11T00:26:10.097144+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

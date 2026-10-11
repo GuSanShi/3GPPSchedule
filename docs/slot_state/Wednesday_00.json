@@ -335,7 +335,32 @@
       "specified_start_time": "09:00",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null
+      "agenda_item": "10.2.1",
+      "description": "Waveform",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.2.1",
+          "matched_agenda_item": "10.2.1",
+          "description": "Waveform",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2",
+              "description": "Waveform for 6GR air interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.2.1",
+              "description": "Waveform",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_off1",
@@ -451,7 +476,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:15:56.139282+00:00",
+  "merged_at": "2026-10-11T00:26:35.973263+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.2",
+      "agenda_item": null,
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.3",
+      "agenda_item": null,
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -160,12 +160,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 9.5 NTN",
-      "duration_minutes": 30,
+      "name": "R20 NR",
+      "duration_minutes": 70,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
-      "agenda_item": "9.5",
+      "agenda_item": "9.5, 9.4",
       "description": "NR NTN in systems using downlink compensation",
       "agenda_descriptions": [
         {
@@ -184,19 +184,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "AI 9.4 NR-NTN",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "R20",
-      "agenda_item": "9.4",
-      "description": "GNSS resilient NR-NTN operation",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "9.4",
           "matched_agenda_item": "9.4",
@@ -252,11 +240,11 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "Maintenance",
+      "name": "AI 7/8.2",
       "duration_minutes": 80,
       "specified_start_time": null,
-      "chair": null,
-      "group_header": "AI 7/8.2",
+      "chair": "Hiroki",
+      "group_header": "",
       "agenda_item": "7, 8.2, 8.3",
       "description": "Pre-Rel-19 NR Maintenance",
       "agenda_descriptions": [
@@ -431,7 +419,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.2, 10.6.1.1, 106.1.2",
+      "agenda_item": "10.6.2, 10.6.1.1, 10.6.1.2",
       "description": "Uplink WUS and operation",
       "agenda_descriptions": [
         {
@@ -482,11 +470,38 @@
               "has_description": true
             }
           ]
+        },
+        {
+          "agenda_item": "10.6.1.2",
+          "matched_agenda_item": "10.6.1.2",
+          "description": "WUS operation in RRC states",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.6",
+              "description": "WUS and operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.6.1",
+              "description": "Downlink WUS and operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.6.1.2",
+              "description": "WUS operation in RRC states",
+              "has_description": true
+            }
+          ]
         }
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:16:13.442766+00:00",
+  "merged_at": "2026-10-11T00:26:53.138451+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

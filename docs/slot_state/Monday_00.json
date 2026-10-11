@@ -85,7 +85,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.1",
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -118,7 +118,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:15:23.359450+00:00",
+  "merged_at": "2026-10-11T00:26:03.197971+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

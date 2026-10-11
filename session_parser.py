@@ -639,22 +639,34 @@ for each target room.
   under a group prefix — always join the prefix to the item with a space.
   (A group line that already carries a duration, e.g. "6GR (120)", keeps the
   one-line/across-lines rule above.)
-- PARENT SESSION WITH AGENDA-ITEM SUB-ITEMS ("maintenance" blocks). A session
-  line that carries its OWN duration may be followed by lines starting with an
-  agenda-item number that describe its sub-items, e.g.
+- PARENT SESSION WITH SUB-ITEMS (group-label blocks). A session line that is
+  just a GROUP LABEL carrying its OWN duration — "R20 (60)", "6GR (60)",
+  "6G (60)", "Maintenance (70)" — is a PARENT session. Every following line in
+  the same cell (up to the next group-label line, or a blank line separating a
+  new block) is one of its SUB-ITEMS. Sub-item lines may start with an
+  agenda-item number OR be a plain item name, e.g.
     "Maintenance (70)" / "8.2 R19 Duplex, R19 ISAC CM, R19 XR (25)" /
     "8.3 UE features (25)" / "8.2 R19 LP-WUS (20)"
-  or in the chair table: "Maintenance (80)" / "8.2/8.3 TBD" / "7 TBD".
+    "R20 (60)" / "NTN-NR (40)" / ".9.5 NTN (20)"
+    "6GR (60)" / ".10.7.1 NTN (60)"
+    "R20 (60)" / "A-IoT Phase2 (60)"
   These sub-item lines are PART OF the parent session:
-  → emit ONE session whose name is the parent label ("Maintenance") and whose
-    duration is the PARENT's own value (70) — never the sum
+  → emit ONE session per parent group line. Its name is the group label plus a
+    short qualifier for what it covers, e.g. "R20 NR" when the sub-items are the
+    NR-NTN ones ("NTN-NR", ".9.5 NTN")
+  → duration = the PARENT's own value (60) — never the sum (40+20 = 60, not 120)
+  → record the sub-items' agenda-item numbers in the session's AI field
+    (e.g. "9.4, 9.5"); keep their short labels for the description if useful
   → do NOT emit the sub-items as separate sessions: that double-counts the
-    duration and overflows the time block (real symptom: a 120-min block
-    showed 140 min of sessions, spilling past its end time)
-  → record their agenda-item numbers in the session's AI field, e.g. "8.2, 8.3"
-    (keep their short labels for the description if useful)
+    duration and overflows the time block (real symptom: a 120-min block showed
+    180 min of sessions, spilling past 16:30 into 17:30)
   This applies ONLY when the parent line has its own "(N)"; a bare group prefix
   like "R20" (no duration) follows the rule above instead.
+  ⚠️ FINAL CHECK before you answer: a parent group session and its sub-items must
+  NEVER both appear in the output list. If you emit "R20 NR" (covering 9.4 and
+  9.5), you MUST delete any "NTN-NR" / "9.5 NTN" entries — the parent's AI field
+  already records them. Same for "6GR (60)" + ".10.7.1 NTN (60)": output only the
+  parent. Emitting both is the single most common mistake — verify it.
 - AI FIELD = UNION ACROSS SOURCES. The same session is often described by more
   than one document in a slot (e.g. the Main Schedule writes
   "TEI, AI 7/8.2 (80)" while the vice-chair's file lists its
@@ -1205,6 +1217,13 @@ def parse_time_slots(
             agenda_description_map,
         )
 
+        # Deterministic backstop: fold away standalone sub-items that a parent
+        # session already covers in its agenda_item list (LLM compliance is
+        # unreliable, and a missed merge double-counts the block's duration).
+        parsed_result["sessions"] = _drop_covered_sub_items(
+            parsed_result.get("sessions", [])
+        )
+
         # Persist slot state so the next run can short-circuit / merge incrementally.
         try:
             save_slot_state(
@@ -1244,6 +1263,58 @@ def parse_time_slots(
     )
 
     return all_sessions
+
+
+def _drop_covered_sub_items(sessions: list[dict]) -> list[dict]:
+    """Remove standalone sub-items already covered by a parent session's AI list.
+
+    The LLM is asked to fold a parent group session and its sub-items into ONE
+    entry (parent keeps the group duration, the sub-items' agenda numbers go into
+    the parent's ``agenda_item`` field, e.g. "9.4, 9.5").  It only does this about
+    half the time; when it fails, the block double-counts its duration — a
+    120-min block shows 180 min and spills past its end time.
+
+    Deterministic backstop: within one room, if any session lists TWO OR MORE
+    agenda numbers, drop every standalone session whose agenda_item is exactly
+    one of those numbers.
+    """
+    import re as _re
+    from collections import defaultdict
+
+    def _nums(sd: dict) -> list[str]:
+        raw = sd.get("agenda_item") or ""
+        if not isinstance(raw, str):
+            return []
+        return [p.strip() for p in _re.split(r"[,|;]", raw) if p.strip()]
+
+    by_room: dict[str, list[dict]] = defaultdict(list)
+    for sd in sessions:
+        by_room[sd.get("room_name", "")].append(sd)
+
+    keep_ids: set[int] = set()
+    dropped: list[str] = []
+    for _room, group in by_room.items():
+        covered: set[str] = set()
+        for sd in group:
+            nums = _nums(sd)
+            if len(nums) >= 2:
+                covered.update(nums)
+        if not covered:
+            keep_ids.update(id(sd) for sd in group)
+            continue
+        for sd in group:
+            nums = _nums(sd)
+            if len(nums) == 1 and nums[0] in covered:
+                dropped.append(f"{sd.get('name')!r} ({nums[0]})")
+                continue
+            keep_ids.add(id(sd))
+
+    if dropped:
+        print(
+            f"  [post] dropped {len(dropped)} sub-item(s) covered by a parent: "
+            + ", ".join(dropped[:6])
+        )
+    return [sd for sd in sessions if id(sd) in keep_ids]
 
 
 def _slot_result_to_sessions(

@@ -159,22 +159,10 @@
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "TEI, AI 7/8.2",
-      "agenda_item": "7, 8.2, 8.3, 11",
-      "description": "Pre-Rel-19 NR Maintenance",
+      "group_header": "",
+      "agenda_item": "8.2, 8.3, 7, 11",
+      "description": "Maintenance on others",
       "agenda_descriptions": [
-        {
-          "agenda_item": "7",
-          "matched_agenda_item": "7",
-          "description": "Pre-Rel-19 NR Maintenance",
-          "hierarchy": [
-            {
-              "agenda_item": "7",
-              "description": "Pre-Rel-19 NR Maintenance",
-              "has_description": true
-            }
-          ]
-        },
         {
           "agenda_item": "8.2",
           "matched_agenda_item": "8.2",
@@ -210,6 +198,18 @@
           ]
         },
         {
+          "agenda_item": "7",
+          "matched_agenda_item": "7",
+          "description": "Pre-Rel-19 NR Maintenance",
+          "hierarchy": [
+            {
+              "agenda_item": "7",
+              "description": "Pre-Rel-19 NR Maintenance",
+              "has_description": true
+            }
+          ]
+        },
+        {
           "agenda_item": "11",
           "matched_agenda_item": "11",
           "description": "TEI",
@@ -234,7 +234,7 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.4.x",
+      "name": "6G 10.5.4.x",
       "duration_minutes": 60,
       "specified_start_time": "14:30",
       "chair": "Hiroki",
@@ -506,7 +506,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:16:03.993064+00:00",
+  "merged_at": "2026-10-11T00:26:44.236531+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

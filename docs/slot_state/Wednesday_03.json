@@ -671,7 +671,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 9.5 NTN",
+      "name": "9.5 NTN",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -700,7 +700,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 9.4 NTN-NR",
+      "name": "9.4 NTN-NR",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -728,7 +728,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:16:09.143479+00:00",
+  "merged_at": "2026-10-11T00:26:49.156062+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
