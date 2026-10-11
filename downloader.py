@@ -367,6 +367,18 @@ def _files_at_or_after_preferred_meeting(
     ]
 
 
+def _is_official_document(name: str) -> bool:
+    """True when a file name is NOT marked as a draft.
+
+    The chair publishes draft schedules (``Draft RAN1#126b ... v03.docx``)
+    before the official release (``RAN1#126b ... v00.docx``).  The official
+    file usually has a LOWER version number, so official-ness must be the
+    primary sort key — otherwise a stale high-numbered draft keeps winning
+    after the chair has published the real schedule.
+    """
+    return "draft" not in name.lower()
+
+
 def _pick_latest_in_meeting_group(
     files: list[dict],
     label: str = "schedule",
@@ -463,6 +475,7 @@ def _pick_latest_in_meeting_group(
     latest = max(
         current_group,
         key=lambda x: (
+            _is_official_document(x["name"]),
             _extract_version_parts_from_name(x["name"]),
             x["uploaded_at"],
             x["name"].lower(),

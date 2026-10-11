@@ -2,8 +2,8 @@
   "day": "Thursday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "6f0e92cd33211c5c",
-    "Hiroki's schedule": "d7cda1b36591535b",
+    "Main Schedule": "a07372d461a5dd44",
+    "Hiroki's schedule": "5d0a0bf4dc590347",
     "Sorour's schedule": "70116b0634ad924d"
   },
   "merged_sessions": [
@@ -276,7 +276,7 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.8.x Sensing",
+      "name": "6G ISAC",
       "duration_minutes": 90,
       "specified_start_time": "11:00",
       "chair": "Hiroki",
@@ -509,7 +509,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:11:38.736643+00:00",
+  "merged_at": "2026-10-11T00:16:17.130487+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

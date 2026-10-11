@@ -2,8 +2,8 @@
   "day": "Wednesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "94ce69e17790bf59",
-    "Hiroki's schedule": "b962051c8444ebcf",
+    "Main Schedule": "1f56f55864558201",
+    "Hiroki's schedule": "98784d0c0f423f3f",
     "Sorour's schedule": "a3f086c103ac1a95"
   },
   "merged_sessions": [
@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.1",
+      "agenda_item": null,
       "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.2",
+      "agenda_item": null,
       "description": "Aspects of uplink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.3",
+      "agenda_item": null,
       "description": "Other aspects",
       "agenda_descriptions": [
         {
@@ -227,7 +227,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
+      "group_header": "6GR / 10.8 Sensing",
       "agenda_item": "10.8.2",
       "description": "Aspects of integration with communication",
       "agenda_descriptions": [
@@ -261,7 +261,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
+      "group_header": "6GR / 10.8 Sensing",
       "agenda_item": "10.8.3",
       "description": "Waveform and frame structure",
       "agenda_descriptions": [
@@ -295,7 +295,7 @@
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "6GR",
+      "group_header": "6GR / 10.8 Sensing",
       "agenda_item": "10.8.1",
       "description": "Evaluations",
       "agenda_descriptions": [
@@ -330,7 +330,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.x",
+      "agenda_item": null,
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -398,7 +398,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.1",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -437,7 +437,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.3",
+      "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -479,7 +479,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-11T00:11:21.090414+00:00",
+  "merged_at": "2026-10-11T00:15:59.996803+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

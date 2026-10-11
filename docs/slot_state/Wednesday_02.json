@@ -2,8 +2,8 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "934b1f3e48a2190a",
-    "Hiroki's schedule": "ace4ada185bdc283",
+    "Main Schedule": "89621e1e5f4d8456",
+    "Hiroki's schedule": "0dba025385ae2347",
     "Sorour's schedule": "6660b77fea3ffc95"
   },
   "merged_sessions": [
@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.4",
+      "agenda_item": null,
       "description": "Beam management for downlink and uplink",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.6.x",
+      "agenda_item": null,
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -332,7 +332,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.4.2",
+      "agenda_item": null,
       "description": "Operation in connected mode",
       "agenda_descriptions": [
         {
@@ -366,7 +366,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.4.1",
+      "agenda_item": null,
       "description": "Operation in idle mode",
       "agenda_descriptions": [
         {
@@ -400,7 +400,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -506,7 +506,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:11:24.778870+00:00",
+  "merged_at": "2026-10-11T00:16:03.993064+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

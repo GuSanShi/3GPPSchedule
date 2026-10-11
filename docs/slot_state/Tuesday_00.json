@@ -2,9 +2,9 @@
   "day": "Tuesday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "5440d5fccf18f804",
-    "Hiroki's schedule": "99345087144543d9",
-    "Sorour's schedule": "ebe482b1fb4ecc9d"
+    "Main Schedule": "0d86fb1ec1a9a1e7",
+    "Hiroki's schedule": "d61c4b7f98654b92",
+    "Sorour's schedule": "2bff0e38e65d8260"
   },
   "merged_sessions": [
     {
@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.3",
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.2",
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.1",
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -340,7 +340,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.4.2",
       "description": "Operation in connected mode",
       "agenda_descriptions": [
         {
@@ -374,7 +374,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.6.1.1",
       "description": "Design of WUS with OFDM based sequence",
       "agenda_descriptions": [
         {
@@ -417,7 +417,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.8.x Sensing",
+      "name": "6G ISAC",
       "duration_minutes": 90,
       "specified_start_time": "08:30",
       "chair": "Hiroki",
@@ -473,12 +473,12 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.2.1 Waveform",
+      "name": "6G waveform",
       "duration_minutes": 30,
       "specified_start_time": "10:00",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.2.1",
       "description": "Waveform",
       "agenda_descriptions": [
         {
@@ -506,7 +506,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:10:59.483237+00:00",
+  "merged_at": "2026-10-11T00:15:41.190457+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

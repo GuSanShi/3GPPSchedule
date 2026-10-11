@@ -2,8 +2,8 @@
   "day": "Wednesday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "f131b960c21c5a49",
-    "Hiroki's schedule": "96e6f53e5de651ca",
+    "Main Schedule": "a638f95bba9fb56a",
+    "Hiroki's schedule": "565be62e901acf87",
     "Sorour's schedule": "3b17ae1b7de2c2d4"
   },
   "merged_sessions": [
@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.3",
+      "agenda_item": null,
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.2",
+      "agenda_item": null,
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -301,7 +301,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.5",
+      "agenda_item": null,
       "description": "Other physical layer signals, channels and procedure",
       "agenda_descriptions": [
         {
@@ -330,52 +330,27 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.2.1 Waveform",
+      "name": "6G waveform",
       "duration_minutes": 30,
-      "specified_start_time": null,
+      "specified_start_time": "09:00",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
-      "description": "Waveform",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.2.1",
-          "matched_agenda_item": "10.2.1",
-          "description": "Waveform",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2",
-              "description": "Waveform for 6GR air interface",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2.1",
-              "description": "Waveform",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.8.x Sensing",
-      "duration_minutes": 6,
-      "specified_start_time": null,
+      "name": "6G ISAC",
+      "duration_minutes": 60,
+      "specified_start_time": "09:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.x",
-      "description": "ISAC",
+      "agenda_item": "10.8.2, 10.8.3",
+      "description": "Aspects of integration with communication",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8.x",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -385,6 +360,33 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
               "has_description": true
             }
           ]
@@ -416,7 +418,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.1",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -449,7 +451,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:11:16.995376+00:00",
+  "merged_at": "2026-10-11T00:15:56.139282+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
