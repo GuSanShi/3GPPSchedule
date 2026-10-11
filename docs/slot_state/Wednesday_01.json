@@ -3,7 +3,8 @@
   "time_block_index": 1,
   "source_hashes": {
     "Main Schedule": "94ce69e17790bf59",
-    "Hiroki's schedule": "b962051c8444ebcf"
+    "Hiroki's schedule": "b962051c8444ebcf",
+    "Sorour's schedule": "a3f086c103ac1a95"
   },
   "merged_sessions": [
     {
@@ -128,16 +129,36 @@
       "name": "R20 AI/ML",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.1",
+      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.1",
+          "matched_agenda_item": "9.1",
+          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.1",
+              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk1",
       "name": "AI 8.1",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "",
       "agenda_item": "8.1",
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
@@ -166,7 +187,7 @@
       "name": "10.5.2.2",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
@@ -202,36 +223,14 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "6G ISAC",
-      "duration_minutes": 120,
+      "name": "10.8.2",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.1, 10.8.2, 10.8.3",
-      "description": "Evaluations",
+      "agenda_item": "10.8.2",
+      "description": "Aspects of integration with communication",
       "agenda_descriptions": [
-        {
-          "agenda_item": "10.8.1",
-          "matched_agenda_item": "10.8.1",
-          "description": "Evaluations",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.1",
-              "description": "Evaluations",
-              "has_description": true
-            }
-          ]
-        },
         {
           "agenda_item": "10.8.2",
           "matched_agenda_item": "10.8.2",
@@ -253,7 +252,19 @@
               "has_description": true
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "10.8.3",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6GR",
+      "agenda_item": "10.8.3",
+      "description": "Waveform and frame structure",
+      "agenda_descriptions": [
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -272,6 +283,40 @@
             {
               "agenda_item": "10.8.3",
               "description": "Waveform and frame structure",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "10.8.1",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6GR",
+      "agenda_item": "10.8.1",
+      "description": "Evaluations",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
               "has_description": true
             }
           ]
@@ -311,7 +356,7 @@
       "room_name": "RAN1_off1",
       "name": "10.5.4.x",
       "duration_minutes": 30,
-      "specified_start_time": null,
+      "specified_start_time": "12:30",
       "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.1",
@@ -434,7 +479,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-09T06:42:22.135388+00:00",
+  "merged_at": "2026-10-11T00:11:21.090414+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -3,7 +3,8 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "e0f568a4849c57eb",
-    "Hiroki's schedule": "ad06572322b29100"
+    "Hiroki's schedule": "ad06572322b29100",
+    "Sorour's schedule": "78d19b7d58c4e146"
   },
   "merged_sessions": [
     {
@@ -66,8 +67,8 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "NTN-NR",
-      "duration_minutes": 40,
+      "name": "R20 NR",
+      "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
@@ -75,12 +76,41 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "9.5 NTN",
+      "name": "AI 9.4 NTN-NR",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "R20",
+      "agenda_item": "9.4",
+      "description": "GNSS resilient NR-NTN operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.4",
+          "matched_agenda_item": "9.4",
+          "description": "GNSS resilient NR-NTN operation",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.4",
+              "description": "GNSS resilient NR-NTN operation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk1",
+      "name": "AI 9.5 NTN",
       "duration_minutes": 20,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
-      "agenda_item": null,
+      "agenda_item": "9.5",
       "description": "NR NTN in systems using downlink compensation",
       "agenda_descriptions": [
         {
@@ -104,12 +134,12 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.7.1 NTN",
+      "name": "AI 10.7.1 NTN",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.7.1",
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -488,7 +518,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-09T06:41:50.888788+00:00",
+  "merged_at": "2026-10-11T00:10:49.732016+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
