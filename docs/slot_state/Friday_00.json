@@ -3,7 +3,7 @@
   "time_block_index": 0,
   "source_hashes": {
     "Main Schedule": "7ed33ec46d3c5793",
-    "Hiroki's schedule": "f2dbd9d37e5a0373",
+    "Hiroki's schedule": "1a97268a23cecd00",
     "Sorour's schedule": "3a0b5572a157ba8d"
   },
   "merged_sessions": [
@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.1",
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.2",
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.1.3",
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -194,7 +194,7 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT",
+      "name": "R20 A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
@@ -271,7 +271,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:27:07.998540+00:00",
+  "merged_at": "2026-10-13T13:59:36.662720+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

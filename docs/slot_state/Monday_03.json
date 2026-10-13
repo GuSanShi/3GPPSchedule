@@ -3,7 +3,7 @@
   "time_block_index": 3,
   "source_hashes": {
     "Main Schedule": "2a13115e4db83bfc",
-    "Hiroki's schedule": "1692e5760d79b8e8",
+    "Hiroki's schedule": "e85f8574400c0e92",
     "Sorour's schedule": "5783c1c8a512bf26"
   },
   "merged_sessions": [
@@ -168,7 +168,7 @@
       "name": "R20 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
       "agenda_item": "9.2",
       "description": "NR MIMO Phase 6",
@@ -197,7 +197,7 @@
       "name": "10.3.2 Modulation",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": "10.3.2",
       "description": "Modulation",
@@ -231,7 +231,7 @@
       "name": "10.3.1 Channel coding",
       "duration_minutes": 50,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": "10.3.1",
       "description": "Channel coding",
@@ -265,7 +265,7 @@
       "name": "10.5.2.1",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "6GR",
       "agenda_item": "10.5.2.1",
       "description": "Downlink transmission scheme(s) for downlink control channels",
@@ -652,7 +652,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 9.5 NTN",
+      "name": "9.5 NTN",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorouri",
@@ -681,7 +681,7 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 NTN-NR",
+      "name": "NTN-NR",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorouri",
@@ -709,7 +709,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-11T00:26:15.353954+00:00",
+  "merged_at": "2026-10-13T13:58:37.642828+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
