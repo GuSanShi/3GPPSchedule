@@ -1224,6 +1224,13 @@ def parse_time_slots(
             parsed_result.get("sessions", [])
         )
 
+        # Deterministic backstop #2: if a room's items still exceed the block
+        # capacity (conflicting durations across sources), compress them
+        # proportionally so nothing spills past the block end time.
+        parsed_result["sessions"] = _rescale_oversized_rooms(
+            parsed_result.get("sessions", []), slot
+        )
+
         # Persist slot state so the next run can short-circuit / merge incrementally.
         try:
             save_slot_state(
@@ -1263,6 +1270,46 @@ def parse_time_slots(
     )
 
     return all_sessions
+
+
+def _rescale_oversized_rooms(sessions: list[dict], slot) -> list[dict]:
+    """按比例压缩超出时段容量的房间(多源时长冲突的确定性兜底)。
+
+    多源合并时,副主席文档给出的细分时长可能高于主排期声明的总量 ——
+    实测 Sorour v01 把 "10.5.4.x (120)" 拆成 50+25+40+35 = 150,而 Chair v02
+    与 Hiroki v06 都写 120(且 Hiroki 自己的细分之和正好 120,自洽)。合并后
+    该房间合计 30+150 = 180min,排到时段之外(19:30 -> 20:00)。
+
+    判据:同一房间内的细分之和应等于组行声明的总量。代码层无法恢复结构,
+    故做保守兜底 —— 超过时段容量时按比例缩放,保持相对顺序与占比。
+    """
+    from collections import defaultdict
+
+    capacity = time_to_minutes(slot.time_block_end) - time_to_minutes(slot.time_block_start)
+    if capacity <= 0:
+        return sessions
+
+    by_room: dict[str, list[dict]] = defaultdict(list)
+    for sd in sessions:
+        by_room[sd.get("room_name", "")].append(sd)
+
+    for room, group in by_room.items():
+        total = sum(sd.get("duration_minutes") or 0 for sd in group)
+        if total <= capacity or total <= 0:
+            continue
+        scaled = [max(1, round((sd.get("duration_minutes") or 0) * capacity / total))
+                  for sd in group]
+        diff = capacity - sum(scaled)
+        if diff:
+            i = max(range(len(scaled)), key=lambda k: scaled[k])
+            scaled[i] = max(1, scaled[i] + diff)
+        for sd, nd in zip(group, scaled):
+            sd["duration_minutes"] = nd
+        print(
+            f"  [post] rescaled room {room!r}: {total} -> {capacity} min "
+            f"({len(group)} items)"
+        )
+    return sessions
 
 
 def _drop_covered_sub_items(sessions: list[dict]) -> list[dict]:

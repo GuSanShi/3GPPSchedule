@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.2",
+      "agenda_item": null,
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.3",
+      "agenda_item": null,
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -271,7 +271,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:26:49.293286+00:00",
+  "merged_at": "2026-10-14T08:35:08.952227+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -13,7 +13,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -52,7 +52,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.2",
+      "agenda_item": null,
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -91,7 +91,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.1.3",
+      "agenda_item": null,
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -130,7 +130,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.2",
+      "agenda_item": null,
       "description": "Modulation",
       "agenda_descriptions": [
         {
@@ -164,7 +164,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -297,35 +297,10 @@
       "specified_start_time": "12:30",
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.2.1",
-      "description": "Waveform",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.2.1",
-          "matched_agenda_item": "10.2.1",
-          "description": "Waveform",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2",
-              "description": "Waveform for 6GR air interface",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.2.1",
-              "description": "Waveform",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-14T08:26:32.117036+00:00",
+  "merged_at": "2026-10-14T08:34:01.693218+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

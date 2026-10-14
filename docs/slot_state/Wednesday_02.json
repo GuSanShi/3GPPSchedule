@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.4",
+      "agenda_item": null,
       "description": "Beam management for downlink and uplink",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.6.x",
+      "agenda_item": null,
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -158,7 +158,7 @@
       "name": "TEI, AI 7/8.2",
       "duration_minutes": 90,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "",
       "agenda_item": "7, 8.2",
       "description": "Pre-Rel-19 NR Maintenance",
@@ -199,7 +199,7 @@
       "name": "R20 Coverage RRC",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "",
       "agenda_item": null
     },
@@ -303,7 +303,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.4.2",
+      "agenda_item": null,
       "description": "Operation in connected mode",
       "agenda_descriptions": [
         {
@@ -337,7 +337,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.4.1",
+      "agenda_item": null,
       "description": "Operation in idle mode",
       "agenda_descriptions": [
         {
@@ -371,7 +371,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.3.1",
+      "agenda_item": null,
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -477,7 +477,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:26:35.921068+00:00",
+  "merged_at": "2026-10-14T08:34:42.467053+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

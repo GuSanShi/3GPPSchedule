@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.5",
+      "agenda_item": null,
       "description": "Other physical layer signals, channels and procedure",
       "agenda_descriptions": [
         {
@@ -48,7 +48,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.4.2",
+      "agenda_item": null,
       "description": "Operation in connected mode",
       "agenda_descriptions": [
         {
@@ -82,7 +82,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.4.1",
+      "agenda_item": null,
       "description": "Operation in idle mode",
       "agenda_descriptions": [
         {
@@ -172,7 +172,7 @@
       "name": "AI 8.1",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "",
       "agenda_item": "8.1",
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
@@ -203,13 +203,13 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.8",
-      "description": "ISAC",
+      "agenda_item": "10.8.3, 10.8.1",
+      "description": "Waveform and frame structure",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -219,6 +219,33 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
               "has_description": true
             }
           ]
@@ -266,7 +293,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.1.2",
+      "agenda_item": null,
       "description": "WUS operation in RRC states",
       "agenda_descriptions": [
         {
@@ -305,7 +332,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.2",
+      "agenda_item": null,
       "description": "Uplink WUS and operation",
       "agenda_descriptions": [
         {
@@ -339,7 +366,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.3",
+      "agenda_item": null,
       "description": "WUS operation with other functionalities",
       "agenda_descriptions": [
         {
@@ -373,7 +400,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.1.2",
+      "agenda_item": null,
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -412,7 +439,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.3",
+      "agenda_item": null,
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -451,7 +478,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.5.2.2",
+      "agenda_item": null,
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -484,7 +511,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:26:32.121348+00:00",
+  "merged_at": "2026-10-14T08:34:20.615168+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

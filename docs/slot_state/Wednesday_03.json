@@ -258,7 +258,7 @@
     {
       "room_name": "RAN1_brk2",
       "name": "10.2.1 Waveform",
-      "duration_minutes": 30,
+      "duration_minutes": 25,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -292,7 +292,7 @@
     {
       "room_name": "RAN1_brk2",
       "name": "10.5.4.1",
-      "duration_minutes": 50,
+      "duration_minutes": 42,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -331,7 +331,7 @@
     {
       "room_name": "RAN1_brk2",
       "name": "10.5.4.2",
-      "duration_minutes": 25,
+      "duration_minutes": 21,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -370,7 +370,7 @@
     {
       "room_name": "RAN1_brk2",
       "name": "10.5.4.3",
-      "duration_minutes": 40,
+      "duration_minutes": 33,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -409,7 +409,7 @@
     {
       "room_name": "RAN1_brk2",
       "name": "10.5.4.4",
-      "duration_minutes": 35,
+      "duration_minutes": 29,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -728,7 +728,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:26:35.921068+00:00",
+  "merged_at": "2026-10-14T08:34:48.453423+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
