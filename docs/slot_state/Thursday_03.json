@@ -2,9 +2,9 @@
   "day": "Thursday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "5cd3b2a794eae3cb",
-    "Hiroki's schedule": "6a709ed53a1309d8",
-    "Sorour's schedule": "3d1d360848ca9409"
+    "Main Schedule": "3d1acc9712322494",
+    "Hiroki's schedule": "f74dcf63083fc394",
+    "Sorour's schedule": "3b66581248485e5f"
   },
   "merged_sessions": [
     {
@@ -553,7 +553,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-13T13:59:33.457868+00:00",
+  "merged_at": "2026-10-14T08:26:49.293286+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
