@@ -1,14 +1,14 @@
 name: Build and Deploy Schedule
 
 on:
-  # Fixed schedule: 2x daily, weekdays only, Jeju (Asia/Seoul, UTC+9) local time.
-  #   07:00 Jeju (Mon-Fri) = 22:00 UTC previous day -> '0 22 * * 0-4'
-  #   21:00 Jeju (Mon-Fri) = 12:00 UTC same day    -> '0 12 * * 1-5'
-  # (cron-job.org external dispatcher is no longer required; if it is still
-  #  enabled it just triggers the same change-detection check more often.)
-  schedule:
-    - cron: '0 22 * * 0-4'
-    - cron: '0 12 * * 1-5'
+  # GitHub-side cron DISABLED (2026-10-13): Actions runs were stuck in
+  # "pending"/"waiting" for hours-to-days (one sat 6 days), while push-triggered
+  # Pages deploys kept working. Schedule updates are now driven by the local
+  # Hermes cron job `7ea4393799be` (Beijing 06:00/20:00 = Jeju 07:00/21:00).
+  # To re-enable GitHub scheduled runs, uncomment the block below.
+  # schedule:
+  #   - cron: '0 22 * * 0-4'
+  #   - cron: '0 12 * * 1-5'
 
   repository_dispatch:
     types: [cronjob_trigger] # cron-job.org에서 보낼 이벤트 이름
