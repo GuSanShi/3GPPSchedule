@@ -260,7 +260,7 @@
       "name": "10.2.1 Waveform",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.2.1",
       "description": "Waveform",
@@ -294,7 +294,7 @@
       "name": "10.5.4.2",
       "duration_minutes": 20,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.2",
       "description": "Downlink and uplink transmission without dynamic scheduling",
@@ -333,7 +333,7 @@
       "name": "10.5.4.1",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.1",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
@@ -372,7 +372,7 @@
       "name": "10.5.4.4",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.4",
       "description": "Handling of potential multiple uplink transmissions",
@@ -411,7 +411,7 @@
       "name": "10.5.4.3",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.3",
       "description": "HARQ related Aspects",
@@ -728,7 +728,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:41:29.083298+00:00",
+  "merged_at": "2026-10-14T08:48:01.118956+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

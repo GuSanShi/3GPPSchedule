@@ -223,7 +223,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.4.1",
       "description": "Downlink control channel, scheduling for downlink and uplink transmission",
       "agenda_descriptions": [
         {
@@ -262,7 +262,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.4.2",
       "description": "Downlink and uplink transmission without dynamic scheduling",
       "agenda_descriptions": [
         {
@@ -301,7 +301,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.4.3",
       "description": "HARQ related Aspects",
       "agenda_descriptions": [
         {
@@ -506,7 +506,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:40:56.663306+00:00",
+  "merged_at": "2026-10-14T08:47:27.966689+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

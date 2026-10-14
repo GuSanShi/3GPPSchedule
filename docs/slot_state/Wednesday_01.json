@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.1",
+      "agenda_item": null,
       "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.2",
+      "agenda_item": null,
       "description": "Aspects of uplink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.3",
+      "agenda_item": null,
       "description": "Other aspects",
       "agenda_descriptions": [
         {
@@ -176,40 +176,6 @@
             {
               "agenda_item": "8.1",
               "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk1",
-      "name": "10.3.1 Channel coding",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "6GR",
-      "agenda_item": "10.3.1",
-      "description": "Channel coding",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.3.1",
-          "matched_agenda_item": "10.3.1",
-          "description": "Channel coding",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.3",
-              "description": "Channel coding and modulation for 6GR interface",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.3.1",
-              "description": "Channel coding",
               "has_description": true
             }
           ]
@@ -340,7 +306,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.6.x",
+      "agenda_item": null,
       "description": "WUS and operation",
       "agenda_descriptions": [
         {
@@ -489,7 +455,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-14T08:41:19.008797+00:00",
+  "merged_at": "2026-10-14T08:47:50.619136+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -1239,6 +1239,12 @@ def parse_time_slots(
             parsed_result.get("sessions", [])
         )
 
+        # Deterministic backstop #1b: structural duplicate merge — same room +
+        # same agenda_item means one session split in two by the LLM.
+        parsed_result["sessions"] = _merge_duplicate_agenda_items(
+            parsed_result.get("sessions", [])
+        )
+
         # Deterministic backstop #2: if a room's items still exceed the block
         # capacity (conflicting durations across sources), compress them
         # proportionally so nothing spills past the block end time.
@@ -1285,6 +1291,50 @@ def parse_time_slots(
     )
 
     return all_sessions
+
+
+def _merge_duplicate_agenda_items(sessions: list[dict]) -> list[dict]:
+    """同房间内 ``agenda_item`` 相同的重复条 → 合并为一条。
+
+    这是"父/子被拆成两条"问题的**结构性**兜底。LLM 有时把源文档的
+    ``R20 (40) / MIMO (40)``(一个 session)输出成 ``R20 NR`` + ``AI 9.2 MIMO``
+    两条,二者的 ``agenda_item`` 都是 ``"9.2"``。
+
+    之前的 ``_drop_covered_sub_items`` 只在"父条的 AI 字段含两个以上编号"时
+    生效(如 ``"9.4, 9.5"``),父条只填一个编号时完全不触发 —— 该形态就漏了。
+    这里不再依赖父条的形态:同房间内 AI 编号相同的条目视为同一个 session,
+    保留**名称更长**(信息更全)的一条,时长取二者较大值(**绝不累加**)。
+    """
+    from collections import defaultdict
+
+    by_room: dict[str, list[dict]] = defaultdict(list)
+    for sd in sessions:
+        by_room[sd.get("room_name", "")].append(sd)
+
+    drop_ids: set[int] = set()
+    for _room, group in by_room.items():
+        best: dict[str, dict] = {}
+        for sd in group:
+            ai = (sd.get("agenda_item") or "").strip()
+            if not ai:
+                continue
+            cur = best.get(ai)
+            if cur is None:
+                best[ai] = sd
+                continue
+            cur_len = len(str(cur.get("name") or ""))
+            sd_len = len(str(sd.get("name") or ""))
+            winner, loser = (cur, sd) if cur_len >= sd_len else (sd, cur)
+            winner["duration_minutes"] = max(
+                cur.get("duration_minutes") or 0, sd.get("duration_minutes") or 0
+            )
+            best[ai] = winner
+            drop_ids.add(id(loser))
+            print(
+                f"  [post] merged duplicate AI {ai!r}: kept "
+                f"{winner.get('name')!r}, dropped {loser.get('name')!r}"
+            )
+    return [sd for sd in sessions if id(sd) not in drop_ids]
 
 
 def _rescale_oversized_rooms(sessions: list[dict], slot) -> list[dict]:

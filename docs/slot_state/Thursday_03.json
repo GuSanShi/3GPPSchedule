@@ -165,7 +165,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 10.3.1 Coding",
+      "name": "10.3.1 Channel coding",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -199,7 +199,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 10.3.2 Modulation",
+      "name": "10.3.2 Modulation",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -233,7 +233,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 9.1 AIML",
+      "name": "R20 AI/ML",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -533,7 +533,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:41:47.881125+00:00",
+  "merged_at": "2026-10-14T08:48:18.987094+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
