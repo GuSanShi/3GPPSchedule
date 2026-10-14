@@ -116,7 +116,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.3.1",
       "description": "Channel coding",
       "agenda_descriptions": [
         {
@@ -359,18 +359,18 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.3.2",
+      "name": "10.5.3.4",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": null,
-      "description": "Aspects of uplink-based CSI acquisition",
+      "agenda_item": "10.5.3.4",
+      "description": "Beam management for downlink and uplink",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.5.3.2",
-          "matched_agenda_item": "10.5.3.2",
-          "description": "Aspects of uplink-based CSI acquisition",
+          "agenda_item": "10.5.3.4",
+          "matched_agenda_item": "10.5.3.4",
+          "description": "Beam management for downlink and uplink",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -388,8 +388,8 @@
               "has_description": true
             },
             {
-              "agenda_item": "10.5.3.2",
-              "description": "Aspects of uplink-based CSI acquisition",
+              "agenda_item": "10.5.3.4",
+              "description": "Beam management for downlink and uplink",
               "has_description": true
             }
           ]
@@ -403,7 +403,7 @@
       "specified_start_time": null,
       "chair": "Sorouri",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.3",
       "description": "Uplink transmission scheme(s) for uplink channels",
       "agenda_descriptions": [
         {
@@ -442,7 +442,7 @@
       "specified_start_time": null,
       "chair": "Sorouri",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.1",
       "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
@@ -481,7 +481,7 @@
       "specified_start_time": null,
       "chair": "Sorouri",
       "group_header": "6GR",
-      "agenda_item": null,
+      "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
       "agenda_descriptions": [
         {
@@ -514,7 +514,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:34:56.906505+00:00",
+  "merged_at": "2026-10-14T08:41:39.017117+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

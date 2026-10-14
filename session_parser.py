@@ -761,7 +761,22 @@ Example 4 – Sweep session over a topic area (no explicit durations):
    e.g. "Hiroki (120) / R20 / A-IoT (120)" → Offline B has one session, chair=Hiroki.
    Vice-chair detail for offline rooms just confirms this.
 
-7. Total leaf durations per room must NOT exceed the time block duration,
+7. SUB-ITEM DURATIONS MUST ADD UP TO THE PARENT'S DECLARED TOTAL.
+   Before adopting a vice-chair leaf breakdown, ADD UP its durations and
+   compare with the duration the Main Schedule declares for that same item.
+   → Use the breakdown ONLY when the sums match exactly.
+   → If they do NOT match, that breakdown is UNRELIABLE — keep the Main
+     Schedule's coarse entry, or another source's SELF-CONSISTENT breakdown.
+     Never emit a room whose items exceed the block capacity.
+   Real case: Main = "6GR (150) / .10.5.4.x (120) / .10.2.1 Waveform (30)".
+     Hiroki's file: 10.5.4.2(20)+10.5.4.1(30)+10.5.4.4(30)+10.5.4.3(40) = 120
+       → matches the declared 120 ✅ USE THIS BREAKDOWN.
+     Sorour's file: 10.5.4.1(50)+10.5.4.2(25)+10.5.4.3(40)+10.5.4.4(35) = 150
+       → does NOT match 120 ❌ REJECT IT (adopting it gives 30+150 = 180 min
+         inside a 150-min block).
+   When sources disagree, prefer the one that is arithmetically consistent with
+   the main schedule — a 2-vs-1 majority is NOT the criterion, consistency is.
+8. Total leaf durations per room must NOT exceed the time block duration,
    UNLESS the cell text contains explicit time ranges (see "Explicit time
    ranges" section below).
 
@@ -1297,17 +1312,11 @@ def _rescale_oversized_rooms(sessions: list[dict], slot) -> list[dict]:
         total = sum(sd.get("duration_minutes") or 0 for sd in group)
         if total <= capacity or total <= 0:
             continue
-        scaled = [max(1, round((sd.get("duration_minutes") or 0) * capacity / total))
-                  for sd in group]
-        diff = capacity - sum(scaled)
-        if diff:
-            i = max(range(len(scaled)), key=lambda k: scaled[k])
-            scaled[i] = max(1, scaled[i] + diff)
-        for sd, nd in zip(group, scaled):
-            sd["duration_minutes"] = nd
+        names = ", ".join(str(sd.get("name")) for sd in group)
         print(
-            f"  [post] rescaled room {room!r}: {total} -> {capacity} min "
-            f"({len(group)} items)"
+            f"  [WARN] room {room!r} totals {total} min but the block is only "
+            f"{capacity} min — conflicting source durations; NOT rescaling "
+            f"(data left untouched — fix the source selection instead) [{names}]"
         )
     return sessions
 

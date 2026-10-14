@@ -127,7 +127,7 @@
     {
       "room_name": "RAN1_brk1",
       "name": "R20 AI/ML",
-      "duration_minutes": 48,
+      "duration_minutes": 60,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
@@ -156,10 +156,10 @@
     {
       "room_name": "RAN1_brk1",
       "name": "AI 8.1",
-      "duration_minutes": 24,
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "6GR",
       "agenda_item": "8.1",
       "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
       "agenda_descriptions": [
@@ -185,7 +185,7 @@
     {
       "room_name": "RAN1_brk1",
       "name": "10.3.1 Channel coding",
-      "duration_minutes": 24,
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -219,7 +219,7 @@
     {
       "room_name": "RAN1_brk1",
       "name": "10.5.2.2",
-      "duration_minutes": 24,
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
@@ -260,7 +260,7 @@
       "name": "10.8 Sensing",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.8.1, 10.8.2, 10.8.3",
       "description": "Evaluations",
@@ -484,12 +484,12 @@
       "name": "R20 MIMO",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Sorour",
       "group_header": "R20",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-10-14T08:34:38.222697+00:00",
+  "merged_at": "2026-10-14T08:41:19.008797+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

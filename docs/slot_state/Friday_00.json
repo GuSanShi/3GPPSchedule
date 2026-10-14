@@ -197,7 +197,7 @@
       "name": "R20 A-IoT Phase2",
       "duration_minutes": 120,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": "9.3.1, 9.3.2, 9.3.3",
       "description": "R2D signals, channels, waveform and procedures",
@@ -271,7 +271,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:35:08.952227+00:00",
+  "merged_at": "2026-10-14T08:41:50.782768+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

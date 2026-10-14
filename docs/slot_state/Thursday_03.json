@@ -14,7 +14,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.1",
+      "agenda_item": null,
       "description": "Aspects of downlink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -53,7 +53,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.2",
+      "agenda_item": null,
       "description": "Aspects of uplink-based CSI acquisition",
       "agenda_descriptions": [
         {
@@ -92,7 +92,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.3",
+      "agenda_item": null,
       "description": "Other aspects",
       "agenda_descriptions": [
         {
@@ -131,7 +131,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.3.4",
+      "agenda_item": null,
       "description": "Beam management for downlink and uplink",
       "agenda_descriptions": [
         {
@@ -165,7 +165,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.1 Channel coding",
+      "name": "AI 10.3.1 Coding",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -199,7 +199,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.2 Modulation",
+      "name": "AI 10.3.2 Modulation",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -233,7 +233,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 AI/ML",
+      "name": "AI 9.1 AIML",
       "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
@@ -267,7 +267,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.5.4",
+      "agenda_item": null,
       "description": "Downlink control channel, scheduling and HARQ operation",
       "agenda_descriptions": [
         {
@@ -301,7 +301,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
+      "agenda_item": null,
       "description": "Synchronization acquisition and beam measurement",
       "agenda_descriptions": [
         {
@@ -340,7 +340,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.1.2",
+      "agenda_item": null,
       "description": "PRACH and RACH procedure",
       "agenda_descriptions": [
         {
@@ -379,7 +379,7 @@
       "specified_start_time": null,
       "chair": "Xiaodong",
       "group_header": "6GR",
-      "agenda_item": "10.5.1.3",
+      "agenda_item": null,
       "description": "Bandwidth operation",
       "agenda_descriptions": [
         {
@@ -418,7 +418,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
-      "agenda_item": "10.7.1",
+      "agenda_item": null,
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
         {
@@ -452,27 +452,7 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": "9.1",
-      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.1",
-          "matched_agenda_item": "9.1",
-          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.1",
-              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off2",
@@ -553,7 +533,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-14T08:35:05.880909+00:00",
+  "merged_at": "2026-10-14T08:41:47.881125+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
