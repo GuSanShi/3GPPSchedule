@@ -2,8 +2,8 @@
   "day": "Friday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "ac23876070d02a4f",
-    "Hiroki's schedule": "8f1d0efe6e861764",
+    "Main Schedule": "508f988ec594c512",
+    "Hiroki's schedule": "c2e25dcded1a5a99",
     "Sorour's schedule": "4533c2f48a99a565"
   },
   "merged_sessions": [
@@ -398,35 +398,6 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.8.x Sensing",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR",
-      "agenda_item": "10.8.x",
-      "description": "ISAC",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.8.x",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_off2",
       "name": "10.5.4.x",
       "duration_minutes": 60,
       "specified_start_time": null,
@@ -458,9 +429,38 @@
           ]
         }
       ]
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.8.x Sensing",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6GR",
+      "agenda_item": "10.8.x",
+      "description": "ISAC",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.x",
+          "matched_agenda_item": "10.8",
+          "description": "ISAC",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-10-15T06:56:56.600688+00:00",
+  "merged_at": "2026-10-15T12:01:06.325129+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
