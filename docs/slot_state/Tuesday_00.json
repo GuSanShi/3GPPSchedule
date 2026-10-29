@@ -166,21 +166,16 @@
       "chair": null,
       "group_header": "R20 NR",
       "agenda_item": "9.5",
-      "description": "NR NTN in systems using downlink compensation",
+      "description": "Release 20 NR",
       "agenda_descriptions": [
         {
           "agenda_item": "9.5",
-          "matched_agenda_item": "9.5",
-          "description": "NR NTN in systems using downlink compensation",
+          "matched_agenda_item": "9",
+          "description": "Release 20 NR",
           "hierarchy": [
             {
               "agenda_item": "9",
               "description": "Release 20 NR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "9.5",
-              "description": "NR NTN in systems using downlink compensation",
               "has_description": true
             }
           ]
@@ -263,12 +258,12 @@
       "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.5.4.2",
-      "description": "Downlink and uplink transmission without dynamic scheduling",
+      "description": "Downlink and uplink transmission without downlink control channel",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.2",
           "matched_agenda_item": "10.5.4.2",
-          "description": "Downlink and uplink transmission without dynamic scheduling",
+          "description": "Downlink and uplink transmission without downlink control channel",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -287,7 +282,7 @@
             },
             {
               "agenda_item": "10.5.4.2",
-              "description": "Downlink and uplink transmission without dynamic scheduling",
+              "description": "Downlink and uplink transmission without downlink control channel",
               "has_description": true
             }
           ]
@@ -506,7 +501,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-16T12:01:24.965758+00:00",
+  "merged_at": "2026-10-29T22:06:29.709798+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }

@@ -211,12 +211,12 @@
       "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.5.4.2, 10.5.4.3, 10.5.4.4",
-      "description": "Downlink and uplink transmission without dynamic scheduling",
+      "description": "Downlink and uplink transmission without downlink control channel",
       "agenda_descriptions": [
         {
           "agenda_item": "10.5.4.2",
           "matched_agenda_item": "10.5.4.2",
-          "description": "Downlink and uplink transmission without dynamic scheduling",
+          "description": "Downlink and uplink transmission without downlink control channel",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -235,7 +235,7 @@
             },
             {
               "agenda_item": "10.5.4.2",
-              "description": "Downlink and uplink transmission without dynamic scheduling",
+              "description": "Downlink and uplink transmission without downlink control channel",
               "has_description": true
             }
           ]
@@ -477,7 +477,7 @@
       ]
     }
   ],
-  "merged_at": "2026-10-16T12:01:24.965758+00:00",
+  "merged_at": "2026-10-29T22:06:29.730127+00:00",
   "meeting_id": "ran1#126bis",
   "schema_version": 1
 }
