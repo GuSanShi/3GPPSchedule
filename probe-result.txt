@@ -1,9 +1,0 @@
-=== DNS ===
-DNS FAILED
-=== HTTP /v1/models ===
-HTTP:000 time:0.127829
-curl failed
-
-=== chat/completions ===
-HTTP:000 time:0.255774
-curl failed
