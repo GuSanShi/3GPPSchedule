@@ -2,19 +2,42 @@ name: LLM endpoint probe
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
       - name: Probe UNISOC MaaS
         env:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
         run: |
-          echo "--- DNS ---"
-          getent hosts www.maas.unisoc.com || echo "DNS FAILED"
-          echo "--- HTTP /v1/models ---"
-          curl -s --max-time 25 -o /tmp/r.txt -w "HTTP:%{http_code} time:%{time_total}\n" \
-            -H "Authorization: Bearer $LLM_API_KEY" \
-            http://www.maas.unisoc.com/v1/models || echo "curl failed"
-          echo "--- body ---"
-          head -c 400 /tmp/r.txt || true
+          {
+            echo "=== DNS ==="
+            getent hosts www.maas.unisoc.com || echo "DNS FAILED"
+            echo "=== HTTP /v1/models ==="
+            curl -s --max-time 25 -o /tmp/r.txt -w "HTTP:%{http_code} time:%{time_total}\n" \
+              -H "Authorization: Bearer $LLM_API_KEY" \
+              http://www.maas.unisoc.com/v1/models || echo "curl failed"
+            head -c 500 /tmp/r.txt || true
+            echo
+            echo "=== chat/completions ==="
+            curl -s --max-time 40 -o /tmp/c.txt -w "HTTP:%{http_code} time:%{time_total}\n" \
+              -H "Authorization: Bearer $LLM_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d '{"model":"deepseek-v4.1-flash","messages":[{"role":"user","content":"ping"}],"max_tokens":5}' \
+              http://www.maas.unisoc.com/v1/chat/completions || echo "curl failed"
+            head -c 500 /tmp/c.txt || true
+          } > probe-result.txt
+          cat probe-result.txt
+
+      - name: Commit result
+        run: |
+          git config user.name "probe-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add probe-result.txt
+          git commit -m "chore: LLM probe result [skip ci]" || echo "nothing to commit"
+          git push || echo "push failed"
