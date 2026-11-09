@@ -158,6 +158,11 @@ jobs:
           # Add DEEPSEEK_API_KEY to repo secrets to switch providers.
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # UNISOC MaaS (OpenAI-compatible).  deepseek_llm.py prefers
+          # LLM_API_KEY, then LLM_BASE_URL / LLM_MODEL over the defaults.
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: http://www.maas.unisoc.com/v1
+          LLM_MODEL: deepseek-v4.1-flash
           SCHEDULE_CONTACT_NAME: 846371094
           SCHEDULE_CONTACT_EMAIL: 846371094@qq.com
         run: uv run python main.py
