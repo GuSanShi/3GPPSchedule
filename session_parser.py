@@ -594,6 +594,38 @@ def _alias_room_label(label: str, name_to_alias: dict[str, str]) -> str:
     return prefix + " + ".join(aliased)
 
 
+# Opt-in behaviour switch: emit one session per sub-item instead of folding a
+# "group label (N)" parent line into a single block.  Off by default so the
+# historical (deduplicated) behaviour is preserved.
+SPLIT_SUBITEMS = os.getenv("SPLIT_SUBITEMS", "").strip().lower() in ("1", "true", "yes", "on")
+
+SUBITEM_SPLIT_OVERRIDE = """
+
+
+
+=== OVERRIDE FOR THIS RUN: DO NOT FOLD SUB-ITEMS ===
+IGNORE the \"PARENT SESSION WITH SUB-ITEMS\" folding rule above.
+When a group-label line carries its own duration and is followed by sub-item
+lines that EACH carry their OWN explicit duration, e.g.
+    \"6GR (90)\" / \".10.3.1 Channel coding (40)\" / \".10.7.1 NTN (40)\"
+  → emit ONE session PER SUB-ITEM
+  → name = the sub-item label as written (keep its agenda number and short title)
+  → duration = that sub-item's OWN duration (40 and 40), not the parent's
+  → agenda_item = that sub-item's own agenda number (or null when the
+    sub-item has no number, e.g. "MIMO", "UE feature")
+  → group_header = the PARENT label for EVERY sub-item (e.g. all children of
+    "R20 (90)" carry group_header "R20"; all children of "6GR (90)" carry
+    "6GR").  Never leave a sub-item's group empty when its parent line has a
+    label.
+  → do NOT emit the parent group line as a session (it is only a group header)
+  → if the sub-items' durations sum to MORE than the parent's duration, the
+    source is inconsistent: emit the parent as ONE session instead of the
+    sub-items.
+Example: \"6GR (90) / .10.3.1 Channel coding (40) / .10.7.1 NTN (40)\" produces
+two sessions of 40 min and 40 min — never one 90-min \"6GR\" block.
+This override applies to every group block in this slot.
+"""
+
 MULTI_SOURCE_SYSTEM_INSTRUCTION_COLD = """You produce a unified session list for a 3GPP RAN1 time-slot.
 
 You receive MULTIPLE schedule tables that all describe the SAME time duration.
@@ -1186,6 +1218,14 @@ def parse_time_slots(
             mode = "cold"
             system_instruction = MULTI_SOURCE_SYSTEM_INSTRUCTION_COLD
 
+        # Opt-in: keep parent group blocks split into their sub-items so the
+        # chart shows the real per-item times.  The folding rule above exists
+        # to stop double-counting; it also throws away the sub-item durations
+        # whenever the parent line does not equal their exact sum (as in the
+        # RAN1#127 draft), so it is off by default.
+        if SPLIT_SUBITEMS:
+            system_instruction = system_instruction + SUBITEM_SPLIT_OVERRIDE
+
         user_prompt = _build_time_slot_prompt(slot, name_to_alias, mode=mode)
         n_sources = len(slot.sources)
         n_entries = sum(len(s.entries) for s in slot.sources)
@@ -1235,9 +1275,12 @@ def parse_time_slots(
         # Deterministic backstop: fold away standalone sub-items that a parent
         # session already covers in its agenda_item list (LLM compliance is
         # unreliable, and a missed merge double-counts the block's duration).
-        parsed_result["sessions"] = _drop_covered_sub_items(
-            parsed_result.get("sessions", [])
-        )
+        # Disabled when sub-item splitting is requested: there the sub-items
+        # ARE the intended output.
+        if not SPLIT_SUBITEMS:
+            parsed_result["sessions"] = _drop_covered_sub_items(
+                parsed_result.get("sessions", [])
+            )
 
         # Deterministic backstop #1b: structural duplicate merge — same room +
         # same agenda_item means one session split in two by the LLM.
@@ -1603,6 +1646,70 @@ def normalize_group_headers(sessions: list[Session]) -> list[Session]:
         if session.group_header and session.group_header in mapping:
             session.group_header = mapping[session.group_header]
 
+    return sessions
+
+
+# Short labels for the top-level agenda sections of the chairman's agenda.csv
+# (TSGR1_127/Agenda).  One colour block per section keeps the chart searchable.
+SECTION_ALIASES = {
+    "6": "Pre-R19 E-UTRA",
+    "7": "Pre-R19 NR",
+    "8": "Rel-19 Maint",
+    "9": "R20 NR",
+    "10": "6GR",
+    "11": "TEI",
+}
+
+
+def assign_section_groups(sessions: list[Session]) -> list[Session]:
+    """Group every session by its TOP-LEVEL agenda section (9, 10, ...).
+
+    The agenda published on the 3GPP FTP splits RAN1 into numbered sections
+    ("9 Release 20 NR", "10 Rel-20 Study of 6GR", "11 TEI", ...).  Using the
+    section as the group gives one colour block per section, which is what the
+    chairman's schedule is organised by — more useful than the free-text group
+    labels the LLM invents.
+    """
+    from agenda_descriptions import load_agenda_description_map
+
+    descriptions = load_agenda_description_map()
+    mapped = 0
+    # Fallback for sessions the LLM left without an agenda number: the block
+    # name itself states the branch ("6GR Sensing", "R20 A-IoT", "TEI ...").
+    # Bare block names that are Rel-20 NR items (agenda 9.x) even without an
+    # agenda number: 9.1 AI/ML, 9.2 MIMO, 9.3 A-IoT, 9.4/9.5 NTN, 9.6 UE features.
+    name_hints = (
+        ("6gr", "10"),
+        ("r20", "9"),
+        ("tei", "11"),
+        ("ai/ml", "9"),
+        ("mimo", "9"),
+        ("a-iot", "9"),
+        ("ntn-nr", "9"),
+        ("ue feature", "9"),
+    )
+    for s in sessions:
+        raw = (s.agenda_item or "").strip()
+        m = re.match(r"(\d+)", raw)
+        if m:
+            sec = m.group(1)
+        else:
+            # The block name or the group the LLM attached both state the branch
+            # ("NTN-NR" under group "R20", "6GR Sensing", "TEI ...").
+            lowered = f"{s.name or ''} {s.group_header or ''}".lower()
+            sec = next((num for token, num in name_hints if token in lowered), None)
+            if sec is None:
+                # No agenda number and no section hint: drop any free-text group
+                # so the legend contains agenda sections only.
+                s.group_header = ""
+                continue
+        short = SECTION_ALIASES.get(sec) or descriptions.get(sec, "")
+        s.group_header = f"{sec} {short}".strip()
+        mapped += 1
+    print(
+        f"Section groups: {mapped}/{len(sessions)} sessions mapped to top-level "
+        f"agenda sections"
+    )
     return sessions
 
 

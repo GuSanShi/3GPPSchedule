@@ -37,9 +37,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from models import DAY_ORDER, DaySchedule, Schedule, ScheduleSource
-from parser import build_room_list, parse_docx, extract_meeting_location, find_chair_notes_docx
-from session_parser import parse_time_slots, get_timezone_from_location, normalize_group_headers, fill_missing_groups
+from models import DAY_ORDER, DaySchedule, Schedule, ScheduleSource, apply_time_grid
+from parser import (
+    build_room_list,
+    parse_docx,
+    extract_meeting_location,
+    extract_time_grid,
+    find_chair_notes_docx,
+)
+from session_parser import (
+    parse_time_slots,
+    get_timezone_from_location,
+    normalize_group_headers,
+    fill_missing_groups,
+    assign_section_groups,
+)
 from generator import save_html
 from downloader import (
     download_latest_schedule,
@@ -419,6 +431,23 @@ def main():
                 print(f"Using local file: {docx_path}")
 
     # Step 2: Parse DOCX tables
+    # Derive the day grid from the document itself: RAN1 venues use different
+    # block times (Seoul 08:30/11:00/14:30/17:00 vs Calgary 08:00/11:00/14:00/17:00).
+    grid_blocks, grid_breaks = extract_time_grid(docx_path)
+    if grid_blocks:
+        apply_time_grid(grid_blocks, grid_breaks or None)
+        print(
+            "Time grid from DOCX: "
+            + ", ".join(
+                f"TB{i} {b['start']}-{b['end']}" for i, b in enumerate(grid_blocks)
+            )
+        )
+        if grid_breaks:
+            print(
+                "Breaks: "
+                + ", ".join(f"{b['name']} {b['start']}-{b['end']}" for b in grid_breaks)
+            )
+
     print(f"\nParsing: {docx_path}")
     cells, tables_meta = parse_docx(docx_path)
     print(f"Extracted {len(cells)} schedule cells from {len(tables_meta)} tables")
@@ -489,15 +518,34 @@ def main():
     # Step 4b: Normalize group headers for cleaner legend
     sessions = normalize_group_headers(sessions)
 
+    # Step 4c: Group by top-level agenda section (9 = R20 NR, 10 = 6GR, ...)
+    # so each section gets its own colour block, matching the FTP agenda.
+    if os.getenv("GROUP_BY", "section").strip().lower() == "llm":
+        print("\nGrouping: LLM free-text groups (GROUP_BY=llm)")
+    else:
+        sessions = assign_section_groups(sessions)
+
     # Step 4c: Fill missing groups by name/substring matching
-    sessions = fill_missing_groups(sessions)
+    # Only groups the chairman's document actually states are kept by default:
+    # the name-matching passes invent groups ("UE feature" inheriting R20 from a
+    # different slot) and are therefore opt-in via INFER_GROUPS=1.
+    if os.getenv("INFER_GROUPS", "").strip().lower() in ("1", "true", "yes", "on"):
+        sessions = fill_missing_groups(sessions)
+    else:
+        print("\nGroup fill: disabled (INFER_GROUPS not set) — only document-stated groups are shown")
 
     # Step 5: Build Schedule model
     meeting_name = _extract_meeting_name(docx_path)
 
     # Detect meeting timezone — reuse cached value when the meeting hasn't changed
     meeting_tz = "UTC"
-    if (
+    env_tz = os.getenv("MEETING_TIMEZONE")
+    if env_tz:
+        # Explicit override for venues whose agenda/Chair notes are not on
+        # FTP yet (or for locally supplied drafts).
+        print(f"\nUsing MEETING_TIMEZONE override: {env_tz}")
+        meeting_tz = env_tz
+    elif (
         current_meeting_id
         and current_meeting_id == cached_meeting_id
         and cached_tz
@@ -564,6 +612,18 @@ def main():
             [s for s in sources if s.local_path is None],
             meeting_id=current_meeting_id,
             meeting_source=meeting_source,
+            timezone=meeting_tz,
+            agenda=_agenda_state_for_save(agenda_info, agenda_path),
+            local_refs=local_reference_hashes(),
+        )
+    else:
+        # Local-only build (--local / --no-download): no FTP listing exists,
+        # but the meeting id, timezone and agenda must still be persisted so
+        # the next run knows which meeting the cached slot state belongs to.
+        save_schedule_state(
+            [],
+            meeting_id=current_meeting_id,
+            meeting_source="local",
             timezone=meeting_tz,
             agenda=_agenda_state_for_save(agenda_info, agenda_path),
             local_refs=local_reference_hashes(),

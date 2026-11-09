@@ -35,3 +35,6 @@ test_runs/
 downloads/*
 !downloads/extra_files/
 !downloads/extra_files/**
+
+# Local run logs
+run*.log

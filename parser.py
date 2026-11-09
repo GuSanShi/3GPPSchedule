@@ -10,10 +10,16 @@ from docx import Document
 from downloader import _iter_local_files, _local_doc_preference
 from models import TIME_BLOCKS, CellData, DAY_ORDER, RoomInfo, time_to_minutes
 
-_TIME_BLOCK_MINUTES = [
-    (block["index"], time_to_minutes(block["start"]), time_to_minutes(block["end"]))
-    for block in TIME_BLOCKS
-]
+def _time_block_minutes() -> list[tuple[int, int, int]]:
+    """(index, start_min, end_min) for the CURRENT time grid.
+
+    Recomputed on every call because the grid is derived from the DOCX
+    being parsed (see models.apply_time_grid).
+    """
+    return [
+        (block["index"], time_to_minutes(block["start"]), time_to_minutes(block["end"]))
+        for block in TIME_BLOCKS
+    ]
 
 
 def extract_meeting_location(docx_path: Path) -> str | None:
@@ -572,10 +578,89 @@ def _determine_time_block_index(time_text: str) -> int | None:
 
     start_minutes = time_to_minutes(start_time)
 
-    for block_index, block_start, block_end in _TIME_BLOCK_MINUTES:
+    for block_index, block_start, block_end in _time_block_minutes():
         if block_start <= start_minutes < block_end:
             return block_index
     return None
+
+
+def extract_time_grid(
+    filepath: str | Path, *, max_tables: int | None = 2
+) -> tuple[list[dict], list[dict]]:
+    """Derive the day grid (time blocks + breaks) from a schedule DOCX.
+
+    RAN1 venues do not share one grid: Seoul ran 08:30-10:30 / 11:00-13:00 /
+    14:30-16:30 / 17:00-19:30 with a 13:00 lunch, while the RAN1#127 Calgary
+    draft runs 08:00-10:30 / 11:00-12:30 / 14:00-16:30 / 17:00-19:00 with a
+    12:30 lunch.  Reading the rows of the largest schedule table makes the
+    generator follow whatever the chairman published.
+
+    Returns ([{start, end, duration}], [{name, start, end}]) sorted by start.
+    Empty lists mean "nothing recognised" and the caller keeps its default.
+    """
+    doc = Document(str(filepath))
+
+    schedule_tables = [
+        (idx, table) for idx, table in enumerate(doc.tables) if _is_schedule_table(table)
+    ]
+    if not schedule_tables:
+        return [], []
+    if max_tables is not None and len(schedule_tables) > max_tables:
+        schedule_tables.sort(key=lambda x: len(x[1].columns), reverse=True)
+        schedule_tables = schedule_tables[:max_tables]
+        schedule_tables.sort(key=lambda x: x[0])
+
+    time_re = re.compile(
+        r"(\d{1,2})[:.](\d{2})\s*[~\-–—]\s*(\d{1,2})[:.](\d{2})"
+    )
+
+    blocks: list[dict] = []
+    breaks: list[dict] = []
+    seen_blocks: set[str] = set()
+    seen_breaks: set[str] = set()
+
+    for _idx, table in schedule_tables:
+        for row in table.rows:
+            if not row.cells:
+                continue
+            label = row.cells[0].text.replace("\n", " ").strip()
+            if not label:
+                continue
+            m = time_re.search(label)
+            if not m:
+                continue
+            start = f"{int(m.group(1)):02d}:{m.group(2)}"
+            end = f"{int(m.group(3)):02d}:{m.group(4)}"
+            start_min = time_to_minutes(start)
+            end_min = time_to_minutes(end)
+            if end_min <= start_min:
+                continue
+
+            lowered = label.lower()
+            if "break" in lowered:
+                if start in seen_breaks:
+                    continue
+                seen_breaks.add(start)
+                if "morning" in lowered:
+                    name = "Morning Coffee Break"
+                elif "afternoon" in lowered:
+                    name = "Afternoon Coffee Break"
+                elif "lunch" in lowered:
+                    name = "Lunch Break"
+                else:
+                    name = re.sub(r"\s+", " ", label.split(":")[0]).strip().title()
+                breaks.append({"name": name, "start": start, "end": end})
+            else:
+                if start in seen_blocks:
+                    continue
+                seen_blocks.add(start)
+                blocks.append(
+                    {"start": start, "end": end, "duration": end_min - start_min}
+                )
+
+    blocks.sort(key=lambda b: time_to_minutes(b["start"]))
+    breaks.sort(key=lambda b: time_to_minutes(b["start"]))
+    return blocks, breaks
 
 
 def parse_docx(

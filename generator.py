@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -42,7 +43,10 @@ def _room_display_name(name: str) -> str:
 
 def _assign_group_colors(sessions: list) -> dict[str, dict]:
     """Assign colors to unique group_header values from the palette."""
-    headers = sorted(set(s.group_header for s in sessions if s.group_header))
+    headers = sorted(
+        set(s.group_header for s in sessions if s.group_header),
+        key=lambda h: _natural_sort_key(h),
+    )
     color_map = {}
     for i, header in enumerate(headers):
         color_map[header] = GROUP_COLORS[i % len(GROUP_COLORS)]
@@ -967,6 +971,12 @@ body.edit-mode .session-name {
 def _generate_js(timezone: str = "UTC", auto_refresh_minutes: int = AUTO_REFRESH_MINUTES) -> str:
     """Generate the JavaScript for tab switching, today selection, now-line, and auto-refresh."""
     auto_refresh_ms = auto_refresh_minutes * 60 * 1000
+    # Grid bounds follow the parsed document's own time grid (see
+    # models.apply_time_grid); fall back to the classic RAN1 day if unset.
+    grid_base_min = min(time_to_minutes(tb["start"]) for tb in TIME_BLOCKS)
+    grid_end_min = max(time_to_minutes(tb["end"]) for tb in TIME_BLOCKS)
+    grid_base_hhmm = f"{grid_base_min // 60:02d}:{grid_base_min % 60:02d}"
+    grid_end_hhmm = f"{grid_end_min // 60:02d}:{grid_end_min % 60:02d}"
     return f"""
 document.addEventListener('DOMContentLoaded', function() {{
     const MEETING_TZ = '{timezone}';
@@ -1101,8 +1111,8 @@ document.addEventListener('DOMContentLoaded', function() {{
     // Only show on the panel matching today's weekday
     function updateNowLine() {{
         const {{ minutes, weekday }} = nowInMeetingTZ();
-        const base = 8 * 60 + 30; // 08:30
-        const end = 19 * 60 + 45; // 19:45
+        const base = {grid_base_min}; // {grid_base_hhmm}
+        const end = {grid_end_min}; // {grid_end_hhmm}
 
         document.querySelectorAll('.now-line').forEach(el => el.remove());
 
@@ -1614,7 +1624,15 @@ def _get_beijing_offset(meeting_tz_str: str) -> int:
     try:
         beijing_tz = zoneinfo.ZoneInfo("Asia/Shanghai")
         meeting_tz = zoneinfo.ZoneInfo(meeting_tz_str)
-        ref = datetime(2026, 8, 17, tzinfo=timezone.utc)
+        # Reference instant for the DST state.  A fixed date is wrong across
+        # DST boundaries (Calgary in November is MST/UTC-7, in August MDT/UTC-6),
+        # so use the meeting reference date when provided, else "now".
+        ref_date = os.getenv("MEETING_REF_DATE")
+        if ref_date:
+            y, m, d = (int(x) for x in ref_date.split("-"))
+            ref = datetime(y, m, d, tzinfo=timezone.utc)
+        else:
+            ref = datetime.now(timezone.utc)
         bj_off = int(beijing_tz.utcoffset(ref).total_seconds() // 3600)
         mt_off = int(meeting_tz.utcoffset(ref).total_seconds() // 3600)
         return bj_off - mt_off
@@ -1658,7 +1676,9 @@ def generate_html(schedule: Schedule) -> str:
     # Legend (group headers)
     if color_map:
         html_parts.append('    <div class="legend">\n')
-        for header, colors in sorted(color_map.items()):
+        for header, colors in sorted(
+            color_map.items(), key=lambda kv: _natural_sort_key(kv[0])
+        ):
             html_parts.append(
                 f'        <div class="legend-item">'
                 f'<span class="legend-swatch" style="background:{colors["bg"]};border-color:{colors["border"]}"></span>'
@@ -1725,10 +1745,11 @@ def generate_html(schedule: Schedule) -> str:
 
         # Time labels at 30-minute intervals (local time + Beijing time)
         bj_offset = _get_beijing_offset(schedule.timezone)
-        time_min = time_to_minutes("08:30")
-        end_min = time_to_minutes("19:45")
+        grid_start = min(time_to_minutes(tb["start"]) for tb in TIME_BLOCKS)
+        time_min = grid_start
+        end_min = max(time_to_minutes(tb["end"]) for tb in TIME_BLOCKS)
         while time_min <= end_min:
-            row = (time_min - time_to_minutes("08:30")) // 5 + 2
+            row = (time_min - grid_start) // 5 + 2
             t_str = f"{time_min // 60:02d}:{time_min % 60:02d}"
             # Calculate Beijing time
             bj_min = time_min + bj_offset * 60
@@ -1753,9 +1774,9 @@ def generate_html(schedule: Schedule) -> str:
             time_min += 30
 
         # Grid lines every 30 minutes
-        time_min = time_to_minutes("08:30")
+        time_min = grid_start
         while time_min <= end_min:
-            row = (time_min - time_to_minutes("08:30")) // 5 + 2
+            row = (time_min - grid_start) // 5 + 2
             major = " major" if time_min % 60 == 0 else ""
             html_parts.append(
                 f'                <div class="grid-line{major}" '
@@ -1814,6 +1835,7 @@ def generate_html(schedule: Schedule) -> str:
                 if is_tiny
                 else session.name
             )
+            display_name = _with_group_prefix(display_name, session.group_header)
             name_html = f'<div class="session-name">{_esc(display_name)}</div>'
             chair_html = ""
             dur_html = ""
@@ -1955,6 +1977,35 @@ def _esc(text: str) -> str:
         .replace(">", "&gt;")
         .replace('"', "&quot;")
     )
+
+
+def _with_group_prefix(name: str, group: str) -> str:
+    """Show the group label in front of the session name ("6GR · 10.3.1 NTN").
+
+    Sessions that are sub-items of a group (e.g. "10.3.1 Channel coding" under
+    "6GR (90)") only carry the group in their colour/legend, which makes the
+    hierarchy invisible on the block.  Names that already start with the group
+    label ("6GR 10.4.1", "R20 A-IoT") are left untouched.
+    """
+    name = (name or "").strip()
+    group = (group or "").strip()
+    if not name or not group:
+        return name
+    if name.lower().startswith(group.lower()):
+        rest = name[len(group):].lstrip(" -–·:,").strip()
+        return f"{group} · {rest}" if rest else group
+    # Group labels carry a section number ("9 R20 NR", "10 6GR") while the block
+    # name only carries the branch ("R20 AI/ML", "6GR Sensing"): drop the
+    # duplicate branch word so we do not print "9 R20 NR · R20 AI/ML".
+    for token in re.split(r"[\s/]+", group):
+        if len(token) >= 3 and name.lower().startswith(token.lower()):
+            rest = name[len(token):].lstrip(" -–·:,").strip()
+            return f"{group} · {rest}" if rest else group
+    first_token = re.split(r"[\s/,]+", name, maxsplit=1)[0].lower()
+    if first_token == group.lower():
+        rest = name[len(first_token):].lstrip(" -–·:,").strip()
+        return f"{group} · {rest}" if rest else group
+    return f"{group} · {name}"
 
 
 def _compact_session_label(name: str, agenda_item: str | None) -> str:
