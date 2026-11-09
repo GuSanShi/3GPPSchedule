@@ -1,14 +1,14 @@
 name: Build and Deploy Schedule
 
 on:
-  # GitHub-side cron DISABLED (2026-10-13): Actions runs were stuck in
-  # "pending"/"waiting" for hours-to-days (one sat 6 days), while push-triggered
-  # Pages deploys kept working. Schedule updates are now driven by the local
-  # Hermes cron job `7ea4393799be` (Beijing 06:00/20:00 = Jeju 07:00/21:00).
-  # To re-enable GitHub scheduled runs, uncomment the block below.
-  # schedule:
-  #   - cron: '0 22 * * 0-4'
-  #   - cron: '0 12 * * 1-5'
+  # GitHub-side cron re-enabled 2026-11-09.  The old "stuck pending" symptom
+  # was `cancel-in-progress: true` killing every run that outlived the next
+  # tick while slow FTP retries made runs take hours.  Timeouts shortened in
+  # downloader.py and concurrency no longer cancels, so runs can finish.
+  # Times are UTC (22:00 UTC = 07:00 Beijing/Jeju next day).
+  schedule:
+    - cron: '0 22 * * 0-4'
+    - cron: '0 12 * * 1-5'
 
   repository_dispatch:
     types: [cronjob_trigger] # cron-job.org에서 보낼 이벤트 이름
@@ -32,7 +32,7 @@ permissions:
 
 concurrency:
   group: schedule-deploy
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   # ── Job 1: Lightweight FTP check (~20 seconds) ──────────────

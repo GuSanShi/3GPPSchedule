@@ -50,9 +50,14 @@ EXTRA_FILES_TRANSFER_DIR = DOWNLOADS_DIR / ".extra_files_transfer"
 AGENDA_EXTENSIONS = (".csv", ".docx", ".zip")
 AGENDA_EXTRACT_EXTENSIONS = (".csv", ".docx")
 
-# Retry configuration for transient server errors
-_MAX_RETRIES = 3
-_RETRY_BACKOFF_BASE = 5  # seconds
+# Retry configuration for transient server errors.
+# The 3GPP FTP server is frequently slow or unreachable from CI runners; the
+# old 3x30s + 5s/10s/15s backoff turned one dead host into ~2 minutes of
+# waiting per URL, which is what made whole workflow runs hang.  Overridable
+# for debugging.
+_MAX_RETRIES = int(os.getenv("HTTP_MAX_RETRIES", "2"))
+_RETRY_BACKOFF_BASE = int(os.getenv("HTTP_RETRY_BACKOFF", "3"))  # seconds
+_DEFAULT_TIMEOUT = int(os.getenv("HTTP_TIMEOUT", "20"))  # seconds
 
 # ETSI's list server may disconnect requests that use httpx/requests' default
 # Python User-Agent without sending an HTTP response.  A browser-compatible
@@ -102,7 +107,7 @@ def _validate_html_response(resp: httpx.Response) -> None:
 def _get_with_retry(
     url: str,
     *,
-    timeout: int = 30,
+    timeout: int = _DEFAULT_TIMEOUT,
     max_retries: int = _MAX_RETRIES,
     stream: bool = False,
 ) -> httpx.Response:
