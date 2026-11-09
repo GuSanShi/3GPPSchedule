@@ -13,6 +13,8 @@ jobs:
           echo "--- DNS ---"
           getent hosts www.maas.unisoc.com || echo "DNS FAILED"
           echo "--- HTTP /v1/models ---"
-          curl -s -o /tmp/r.txt -w "HTTP:%{http_code} total:%{time_total}s
-" --max-time 25             -H "Authorization: Bearer $LLM_API_KEY" http://www.maas.unisoc.com/v1/models || echo "curl failed"
+          curl -s --max-time 25 -o /tmp/r.txt -w "HTTP:%{http_code} time:%{time_total}\n" \
+            -H "Authorization: Bearer $LLM_API_KEY" \
+            http://www.maas.unisoc.com/v1/models || echo "curl failed"
+          echo "--- body ---"
           head -c 400 /tmp/r.txt || true
