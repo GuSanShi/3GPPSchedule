@@ -1,0 +1,18 @@
+name: LLM endpoint probe
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe UNISOC MaaS
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+        run: |
+          echo "--- DNS ---"
+          getent hosts www.maas.unisoc.com || echo "DNS FAILED"
+          echo "--- HTTP /v1/models ---"
+          curl -s -o /tmp/r.txt -w "HTTP:%{http_code} total:%{time_total}s
+" --max-time 25             -H "Authorization: Bearer $LLM_API_KEY" http://www.maas.unisoc.com/v1/models || echo "curl failed"
+          head -c 400 /tmp/r.txt || true
