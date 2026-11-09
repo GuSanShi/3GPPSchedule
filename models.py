@@ -112,9 +112,45 @@ def minutes_to_time(m: int) -> str:
 def time_to_grid_row(t: str) -> int:
     """Convert 'HH:MM' to CSS grid row number (1-indexed, row 1 = header)."""
     mins = time_to_minutes(t)
-    base = time_to_minutes("08:30")
+    base = time_to_minutes(GRID_BASE)
     slot = (mins - base) // 5
     return slot + 2  # row 1 is header
+
+
+GRID_BASE = "08:30"
+
+
+def apply_time_grid(blocks: list[dict], breaks: list[dict] | None = None) -> None:
+    """Replace the module-level TIME_BLOCKS/BREAKS in place.
+
+    Schedules differ per venue (e.g. Calgary starts at 08:00 with a 12:30
+    lunch, Seoul starts at 08:30 with a 13:00 lunch), so the time grid must
+    come from the DOCX being parsed rather than from a fixed template.
+    In-place mutation keeps the references held by parser/generator/merger
+    valid.
+    """
+    global GRID_BASE
+
+    normalised: list[dict] = []
+    for i, b in enumerate(blocks):
+        start = b["start"]
+        end = b["end"]
+        normalised.append(
+            {
+                "index": i,
+                "start": start,
+                "end": end,
+                "duration": b.get("duration")
+                or (time_to_minutes(end) - time_to_minutes(start)),
+            }
+        )
+    if not normalised:
+        return
+
+    TIME_BLOCKS[:] = normalised
+    GRID_BASE = min(b["start"] for b in normalised)
+    if breaks is not None:
+        BREAKS[:] = breaks
 
 
 GROUP_COLORS = [
