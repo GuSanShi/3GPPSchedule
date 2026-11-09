@@ -124,7 +124,7 @@
     },
     {
       "agenda_item": "10.3.2",
-      "description": "Modulation, Joint channel coding and modulation"
+      "description": "Modulation"
     },
     {
       "agenda_item": "10.4",
@@ -204,7 +204,7 @@
     },
     {
       "agenda_item": "10.5.4.2",
-      "description": "Downlink and uplink transmission without downlink control channel"
+      "description": "Downlink and uplink transmission without dynamic scheduling"
     },
     {
       "agenda_item": "10.5.4.3",
@@ -305,7 +305,7 @@
     "10.2.1": "Waveform",
     "10.3": "Channel coding and modulation for 6GR interface",
     "10.3.1": "Channel coding",
-    "10.3.2": "Modulation, Joint channel coding and modulation",
+    "10.3.2": "Modulation",
     "10.4": "Multiple carrier operation",
     "10.4.1": "Operation in idle mode",
     "10.4.2": "Operation in connected mode",
@@ -325,7 +325,7 @@
     "10.5.3.4": "Beam management for downlink and uplink",
     "10.5.4": "Downlink control channel, scheduling and HARQ operation",
     "10.5.4.1": "Downlink control channel, scheduling for downlink and uplink transmission",
-    "10.5.4.2": "Downlink and uplink transmission without downlink control channel",
+    "10.5.4.2": "Downlink and uplink transmission without dynamic scheduling",
     "10.5.4.3": "HARQ related Aspects",
     "10.5.4.4": "Handling of potential multiple uplink transmissions",
     "10.5.5": "Other physical layer signals, channels and procedure",

@@ -38,3 +38,6 @@ downloads/*
 
 # Local run logs
 run*.log
+
+# Local chairman schedule reference copies (not published)
+ref_in_manual/

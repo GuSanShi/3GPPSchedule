@@ -475,16 +475,21 @@
       "chair": "Sorour",
       "group_header": "R20",
       "agenda_item": "9.5",
-      "description": "Release 20 NR",
+      "description": "NR NTN in systems using downlink compensation",
       "agenda_descriptions": [
         {
           "agenda_item": "9.5",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
+          "matched_agenda_item": "9.5",
+          "description": "NR NTN in systems using downlink compensation",
           "hierarchy": [
             {
               "agenda_item": "9",
               "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.5",
+              "description": "NR NTN in systems using downlink compensation",
               "has_description": true
             }
           ]
