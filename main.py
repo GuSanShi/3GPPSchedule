@@ -421,7 +421,27 @@ def main():
             except Exception as e:
                 print(f"Download failed: {e}")
                 print("Trying local files...")
-                docx_path = find_local_latest_schedule()
+                # Local fallback must consider the committed chairman drafts in
+                # downloads/extra_files/ as well: they carry the newest meeting
+                # (e.g. RAN1#127) while downloads/Chair_notes/ may still hold the
+                # previous one.  Pick whichever filename has the later meeting id.
+                _fallback_candidates = [
+                    p
+                    for p in (
+                        find_local_latest_schedule(),
+                        find_local_schedule_sources(ref_dir=EXTRA_FILES_DIR)[1],
+                    )
+                    if p is not None
+                ]
+                if _fallback_candidates:
+                    docx_path = max(
+                        _fallback_candidates,
+                        key=lambda p: (
+                            _meeting_rank(_extract_meeting_id(p.name)) or (0, 0, 0)
+                        ),
+                    )
+                else:
+                    docx_path = None
                 if docx_path is None:
                     # Last resort: use the locally-provided chairman reference
                     docx_path = _local_ref_chosen
