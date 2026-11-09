@@ -1,0 +1,9 @@
+=== DNS ===
+39.102.49.69    alb-h1ahqfk22pu08zczkq.cn-beijing.alb.aliyuncsslb.com www.moyu.info
+39.102.113.205  alb-h1ahqfk22pu08zczkq.cn-beijing.alb.aliyuncsslb.com www.moyu.info
+=== /v1/models ===
+HTTP:200 time:1.111166
+{"data":[{"id":"asr-1.0","object":"model","created":1626777600,"owned_by":"minimax","supported_endpoint_types":["audio-transcription"]},{"id":"deepseek-v4-flash","object":"model","created":1626777600,
+=== chat ===
+HTTP:200 time:2.143575
+{"choices":[{"finish_reason":"stop","index":0,"message":{"content":"{\"ok\":true}","role":"assistant"}}],"created":1794220968,"id":"54f11f18-91ad-47f1-9102-f77f4764ce74","model":"deepseek-v4.1-flash","object":"chat.completion","usage":{"prompt_tokens":60,"completion_tokens":6,"total_tokens":66,"prom
