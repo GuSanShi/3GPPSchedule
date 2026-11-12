@@ -2,10 +2,10 @@
   "day": "Monday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "5e3196afc3ca3345"
+    "Main Schedule": "00d2a628e9c8ef73"
   },
   "merged_sessions": [],
-  "merged_at": "2026-11-12T02:44:12.463192+00:00",
+  "merged_at": "2026-11-12T19:16:50.515471+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
