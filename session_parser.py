@@ -1156,6 +1156,7 @@ def parse_time_slots(
     n_cold = 0
     n_incremental = 0
     n_skipped = 0
+    n_llm_failures = 0
     api_calls = 0
     MAX_RETRIES = 3
     agenda_description_map = load_agenda_description_map()
@@ -1263,6 +1264,21 @@ def parse_time_slots(
                 else:
                     print(f"FAILED: {e}")
                     parsed_result = {"sessions": []}
+                    # Never turn a provider error into a silent empty slot: that
+                    # is how a bad API key wiped the published schedule.
+                    n_llm_failures += 1
+                    if any(
+                        token in str(e)
+                        for token in ("401", "403", "无效的令牌", "invalid_api_key",
+                                      "Unauthorized", "insufficient")
+                    ):
+                        raise RuntimeError(
+                            "LLM rejected the request (auth/quota): "
+                            f"{str(e)[:180]}"
+
+                            "Refusing to write a schedule — check LLM_API_KEY / "
+                            "LLM_BASE_URL / LLM_MODEL secrets."
+                        ) from e
 
         if parsed_result is None:
             parsed_result = {"sessions": []}
@@ -1332,6 +1348,12 @@ def parse_time_slots(
         f"Multi-source parsing complete: {len(all_sessions)} sessions from "
         f"{total} time slots"
     )
+
+    if n_llm_failures:
+        raise RuntimeError(
+            f"LLM failed for {n_llm_failures} of {total} time slots — refusing to "
+            "publish a partial schedule (the previous docs/ build stays live)."
+        )
 
     return all_sessions
 
