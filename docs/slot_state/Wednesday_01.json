@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "ce4464e7f69f782a"
+    "Main Schedule": "cc3a184475d657ca"
   },
   "merged_sessions": [
     {
@@ -75,20 +75,20 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 AI/ML",
-      "duration_minutes": 50,
+      "name": "UE feature",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
-      "duration_minutes": 40,
+      "name": "AI/ML",
+      "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -239,15 +239,15 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 A-IoT",
+      "name": "A-IoT",
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.944694+00:00",
+  "merged_at": "2026-11-13T13:46:10.527880+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

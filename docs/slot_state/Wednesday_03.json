@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "9cd6ea1dee56312e"
+    "Main Schedule": "702b83fa6d8ba3f8"
   },
   "merged_sessions": [
     {
@@ -36,11 +36,11 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 UE feature",
+      "name": "MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
@@ -272,7 +272,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.961618+00:00",
+  "merged_at": "2026-11-13T13:47:02.699207+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

@@ -2,7 +2,7 @@
   "day": "Tuesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "371f197de4da1bc6"
+    "Main Schedule": "180b4082b56f68f6"
   },
   "merged_sessions": [
     {
@@ -75,8 +75,8 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI/ML",
-      "duration_minutes": 50,
+      "name": "UE feature",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
@@ -84,8 +84,8 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "MIMO",
-      "duration_minutes": 40,
+      "name": "AI/ML",
+      "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
@@ -123,7 +123,7 @@
     {
       "room_name": "RAN1_off1",
       "name": "10.5.2.2",
-      "duration_minutes": 45,
+      "duration_minutes": 35,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
@@ -162,7 +162,7 @@
     {
       "room_name": "RAN1_off1",
       "name": "10.5.2.3",
-      "duration_minutes": 45,
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "6GR",
@@ -192,6 +192,45 @@
             {
               "agenda_item": "10.5.2.3",
               "description": "Uplink transmission scheme(s) for uplink channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_off1",
+      "name": "10.5.2.1",
+      "duration_minutes": 15,
+      "specified_start_time": null,
+      "chair": "Sorour",
+      "group_header": "6GR",
+      "agenda_item": "10.5.2.1",
+      "description": "Downlink transmission scheme(s) for downlink control channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.1",
+          "matched_agenda_item": "10.5.2.1",
+          "description": "Downlink transmission scheme(s) for downlink control channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.1",
+              "description": "Downlink transmission scheme(s) for downlink control channels",
               "has_description": true
             }
           ]
@@ -239,45 +278,6 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "10.5.3.3",
-      "duration_minutes": 25,
-      "specified_start_time": null,
-      "chair": "Xiaodong",
-      "group_header": "6GR",
-      "agenda_item": "10.5.3.3",
-      "description": "Other aspects",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.3.3",
-          "matched_agenda_item": "10.5.3.3",
-          "description": "Other aspects",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.3",
-              "description": "CSI acquisition and report",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.3.3",
-              "description": "Other aspects",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_off2",
       "name": "10.5.3.4",
       "duration_minutes": 20,
       "specified_start_time": null,
@@ -314,9 +314,48 @@
           ]
         }
       ]
+    },
+    {
+      "room_name": "RAN1_off2",
+      "name": "10.5.3.3",
+      "duration_minutes": 25,
+      "specified_start_time": null,
+      "chair": "Xiaodong",
+      "group_header": "6GR",
+      "agenda_item": "10.5.3.3",
+      "description": "Other aspects",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.3.3",
+          "matched_agenda_item": "10.5.3.3",
+          "description": "Other aspects",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3",
+              "description": "CSI acquisition and report",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.3.3",
+              "description": "Other aspects",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.926617+00:00",
+  "merged_at": "2026-11-13T13:44:43.328265+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

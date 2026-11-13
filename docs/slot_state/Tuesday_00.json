@@ -2,7 +2,7 @@
   "day": "Tuesday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "5dee5eecc545c346"
+    "Main Schedule": "968743981ef6e20b"
   },
   "merged_sessions": [
     {
@@ -124,40 +124,6 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.1 Channel coding",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "6GR",
-      "agenda_item": "10.3.1",
-      "description": "Channel coding",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.3.1",
-          "matched_agenda_item": "10.3.1",
-          "description": "Channel coding",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.3",
-              "description": "Channel coding and modulation for 6GR interface",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.3.1",
-              "description": "Channel coding",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk1",
       "name": "10.7.1 NTN",
       "duration_minutes": 40,
       "specified_start_time": null,
@@ -229,6 +195,69 @@
       "agenda_item": null
     },
     {
+      "room_name": "RAN1_brk1",
+      "name": "10.3.1 Channel coding",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": "10.3.1",
+      "description": "Channel coding",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.3.1",
+          "matched_agenda_item": "10.3.1",
+          "description": "Channel coding",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3",
+              "description": "Channel coding and modulation for 6GR interface",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.3.1",
+              "description": "Channel coding",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "6GR",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "",
+      "agenda_item": "10.8",
+      "description": "ISAC",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8",
+          "matched_agenda_item": "10.8",
+          "description": "ISAC",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
       "room_name": "RAN1_brk2",
       "name": "TEI, AI 7/8.1",
       "duration_minutes": 50,
@@ -277,35 +306,6 @@
       "chair": null,
       "group_header": "",
       "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "6GR",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "",
-      "agenda_item": "10.8",
-      "description": "ISAC",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            }
-          ]
-        }
-      ]
     },
     {
       "room_name": "RAN1_off1",
@@ -481,7 +481,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.923617+00:00",
+  "merged_at": "2026-11-13T13:44:30.676755+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

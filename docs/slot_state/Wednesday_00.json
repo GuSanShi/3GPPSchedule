@@ -2,7 +2,7 @@
   "day": "Wednesday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "d6eca30075f9a915"
+    "Main Schedule": "5954b44c95d32139"
   },
   "merged_sessions": [
     {
@@ -305,15 +305,6 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "UE feature",
-      "duration_minutes": 40,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_brk2",
       "name": "10.5.4.1",
       "duration_minutes": 60,
       "specified_start_time": null,
@@ -350,6 +341,15 @@
           ]
         }
       ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "UE feature",
+      "duration_minutes": 40,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "",
+      "agenda_item": null
     },
     {
       "room_name": "RAN1_off1",
@@ -570,7 +570,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.940690+00:00",
+  "merged_at": "2026-11-13T13:46:00.804338+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

@@ -7,7 +7,7 @@
   "merged_sessions": [
     {
       "room_name": "ALL_ONLINE",
-      "name": "RAN1#127 commences at 09:00 on Monday",
+      "name": "RAN1#126b commences at 09:00 on Monday",
       "duration_minutes": 60,
       "specified_start_time": "09:00",
       "chair": null,
@@ -117,7 +117,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.907618+00:00",
+  "merged_at": "2026-11-13T13:43:33.848974+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

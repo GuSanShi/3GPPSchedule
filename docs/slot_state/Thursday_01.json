@@ -2,7 +2,7 @@
   "day": "Thursday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "b993c8b96e8ef842"
+    "Main Schedule": "93274575faf4c49e"
   },
   "merged_sessions": [
     {
@@ -75,8 +75,8 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 AI/ML",
-      "duration_minutes": 50,
+      "name": "MIMO",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
@@ -84,12 +84,42 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 MIMO",
-      "duration_minutes": 40,
+      "name": "10.5.2.2",
+      "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
-      "agenda_item": null
+      "group_header": "6GR",
+      "agenda_item": "10.5.2.2",
+      "description": "Downlink transmission scheme(s) for downlink shared channels",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.2.2",
+          "matched_agenda_item": "10.5.2.2",
+          "description": "Downlink transmission scheme(s) for downlink shared channels",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.2",
+              "description": "Downlink transmission scheme(s) for downlink shared channels",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
@@ -247,7 +277,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-09T10:02:49.972621+00:00",
+  "merged_at": "2026-11-13T13:47:45.079254+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
