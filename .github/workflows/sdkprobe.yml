@@ -1,0 +1,36 @@
+name: SDK probe
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Install openai
+        run: pip install -q openai==1.*
+      - name: Probe
+        env:
+          K: ${{ secrets.MOYU_API_KEY }}
+        run: |
+          python - <<'PY'
+          import os
+          from openai import OpenAI
+          k=os.environ['K']
+          print('key len', len(k), 'repr ends', repr(k[-4:]))
+          c=OpenAI(api_key=k, base_url='https://www.moyu.info/v1', timeout=30, max_retries=0)
+          for label, kw in [
+              ('plain', {}),
+              ('json_object', {'response_format': {'type':'json_object'}}),
+          ]:
+              try:
+                  r=c.chat.completions.create(model='DeepSeek-V4.1-flash',
+                      messages=[{'role':'user','content':'Reply with JSON {"ok":true}'}],
+                      temperature=0, **kw)
+                  print(label, 'OK', repr(r.choices[0].message.content)[:60])
+              except Exception as e:
+                  print(label, 'FAIL', type(e).__name__, str(e)[:200])
+          PY
