@@ -18,6 +18,15 @@ from typing import Any
 from openai import OpenAI
 
 
+# Last error raised by llm_json(); callers use it to tell "model returned
+# nothing" apart from "the provider rejected us" (bad key, quota, outage).
+LAST_ERROR: Exception | None = None
+
+
+def llm_last_error() -> Exception | None:
+    return LAST_ERROR
+
+
 def llm_json(
     *,
     prompt: str,
@@ -45,6 +54,9 @@ def llm_json(
     Returns:
         Parsed JSON dict, or None on failure.
     """
+    global LAST_ERROR
+    LAST_ERROR = None
+
     resolved_key = (
         api_key
         or os.environ.get("LLM_API_KEY")
@@ -109,5 +121,6 @@ def llm_json(
                 time.sleep(wait)
             else:
                 print(f"  LLM call failed after {MAX_RETRIES} retries: {e}")
+                LAST_ERROR = e
 
     return None
