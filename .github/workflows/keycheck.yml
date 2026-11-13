@@ -1,14 +1,22 @@
 name: Key check
 on:
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   hash:
     runs-on: ubuntu-latest
     steps:
-      - name: Hash secret
+      - name: Probe with stored secret
         env:
           K: ${{ secrets.MOYU_API_KEY }}
         run: |
           echo "len=${#K}"
-          printf '%s' "$K" | sha256sum
-          printf '%s' "${K:0:6}...${K: -4}" | sed 's/./&/g'
+          echo "--- /models ---"
+          curl -s -o /tmp/m.txt -w "HTTP:%{http_code}\n" -H "Authorization: Bearer $K" https://www.moyu.info/v1/models
+          head -c 120 /tmp/m.txt; echo
+          echo "--- chat ---"
+          curl -s -o /tmp/c.txt -w "HTTP:%{http_code}\n" -H "Authorization: Bearer $K" -H "Content-Type: application/json" \
+            -d '{"model":"DeepSeek-V4.1-flash","messages":[{"role":"user","content":"ping"}],"max_tokens":5}' \
+            https://www.moyu.info/v1/chat/completions
+          head -c 300 /tmp/c.txt; echo
