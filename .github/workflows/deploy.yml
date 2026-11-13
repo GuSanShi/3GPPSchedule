@@ -168,6 +168,7 @@ jobs:
           LLM_API_KEY: ${{ secrets.MOYU_API_KEY }}
           LLM_BASE_URL: https://www.moyu.info/v1
           LLM_MODEL: DeepSeek-V4.1-flash
+          SPLIT_SUBITEMS: '1'  # keep sub-item granularity (matches the published chart)
           SCHEDULE_CONTACT_NAME: 846371094
           SCHEDULE_CONTACT_EMAIL: 846371094@qq.com
         run: uv run python main.py
