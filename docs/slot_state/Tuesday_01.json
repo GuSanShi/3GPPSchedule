@@ -2,7 +2,8 @@
   "day": "Tuesday",
   "time_block_index": 1,
   "source_hashes": {
-    "Main Schedule": "180b4082b56f68f6"
+    "Main Schedule": "180b4082b56f68f6",
+    "Hiroki's schedule": "79e338982dde389c"
   },
   "merged_sessions": [
     {
@@ -98,7 +99,7 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "6GR",
-      "agenda_item": "10.8",
+      "agenda_item": "10.8, 10.8.2",
       "description": "ISAC",
       "agenda_descriptions": [
         {
@@ -114,6 +115,28 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            }
+          ]
+        },
+        {
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
               "has_description": true
             }
           ]
@@ -355,7 +378,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-13T13:44:43.328265+00:00",
+  "merged_at": "2026-11-13T19:02:51.525172+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

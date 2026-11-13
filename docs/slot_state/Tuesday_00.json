@@ -2,7 +2,8 @@
   "day": "Tuesday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "968743981ef6e20b"
+    "Main Schedule": "968743981ef6e20b",
+    "Hiroki's schedule": "8272c29a424b488e"
   },
   "merged_sessions": [
     {
@@ -230,18 +231,18 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "6GR",
-      "duration_minutes": 60,
+      "name": "10.8.1",
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
-      "agenda_item": "10.8",
-      "description": "ISAC",
+      "group_header": "6GR",
+      "agenda_item": "10.8.1",
+      "description": "Evaluations",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.1",
+          "matched_agenda_item": "10.8.1",
+          "description": "Evaluations",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -252,6 +253,11 @@
               "agenda_item": "10.8",
               "description": "ISAC",
               "has_description": true
+            },
+            {
+              "agenda_item": "10.8.1",
+              "description": "Evaluations",
+              "has_description": true
             }
           ]
         }
@@ -259,26 +265,48 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "TEI, AI 7/8.1",
-      "duration_minutes": 50,
+      "name": "10.8.3",
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
-      "agenda_item": "7, 8.1",
-      "description": "Pre-Rel-19 NR Maintenance",
+      "group_header": "6GR",
+      "agenda_item": "10.8.3",
+      "description": "Waveform and frame structure",
       "agenda_descriptions": [
         {
-          "agenda_item": "7",
-          "matched_agenda_item": "7",
-          "description": "Pre-Rel-19 NR Maintenance",
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
           "hierarchy": [
             {
-              "agenda_item": "7",
-              "description": "Pre-Rel-19 NR Maintenance",
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
               "has_description": true
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "8.1 Mobility/LP-WUS",
+      "duration_minutes": 25,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "TEI, AI 7/8.1",
+      "agenda_item": "8.1",
+      "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
+      "agenda_descriptions": [
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
@@ -292,6 +320,30 @@
             {
               "agenda_item": "8.1",
               "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "7 pre-Rel-19 CRs",
+      "duration_minutes": 10,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "TEI, AI 7/8.1",
+      "agenda_item": "7",
+      "description": "Pre-Rel-19 NR Maintenance",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "7",
+          "matched_agenda_item": "7",
+          "description": "Pre-Rel-19 NR Maintenance",
+          "hierarchy": [
+            {
+              "agenda_item": "7",
+              "description": "Pre-Rel-19 NR Maintenance",
               "has_description": true
             }
           ]
@@ -481,7 +533,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-13T13:44:30.676755+00:00",
+  "merged_at": "2026-11-13T19:01:11.635581+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

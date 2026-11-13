@@ -2,7 +2,8 @@
   "day": "Monday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "00d2a628e9c8ef73"
+    "Main Schedule": "00d2a628e9c8ef73",
+    "Hiroki's schedule": "7cd3188a45a19599"
   },
   "merged_sessions": [
     {
@@ -255,18 +256,18 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
-      "duration_minutes": 120,
+      "name": "10.8.2",
+      "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8",
-      "description": "ISAC",
+      "agenda_item": "10.8.2",
+      "description": "Aspects of integration with communication",
       "agenda_descriptions": [
         {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
           "hierarchy": [
             {
               "agenda_item": "10",
@@ -276,6 +277,45 @@
             {
               "agenda_item": "10.8",
               "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "10.8.3",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6GR",
+      "agenda_item": "10.8.3",
+      "description": "Waveform and frame structure",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.3",
+          "matched_agenda_item": "10.8.3",
+          "description": "Waveform and frame structure",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.3",
+              "description": "Waveform and frame structure",
               "has_description": true
             }
           ]
@@ -506,7 +546,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-13T13:43:50.270984+00:00",
+  "merged_at": "2026-11-13T18:53:10.549282+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
