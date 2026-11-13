@@ -14,7 +14,7 @@ from agenda_descriptions import (
     strip_derived_description_fields,
 )
 from models import RoomInfo, Session, time_to_minutes, minutes_to_time
-from deepseek_llm import llm_json
+from deepseek_llm import llm_json, llm_last_error
 
 
 CACHE_DIR = Path(".cache")
@@ -146,7 +146,11 @@ def get_timezone_from_location(location_text: str) -> str | None:
         IANA timezone string (e.g. "Europe/Stockholm") or None on failure.
     """
 
-    api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    api_key = (
+        os.environ.get("LLM_API_KEY")
+        or os.environ.get("DEEPSEEK_API_KEY")
+        or os.environ.get("GEMINI_API_KEY")
+    )
     if not api_key:
         print("Warning: GEMINI_API_KEY not set, cannot determine timezone")
         return None
@@ -222,7 +226,11 @@ def detect_room_from_context(
     if not context_text.strip():
         return None
 
-    api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    api_key = (
+        os.environ.get("LLM_API_KEY")
+        or os.environ.get("DEEPSEEK_API_KEY")
+        or os.environ.get("GEMINI_API_KEY")
+    )
     if not api_key:
         return None
 
@@ -1143,7 +1151,11 @@ def parse_time_slots(
     """
     import time as _time
 
-    api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
+    api_key = (
+        os.environ.get("LLM_API_KEY")
+        or os.environ.get("DEEPSEEK_API_KEY")
+        or os.environ.get("GEMINI_API_KEY")
+    )
     if not api_key:
         raise ValueError("DEEPSEEK_API_KEY or GEMINI_API_KEY environment variable is not set")
 
@@ -1281,6 +1293,18 @@ def parse_time_slots(
                         ) from e
 
         if parsed_result is None:
+            err = llm_last_error()
+            if err is not None:
+                n_llm_failures += 1
+                if any(
+                    token in str(err)
+                    for token in ("401", "403", "无效的令牌", "invalid_api_key",
+                                  "Unauthorized", "insufficient")
+                ):
+                    raise RuntimeError(
+                        "LLM rejected the request (auth/quota): "
+                        f"{str(err)[:180]}"
+                    ) from err
             parsed_result = {"sessions": []}
 
         parsed_result["sessions"] = annotate_sessions_with_agenda_descriptions(
@@ -1609,7 +1633,11 @@ def normalize_group_headers(sessions: list[Session]) -> list[Session]:
             mapping[entry["original"]] = entry["simplified"]
         print(f"  Loaded mapping from cache ({len(mapping)} entries)")
     else:
-        api_key = os.environ.get("DEEPSEEK_API_KEY") or os.environ.get("GEMINI_API_KEY")
+        api_key = (
+            os.environ.get("LLM_API_KEY")
+            or os.environ.get("DEEPSEEK_API_KEY")
+            or os.environ.get("GEMINI_API_KEY")
+        )
         if not api_key:
             print("  Warning: GEMINI_API_KEY not set, skipping normalization")
             return sessions
