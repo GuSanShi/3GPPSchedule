@@ -19,9 +19,9 @@ jobs:
             -H "Authorization: Bearer $K" https://api.deepseek.com/v1/models || echo "curl failed"
           head -c 300 /tmp/m.txt || true
           echo
-          echo "--- chat (deepseek-v4.1-flash) ---"
+          echo "--- chat (deepseek-flash) ---"
           curl -s -o /tmp/c.txt -w "HTTP:%{http_code} time:%{time_total}\n" --max-time 60 \
             -H "Authorization: Bearer $K" -H "Content-Type: application/json" \
-            -d '{"model":"deepseek-v4.1-flash","messages":[{"role":"user","content":"Reply with JSON {\"ok\":true}"}],"max_tokens":10,"response_format":{"type":"json_object"}}' \
+            -d '{"model":"deepseek-flash","messages":[{"role":"user","content":"Reply with JSON {\"ok\":true}"}],"max_tokens":10,"response_format":{"type":"json_object"}}' \
             https://api.deepseek.com/v1/chat/completions || echo "curl failed"
           head -c 400 /tmp/c.txt || true
