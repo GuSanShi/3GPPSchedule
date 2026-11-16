@@ -80,16 +80,16 @@
       "name": "UE feature",
       "duration_minutes": 40,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI/ML",
+      "name": "AI 9.1 AIML",
       "duration_minutes": 50,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": "9.1",
       "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
@@ -115,53 +115,14 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8 Sensing",
-      "duration_minutes": 90,
+      "name": "10.8.3",
+      "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8, 10.8.2, 10.8.3",
-      "description": "ISAC",
+      "agenda_item": "10.8.3",
+      "description": "Waveform and frame structure",
       "agenda_descriptions": [
-        {
-          "agenda_item": "10.8",
-          "matched_agenda_item": "10.8",
-          "description": "ISAC",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            }
-          ]
-        },
-        {
-          "agenda_item": "10.8.2",
-          "matched_agenda_item": "10.8.2",
-          "description": "Aspects of integration with communication",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8",
-              "description": "ISAC",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.8.2",
-              "description": "Aspects of integration with communication",
-              "has_description": true
-            }
-          ]
-        },
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -180,6 +141,40 @@
             {
               "agenda_item": "10.8.3",
               "description": "Waveform and frame structure",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "10.8.2",
+      "duration_minutes": 60,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "6GR",
+      "agenda_item": "10.8.2",
+      "description": "Aspects of integration with communication",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.8.2",
+          "matched_agenda_item": "10.8.2",
+          "description": "Aspects of integration with communication",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8.2",
+              "description": "Aspects of integration with communication",
               "has_description": true
             }
           ]
@@ -313,7 +308,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-16T14:15:50.909672+00:00",
+  "merged_at": "2026-11-16T03:07:52.013331+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
