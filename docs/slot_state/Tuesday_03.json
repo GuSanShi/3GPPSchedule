@@ -514,16 +514,7 @@
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": null
-    },
-    {
-      "room_name": "RAN1_off2",
-      "name": "R20 10.7.1 NTN",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": "10.7.1",
       "description": "NTN specific requirements and design",
       "agenda_descriptions": [
@@ -553,11 +544,11 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "R20 9.5 NTN",
+      "name": "R20 .9.5 NTN",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorour",
-      "group_header": "R20",
+      "group_header": "",
       "agenda_item": "9.5",
       "description": "NR NTN in systems using downlink compensation",
       "agenda_descriptions": [
@@ -615,7 +606,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-16T03:06:40.283966+00:00",
+  "merged_at": "2026-11-16T14:15:47.319598+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
