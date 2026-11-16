@@ -163,11 +163,12 @@ jobs:
         env:
           # Fallback key only; LLM_API_KEY below takes precedence.
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          # Public OpenAI-compatible endpoint used for the LLM parsing step.
-          # deepseek_llm.py prefers LLM_API_KEY + LLM_BASE_URL + LLM_MODEL.
-          LLM_API_KEY: ${{ secrets.MOYU_API_KEY }}
-          LLM_BASE_URL: https://www.moyu.info/v1
-          LLM_MODEL: DeepSeek-V4.1-flash
+          # Official DeepSeek endpoint (api.deepseek.com, reachable from
+          # hosted runners; NOT from the local intranet).  Model id is
+          # deepseek-flash (= DeepSeek-V4.1-Flash).
+          LLM_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          LLM_BASE_URL: https://api.deepseek.com/v1
+          LLM_MODEL: deepseek-flash
           SPLIT_SUBITEMS: '1'  # keep sub-item granularity (matches the published chart)
           SCHEDULE_CONTACT_NAME: 846371094
           SCHEDULE_CONTACT_EMAIL: 846371094@qq.com
