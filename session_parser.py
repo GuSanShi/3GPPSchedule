@@ -626,6 +626,11 @@ lines that EACH carry their OWN explicit duration, e.g.
     "6GR").  Never leave a sub-item's group empty when its parent line has a
     label.
   → do NOT emit the parent group line as a session (it is only a group header)
+  → if the parent's duration EQUALS the duration of the (only) sub-item, the
+    parent line and that sub-item describe the SAME session (e.g.
+    "R20 (40) / MIMO (40)" is one 40-min R20 MIMO session, NOT two): emit ONE
+    session — name = the sub-item label, group = the parent label, duration =
+    that shared value.  Never emit both.
   → if the sub-items' durations sum to MORE than the parent's duration, the
     source is inconsistent: emit the parent as ONE session instead of the
     sub-items.
