@@ -162,15 +162,15 @@
       "name": "AI 8.1",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "",
       "agenda_item": "8.1",
-      "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+      "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
       "agenda_descriptions": [
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
-          "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+          "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
           "hierarchy": [
             {
               "agenda_item": "8",
@@ -179,7 +179,7 @@
             },
             {
               "agenda_item": "8.1",
-              "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+              "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
               "has_description": true
             }
           ]
@@ -188,10 +188,10 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.2",
+      "name": "10.5.2.2 PDSCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
@@ -227,10 +227,10 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.3",
+      "name": "10.5.2.3 PUxCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.5.2.3",
       "description": "Uplink transmission scheme(s) for uplink channels",
@@ -269,7 +269,7 @@
       "name": "10.3.2 Modulation",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.3.2",
       "description": "Modulation",
@@ -484,12 +484,12 @@
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorouri",
-      "group_header": "",
+      "group_header": "R20",
       "agenda_item": null
     },
     {
       "room_name": "RAN1_off2",
-      "name": "6GR 10.7.1 NTN",
+      "name": "10.7.1 NTN",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": "Sorouri",
@@ -531,7 +531,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-16T14:16:03.725341+00:00",
+  "merged_at": "2026-11-16T03:10:20.093764+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
