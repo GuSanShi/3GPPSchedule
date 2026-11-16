@@ -3,7 +3,8 @@
   "time_block_index": 2,
   "source_hashes": {
     "Main Schedule": "2c6a5114c5b9fc3b",
-    "Hiroki's schedule": "eaf2fd0e36096add"
+    "Hiroki's schedule": "eaf2fd0e36096add",
+    "Sorour's schedule": "f1b664c820be6acb"
   },
   "merged_sessions": [
     {
@@ -188,16 +189,36 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 AI/ML",
+      "name": "AI 9.1 AIML",
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
-      "agenda_item": null
+      "group_header": "R20 NR",
+      "agenda_item": "9.1",
+      "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.1",
+          "matched_agenda_item": "9.1",
+          "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.1",
+              "description": "Artificial Intelligence (AI)/Machine Learning (ML) for NR air interface enhancements",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.3.2 Modulation",
+      "name": "AI 10.3.2 Modulation",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
@@ -231,12 +252,32 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 MIMO",
+      "name": "AI 9.2 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "R20",
-      "agenda_item": null
+      "group_header": "R20 NR",
+      "agenda_item": "9.2",
+      "description": "NR MIMO Phase 6",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.2",
+          "matched_agenda_item": "9.2",
+          "description": "NR MIMO Phase 6",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.2",
+              "description": "NR MIMO Phase 6",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
@@ -740,7 +781,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-13T19:04:14.586269+00:00",
+  "merged_at": "2026-11-16T01:43:45.458326+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

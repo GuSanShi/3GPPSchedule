@@ -2,7 +2,8 @@
   "day": "Thursday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "1e8bcc5e76cde47b"
+    "Main Schedule": "1e8bcc5e76cde47b",
+    "Sorour's schedule": "a987d9ef0e8698c8"
   },
   "merged_sessions": [
     {
@@ -530,7 +531,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-13T19:14:20.750698+00:00",
+  "merged_at": "2026-11-16T01:49:24.927323+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

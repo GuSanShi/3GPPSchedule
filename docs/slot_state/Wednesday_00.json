@@ -3,7 +3,8 @@
   "time_block_index": 0,
   "source_hashes": {
     "Main Schedule": "5954b44c95d32139",
-    "Hiroki's schedule": "22c333756b712494"
+    "Hiroki's schedule": "22c333756b712494",
+    "Sorour's schedule": "de8994704ac8978c"
   },
   "merged_sessions": [
     {
@@ -261,7 +262,27 @@
       "specified_start_time": null,
       "chair": null,
       "group_header": "R20",
-      "agenda_item": null
+      "agenda_item": "9.4",
+      "description": "GNSS resilient NR-NTN operation",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "9.4",
+          "matched_agenda_item": "9.4",
+          "description": "GNSS resilient NR-NTN operation",
+          "hierarchy": [
+            {
+              "agenda_item": "9",
+              "description": "Release 20 NR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "9.4",
+              "description": "GNSS resilient NR-NTN operation",
+              "has_description": true
+            }
+          ]
+        }
+      ]
     },
     {
       "room_name": "RAN1_brk2",
@@ -583,7 +604,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-13T19:05:44.252849+00:00",
+  "merged_at": "2026-11-16T01:44:40.298655+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
