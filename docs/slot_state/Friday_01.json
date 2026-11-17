@@ -4,16 +4,17 @@
   "source_hashes": {
     "Main Schedule": "e599de385cab5d49",
     "Hiroki's schedule": "2076997c941a39a8",
+    "Ralf's schedule": "bc6d5c2c3f01cb9f",
     "Sorour's schedule": "ea08241b58b90288"
   },
   "merged_sessions": [
     {
       "room_name": "RAN1_main",
-      "name": "Sweep",
+      "name": "Sweep 6GR",
       "duration_minutes": 90,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "6GR",
       "agenda_item": null
     },
     {
@@ -133,7 +134,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-17T04:22:12.205500+00:00",
+  "merged_at": "2026-11-17T20:11:44.133848+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
