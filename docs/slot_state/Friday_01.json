@@ -10,7 +10,7 @@
     {
       "room_name": "RAN1_main",
       "name": "Sweep",
-      "duration_minutes": 120,
+      "duration_minutes": 90,
       "specified_start_time": null,
       "chair": null,
       "group_header": "",
@@ -18,10 +18,10 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.2",
+      "name": "10.5.2.2 PDSCH",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.5.2.2",
       "description": "Downlink transmission scheme(s) for downlink shared channels",
@@ -57,10 +57,10 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "10.5.2.3",
+      "name": "10.5.2.3 PUxCH",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": "Sorour",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.5.2.3",
       "description": "Uplink transmission scheme(s) for uplink channels",
@@ -97,9 +97,9 @@
     {
       "room_name": "RAN1_brk2",
       "name": "10.8 Sensing",
-      "duration_minutes": 60,
+      "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "6GR",
       "agenda_item": "10.8",
       "description": "ISAC",
@@ -126,14 +126,14 @@
     {
       "room_name": "RAN1_brk2",
       "name": "A-IoT Phase2",
-      "duration_minutes": 60,
+      "duration_minutes": 45,
       "specified_start_time": null,
-      "chair": "Hiroki",
+      "chair": null,
       "group_header": "R20",
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-17T14:20:58.814112+00:00",
+  "merged_at": "2026-11-17T04:22:12.205500+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
