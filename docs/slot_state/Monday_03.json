@@ -257,14 +257,31 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "10.8.2",
-      "duration_minutes": 60,
+      "name": "10.8 Sensing",
+      "duration_minutes": 120,
       "specified_start_time": null,
       "chair": "Hiroki",
       "group_header": "6GR",
-      "agenda_item": "10.8.2",
-      "description": "Aspects of integration with communication",
+      "agenda_item": "10.8, 10.8.2, 10.8.3",
+      "description": "ISAC",
       "agenda_descriptions": [
+        {
+          "agenda_item": "10.8",
+          "matched_agenda_item": "10.8",
+          "description": "ISAC",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.8",
+              "description": "ISAC",
+              "has_description": true
+            }
+          ]
+        },
         {
           "agenda_item": "10.8.2",
           "matched_agenda_item": "10.8.2",
@@ -286,19 +303,7 @@
               "has_description": true
             }
           ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_brk2",
-      "name": "10.8.3",
-      "duration_minutes": 60,
-      "specified_start_time": null,
-      "chair": "Hiroki",
-      "group_header": "6GR",
-      "agenda_item": "10.8.3",
-      "description": "Waveform and frame structure",
-      "agenda_descriptions": [
+        },
         {
           "agenda_item": "10.8.3",
           "matched_agenda_item": "10.8.3",
@@ -510,12 +515,12 @@
     },
     {
       "room_name": "RAN1_off2",
-      "name": "9.5 NTN",
-      "duration_minutes": 30,
+      "name": "R20 NTN",
+      "duration_minutes": 60,
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": "9.5",
+      "agenda_item": "9.5, NTN-NR",
       "description": "NR NTN in systems using downlink compensation",
       "agenda_descriptions": [
         {
@@ -536,18 +541,9 @@
           ]
         }
       ]
-    },
-    {
-      "room_name": "RAN1_off2",
-      "name": "NTN-NR",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": "Sorour",
-      "group_header": "R20",
-      "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-17T04:21:10.115815+00:00",
+  "merged_at": "2026-11-17T14:20:31.587120+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

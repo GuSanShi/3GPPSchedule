@@ -86,7 +86,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 9.1 AIML",
+      "name": "AI/ML",
       "duration_minutes": 50,
       "specified_start_time": null,
       "chair": null,
@@ -118,7 +118,7 @@
       "name": "10.8 Sensing",
       "duration_minutes": 90,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "6GR",
       "agenda_item": "10.8, 10.8.2",
       "description": "ISAC",
@@ -399,7 +399,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-17T04:21:10.117923+00:00",
+  "merged_at": "2026-11-17T14:20:35.530748+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
