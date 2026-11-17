@@ -37,7 +37,7 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "R20 MIMO",
+      "name": "AI 9.2 MIMO",
       "duration_minutes": 40,
       "specified_start_time": null,
       "chair": null,
@@ -72,12 +72,12 @@
       "chair": null,
       "group_header": "",
       "agenda_item": "8.1",
-      "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+      "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
       "agenda_descriptions": [
         {
           "agenda_item": "8.1",
           "matched_agenda_item": "8.1",
-          "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+          "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
           "hierarchy": [
             {
               "agenda_item": "8",
@@ -86,7 +86,7 @@
             },
             {
               "agenda_item": "8.1",
-              "description": "Maintenance on AI/ML for NR Air interface, NR MIMO Phase 5, NES and NTN for NR and IoT",
+              "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
               "has_description": true
             }
           ]
@@ -290,25 +290,10 @@
       "specified_start_time": null,
       "chair": "Sorour",
       "group_header": "R20",
-      "agenda_item": "9.6",
-      "description": "Release 20 NR",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "9.6",
-          "matched_agenda_item": "9",
-          "description": "Release 20 NR",
-          "hierarchy": [
-            {
-              "agenda_item": "9",
-              "description": "Release 20 NR",
-              "has_description": true
-            }
-          ]
-        }
-      ]
+      "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-17T14:20:47.684411+00:00",
+  "merged_at": "2026-11-17T04:21:44.484524+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
