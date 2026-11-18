@@ -2,9 +2,9 @@
   "day": "Thursday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "755f9be55512df63",
-    "Hiroki's schedule": "91d2db83818513bb",
-    "Sorour's schedule": "0e264c68ea1717a3"
+    "Main Schedule": "55f85e04b8f1ae4e",
+    "Hiroki's schedule": "801f92431e6c2f1e",
+    "Sorour's schedule": "0b1ac2f5cdcd827c"
   },
   "merged_sessions": [
     {
@@ -270,7 +270,7 @@
       "name": "9.3.1",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "R20 / A-IoT Phase2",
       "agenda_item": "9.3.1",
       "description": "R2D signals, channels, waveform and procedures",
@@ -304,7 +304,7 @@
       "name": "9.3.2",
       "duration_minutes": 30,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "R20 / A-IoT Phase2",
       "agenda_item": "9.3.2",
       "description": "D2R signals, channels, waveform and procedures",
@@ -338,7 +338,7 @@
       "name": "9.3.3",
       "duration_minutes": 60,
       "specified_start_time": null,
-      "chair": null,
+      "chair": "Hiroki",
       "group_header": "R20 / A-IoT Phase2",
       "agenda_item": "9.3.3",
       "description": "Other procedures",
@@ -631,7 +631,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-18T03:21:41.264466+00:00",
+  "merged_at": "2026-11-18T19:50:59.380955+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

@@ -2,8 +2,8 @@
   "day": "Monday",
   "time_block_index": 0,
   "source_hashes": {
-    "Main Schedule": "4464f1af5bd59f4a",
-    "Ralf's schedule": "b5c5b69e436c8b4e"
+    "Main Schedule": "3bd08ef60f00e5fc",
+    "Ralf's schedule": "0892fbdcb757c16d"
   },
   "merged_sessions": [
     {
@@ -118,7 +118,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-18T03:21:41.255945+00:00",
+  "merged_at": "2026-11-18T19:42:07.703814+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

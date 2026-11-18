@@ -2,10 +2,10 @@
   "day": "Tuesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "8d120b417f101bf9",
-    "Hiroki's schedule": "bd18558e57ff7e56",
-    "Ralf's schedule": "f35992192f0f23fe",
-    "Sorour's schedule": "014d4302029a528f"
+    "Main Schedule": "4bc44b8246c557a5",
+    "Hiroki's schedule": "c960d38bba33a03a",
+    "Ralf's schedule": "75077e541dd686be",
+    "Sorour's schedule": "45519e4ef061b93f"
   },
   "merged_sessions": [
     {
@@ -282,12 +282,12 @@
     },
     {
       "room_name": "RAN1_brk2",
-      "name": "R20 A-IoT Phase2",
-      "duration_minutes": 120,
+      "name": "9.3.1",
+      "duration_minutes": 40,
       "specified_start_time": null,
       "chair": "Hiroki",
-      "group_header": "R20",
-      "agenda_item": "9.3.1, 9.3.2, 9.3.3",
+      "group_header": "R20 / A-IoT Phase2",
+      "agenda_item": "9.3.1",
       "description": "R2D signals, channels, waveform and procedures",
       "agenda_descriptions": [
         {
@@ -311,7 +311,19 @@
               "has_description": true
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "9.3.2",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "R20 / A-IoT Phase2",
+      "agenda_item": "9.3.2",
+      "description": "D2R signals, channels, waveform and procedures",
+      "agenda_descriptions": [
         {
           "agenda_item": "9.3.2",
           "matched_agenda_item": "9.3.2",
@@ -333,7 +345,19 @@
               "has_description": true
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_brk2",
+      "name": "9.3.3",
+      "duration_minutes": 50,
+      "specified_start_time": null,
+      "chair": "Hiroki",
+      "group_header": "R20 / A-IoT Phase2",
+      "agenda_item": "9.3.3",
+      "description": "Other procedures",
+      "agenda_descriptions": [
         {
           "agenda_item": "9.3.3",
           "matched_agenda_item": "9.3.3",
@@ -758,7 +782,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-18T03:21:41.259629+00:00",
+  "merged_at": "2026-11-18T19:47:10.414269+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
