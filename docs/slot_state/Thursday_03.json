@@ -2,10 +2,10 @@
   "day": "Thursday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "d71b48c36a5b7d8f",
-    "Hiroki's schedule": "961166c3bcf7ad90",
-    "Ralf's schedule": "961166c3bcf7ad90",
-    "Sorour's schedule": "f9d6e675171b991f"
+    "Main Schedule": "4abff11e5610d759",
+    "Hiroki's schedule": "e94af97c0d480c27",
+    "Ralf's schedule": "a096e7cf60bd993d",
+    "Sorour's schedule": "bc773b1d5f902ca3"
   },
   "merged_sessions": [
     {
@@ -161,27 +161,37 @@
     },
     {
       "room_name": "RAN1_brk1",
-      "name": "AI 8.1",
+      "name": "10.5.2.1",
       "duration_minutes": 30,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
-      "agenda_item": "8.1",
-      "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
+      "group_header": "6GR",
+      "agenda_item": "10.5.2.1",
+      "description": "Downlink transmission scheme(s) for downlink control channels",
       "agenda_descriptions": [
         {
-          "agenda_item": "8.1",
-          "matched_agenda_item": "8.1",
-          "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
+          "agenda_item": "10.5.2.1",
+          "matched_agenda_item": "10.5.2.1",
+          "description": "Downlink transmission scheme(s) for downlink control channels",
           "hierarchy": [
             {
-              "agenda_item": "8",
-              "description": "Maintenance on Rel-19 NR and E-UTRA",
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
               "has_description": true
             },
             {
-              "agenda_item": "8.1",
-              "description": "Maintenance on all items of Rel-19 NR and E-UTRA",
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2",
+              "description": "MIMO operation",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.2.1",
+              "description": "Downlink transmission scheme(s) for downlink control channels",
               "has_description": true
             }
           ]
@@ -533,7 +543,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-18T20:05:18.824203+00:00",
+  "merged_at": "2026-11-19T03:03:16.456639+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

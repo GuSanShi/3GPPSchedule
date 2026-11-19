@@ -2,10 +2,9 @@
   "day": "Wednesday",
   "time_block_index": 2,
   "source_hashes": {
-    "Main Schedule": "7c3ea33bbcb9f402",
-    "Hiroki's schedule": "c2d622d44f243ff9",
-    "Ralf's schedule": "3fa6013fd9e05d58",
-    "Sorour's schedule": "8f60b721b2d749fb"
+    "Main Schedule": "c23d996c6fd0f547",
+    "Hiroki's schedule": "9739929b54e118fd",
+    "Sorour's schedule": "6233aecc06bca9ce"
   },
   "merged_sessions": [
     {
@@ -453,45 +452,6 @@
     },
     {
       "room_name": "RAN1_off1",
-      "name": "10.5.1.1",
-      "duration_minutes": 30,
-      "specified_start_time": null,
-      "chair": null,
-      "group_header": "6GR",
-      "agenda_item": "10.5.1.1",
-      "description": "Synchronization acquisition and beam measurement",
-      "agenda_descriptions": [
-        {
-          "agenda_item": "10.5.1.1",
-          "matched_agenda_item": "10.5.1.1",
-          "description": "Synchronization acquisition and beam measurement",
-          "hierarchy": [
-            {
-              "agenda_item": "10",
-              "description": "Rel-20 Study of 6GR",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5",
-              "description": "Multi-antenna system",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.1",
-              "description": "Initial access and mobility",
-              "has_description": true
-            },
-            {
-              "agenda_item": "10.5.1.1",
-              "description": "Synchronization acquisition and beam measurement",
-              "has_description": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "room_name": "RAN1_off1",
       "name": "10.6.1.1",
       "duration_minutes": 40,
       "specified_start_time": null,
@@ -630,6 +590,45 @@
             {
               "agenda_item": "10.6.3",
               "description": "WUS operation with other functionalities",
+              "has_description": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_name": "RAN1_off1",
+      "name": "10.5.1.1",
+      "duration_minutes": 30,
+      "specified_start_time": null,
+      "chair": null,
+      "group_header": "6GR",
+      "agenda_item": "10.5.1.1",
+      "description": "Synchronization acquisition and beam measurement",
+      "agenda_descriptions": [
+        {
+          "agenda_item": "10.5.1.1",
+          "matched_agenda_item": "10.5.1.1",
+          "description": "Synchronization acquisition and beam measurement",
+          "hierarchy": [
+            {
+              "agenda_item": "10",
+              "description": "Rel-20 Study of 6GR",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5",
+              "description": "Multi-antenna system",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1",
+              "description": "Initial access and mobility",
+              "has_description": true
+            },
+            {
+              "agenda_item": "10.5.1.1",
+              "description": "Synchronization acquisition and beam measurement",
               "has_description": true
             }
           ]
@@ -788,7 +787,7 @@
       ]
     }
   ],
-  "merged_at": "2026-11-18T20:05:18.818294+00:00",
+  "merged_at": "2026-11-19T03:01:11.964494+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }

@@ -2,10 +2,10 @@
   "day": "Wednesday",
   "time_block_index": 3,
   "source_hashes": {
-    "Main Schedule": "7250442dc6bd4087",
-    "Hiroki's schedule": "6e6cc5b9bb31a743",
-    "Ralf's schedule": "6e6cc5b9bb31a743",
-    "Sorour's schedule": "40f88a34e6cc7775"
+    "Main Schedule": "d12951756b530213",
+    "Hiroki's schedule": "820a07ca17e73973",
+    "Ralf's schedule": "9951d910a33b942e",
+    "Sorour's schedule": "112901b855ec87a2"
   },
   "merged_sessions": [
     {
@@ -72,7 +72,7 @@
       "duration_minutes": 20,
       "specified_start_time": null,
       "chair": null,
-      "group_header": "",
+      "group_header": "6GR",
       "agenda_item": "10.3.1, 8.1",
       "description": "Channel coding",
       "agenda_descriptions": [
@@ -317,7 +317,7 @@
       "agenda_item": null
     }
   ],
-  "merged_at": "2026-11-18T20:05:18.819761+00:00",
+  "merged_at": "2026-11-19T03:01:29.411622+00:00",
   "meeting_id": "ran1#127",
   "schema_version": 1
 }
